@@ -20,13 +20,16 @@
 <div style="width: 600px;margin: 0 auto">
     <c:choose>
         <c:when test="${users != null}"><h1>前台到后台代码正常</h1></c:when>
-        <c:otherwise><h1>前台到后台代码不通</h1></c:otherwise>
+        <c:otherwise><h1>前台到后台代码不通</h1>
+            <br/>
+            <a class="btn btn-info" href="show">测试数据库</a>
+        </c:otherwise>
     </c:choose>
     <h1>从数据库查询到的项目组成员为：</h1>
     <c:forEach items="${users}" var="user">
         <h1>${user.username}</h1>
     </c:forEach>
-    <button class="btn btn-primary" onclick="test()">测试JS</button>
-    <a class="btn btn-info" href="main">测试页面跳转</a></div>
+    <button class="btn btn-primary">测试JS</button>
+    <a class="btn btn-default" href="main">测试页面跳转</a></div>
 </body>
 </html>
