@@ -7,6 +7,43 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
     <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+    <title>登录页</title>
+    <script type="text/javascript">
+        $(function () {
+
+        })
+    </script>
+</head>
+<body style="background-image: url('img/background.jpg'); background-repeat: no-repeat; background-size: 100% 100%; background-attachment: fixed;">
+<div class="container">
+    <div class="jumbotron">
+        <center>
+            <h1>欢迎来到上机考试管理系统</h1>
+        </center>
+    </div>
+    <div class="col-md-6 col-md-push-3" style="background: rgba(114,114,114,0.8);padding: 28px;">
+        <form action="login" class="form-horizontal form-group-lg">
+            <div class="form-group"><label for="username" class="col-sm-3 control-label" style="font-size: 1.5em;">用户名：</label>
+                <div class="col-sm-8"><input type="text" class="form-control" id="username" name="username" /></div>
+            </div>
+            <div class="form-group" style="margin-top: 30px;"><label for="password" class="col-sm-3 control-label" style="font-size: 1.5em;">密 &nbsp; &nbsp;码：</label>
+                <div class="col-sm-8"><input type="text" class="form-control" id="password" name="password" /></div>
+            </div>
+            <div class="form-group text-center" style="margin-top: 30px;">
+                <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 30px;padding-right: 30px;" value="登录" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col-md-12 text-center" style="font-size: 1.5em;position: fixed;bottom: 0;background: rgba(188,188,188,0.5);">上机考试管理系统 &copy; 2020</div>
+</body>
+</html>
+<%--
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
+    <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
     <title>首页</title>
     <script type="text/javascript">
         $(function () {
@@ -33,3 +70,4 @@
     <a class="btn btn-default" href="main">测试页面跳转</a></div>
 </body>
 </html>
+--%>
