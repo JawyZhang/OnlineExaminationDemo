@@ -14,8 +14,19 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <style>
         body {
-            background: url("img/background2.jpg") no-repeat center 0px;
-            padding-top: 100px;
+            padding-top: 50px;
+            background: url("img/background2.jpg")  no-repeat center 0px;
+            background-size: cover;
+
+
+
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            -moz-background-size: cover;
+            -ms-background-size: cover;
         }
 
         .image {
@@ -68,10 +79,10 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active" href="" #><a>控制面板</a></li>
-                <li><a href="#">教师管理</a></li>
-                <li><a href="#">考试清理</a></li>
-                <li><a href="#">系统配置</a></li>
+                <li class="active" ><a href="admin_home.jsp">控制面板</a></li>
+                <li><a href="admin_teacher.jsp">教师管理</a></li>
+                <li><a href="admin_exam.jsp">考试清理</a></li>
+                <li><a href="admin_system.jsp">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="#">修改口令</a></li>
@@ -86,7 +97,7 @@
         <div class="father">
             <div class="item">
                 <img src="img/admin_teacher.png" class="img-rounded img-thumbnail image center-block ">
-                <a class="btn btn-primary btn-large" href="#"><i class="icon-comment icon-white"></i> 教师管理</a>
+                <a class="btn btn-primary btn-large" href="admin_teacher.jsp"><i class="icon-comment icon-white"></i> 教师管理</a>
 
         </div>
 
@@ -95,14 +106,14 @@
         <div class=" father">
             <div class="item">
                 <img src="img/admin_exam.png" class="img-rounded img-thumbnail image center-block">
-                <a class="btn btn-primary btn-large" href="#"><i class="icon-comment icon-white"></i>考试清理</a>
+                <a class="btn btn-primary btn-large" href="admin_exam.jsp"><i class="icon-comment icon-white"></i>考试清理</a>
             </div>
 
         </div>
         <div class=" father">
             <div class="item">
                 <img src="img/admin_system.png" class="img-rounded img-thumbnail image center-block">
-                <a class="btn btn-primary btn-large" href="#"><i class="icon-comment icon-white"></i>系统配置</a>
+                <a class="btn btn-primary btn-large" href="admin_system.jsp"><i class="icon-comment icon-white"></i>系统配置</a>
 
             </div>
 

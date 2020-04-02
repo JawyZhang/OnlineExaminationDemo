@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="修改登录界面，login.jsp">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_home.jsp" afterDir="false" />
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员控制面板设计，admin_home.jsp">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_exam.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_system.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_home.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +154,8 @@
       <workItem from="1585712669642" duration="5468000" />
       <workItem from="1585721539206" duration="668000" />
       <workItem from="1585747080677" duration="9565000" />
-      <workItem from="1585812564345" duration="4283000" />
+      <workItem from="1585812564345" duration="5048000" />
+      <workItem from="1585837326374" duration="1541000" />
     </task>
     <task id="LOCAL-00001" summary="修改登录界面，login.jsp">
       <created>1585722004370</created>
@@ -162,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585722004370</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="管理员控制面板设计，admin_home.jsp">
+      <created>1585817099968</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1585817099968</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -183,6 +192,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改登录界面，login.jsp" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改登录界面，login.jsp" />
+    <MESSAGE value="管理员控制面板设计，admin_home.jsp" />
+    <option name="LAST_COMMIT_MESSAGE" value="管理员控制面板设计，admin_home.jsp" />
   </component>
 </project>
