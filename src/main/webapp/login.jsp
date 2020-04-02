@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>欢迎来到上级考试系统</title>
+    <title>上机考试系统</title>
 
     <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
@@ -187,7 +187,7 @@
                             <input type="checkbox" value="None" id="checkbox1" name="check"/>
                             <label for="checkbox1"></label>
                         </div>
-                        <span class="text">Remember me</span>
+                        <span class="text">记住密码</span>
                         <button type="submit" class="btn btn-default">登录</button>
                     </div>
                 </form>

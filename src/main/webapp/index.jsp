@@ -19,9 +19,9 @@
 <body style="background-image: url('img/background.jpg'); background-repeat: no-repeat; background-size: 100% 100%; background-attachment: fixed;">
 <div class="container">
     <div class="jumbotron">
-        <center>
+        <div style="text-align: center;">
             <h1>欢迎来到上机考试管理系统</h1>
-        </center>
+        </div>
     </div>
     <div class="col-md-6 col-md-push-3" style="background: rgba(114,114,114,0.8);padding: 28px;">
         <form action="login" class="form-horizontal form-group-lg">
