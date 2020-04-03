@@ -47,8 +47,9 @@
                 <li class="active"><a href="admin_system.jsp">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
-                <li><a href="#">修改口令</a></li>
-                <li><a href="#">退出</a></li>
+                <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#edit_password">修改口令</a></li>
+                <li><a href="/logout">退出</a></li>
             </ul>
         </div>
 
@@ -56,6 +57,7 @@
 </nav>
 <div class="container " id="row" >
 
+    <jsp:include page="edit_password.jsp"/>
 </div>
 </body>
 </html>

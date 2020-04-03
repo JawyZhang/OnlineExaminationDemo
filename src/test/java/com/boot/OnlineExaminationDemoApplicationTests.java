@@ -12,7 +12,6 @@ class OnlineExaminationDemoApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println(userMapper.selectAllUser());
 	}
 
 }

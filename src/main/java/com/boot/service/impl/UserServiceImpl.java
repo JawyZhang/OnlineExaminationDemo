@@ -6,15 +6,17 @@ import com.boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+/**
+ * @Author Mango
+ * @Date 2020-04-03 18:46
+ */
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
     @Override
-    public List<User> selectAllUser() {
-        return userMapper.selectAllUser();
+    public User selectUser(User user) {
+        return userMapper.selectUser(user);
     }
 }

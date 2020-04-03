@@ -80,13 +80,14 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active" ><a href="admin_home.jsp">控制面板</a></li>
-                <li><a href="admin_teacher.jsp">教师管理</a></li>
+                <li><a href="/admin_teacher">教师管理</a></li>
                 <li><a href="admin_exam.jsp">考试清理</a></li>
                 <li><a href="admin_system.jsp">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
-                <li><a href="#">修改口令</a></li>
-                <li><a href="#">退出</a></li>
+                <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#edit_password">修改口令</a></li>
+                <li><a href="/logout">退出</a></li>
             </ul>
         </div>
 
@@ -97,7 +98,7 @@
         <div class="father">
             <div class="item">
                 <img src="img/admin_teacher.png" class="img-rounded img-thumbnail image center-block ">
-                <a class="btn btn-primary btn-large" href="admin_teacher.jsp"><i class="icon-comment icon-white"></i> 教师管理</a>
+                <a class="btn btn-primary btn-large" href="/admin_teacher"><i class="icon-comment icon-white"></i> 教师管理</a>
 
         </div>
 
@@ -120,7 +121,7 @@
 
         </div>
     </div>
-
+    <jsp:include page="edit_password.jsp"/>
 </div>
 </body>
 </html>

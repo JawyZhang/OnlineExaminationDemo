@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("com.boot.mapper")
 public class OnlineExaminationDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(OnlineExaminationDemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(OnlineExaminationDemoApplication.class, args);
+    }
 
 }

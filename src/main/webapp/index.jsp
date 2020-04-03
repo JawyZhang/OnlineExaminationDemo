@@ -4,72 +4,195 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>上机考试系统</title>
 
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
     <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-    <title>登录页</title>
-    <script type="text/javascript">
-        $(function () {
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <style>
+        body{
+            padding-top: 50px;
+            background: url("img/background2.jpg")  no-repeat center 0px;
+            background-size: cover;
 
-        })
-    </script>
+
+
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            -webkit-background-size: cover;
+            -o-background-size: cover;
+            -moz-background-size: cover;
+            -ms-background-size: cover;
+        }
+        .row{
+            padding: 40px 15px;
+        }
+
+
+        .form-horizontal{
+            background: #fff;
+            padding-bottom: 40px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .form-horizontal .heading{
+            display: block;
+            font-size: 35px;
+            font-weight: 700;
+            padding: 35px 0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+        .form-horizontal .form-group{
+            padding: 0 40px;
+            margin: 0 0 25px 0;
+            position: relative;
+        }
+        .form-horizontal .form-control{
+            background: #f0f0f0;
+            border: none;
+            border-radius: 20px;
+            box-shadow: none;
+            padding: 0 20px 0 45px;
+            height: 40px;
+            transition: all 0.3s ease 0s;
+        }
+        .form-horizontal .form-control:focus{
+            background: #e0e0e0;
+            box-shadow: none;
+            outline: 0 none;
+        }
+        .form-horizontal .form-group i{
+            position: absolute;
+            top: 12px;
+            left: 60px;
+            font-size: 17px;
+            color: #c8c8c8;
+            transition : all 0.5s ease 0s;
+        }
+        .form-horizontal .form-control:focus + i{
+            color: #00b4ef;
+        }
+        .form-horizontal .fa-question-circle{
+            display: inline-block;
+            position: absolute;
+            top: 12px;
+            right: 60px;
+            font-size: 20px;
+            color: #808080;
+            transition: all 0.5s ease 0s;
+        }
+        .form-horizontal .fa-question-circle:hover{
+            color: #000;
+        }
+        .form-horizontal .main-checkbox{
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #11a3fc;
+            border-radius: 50%;
+            position: relative;
+            margin: 5px 0 0 5px;
+            border: 1px solid #11a3fc;
+        }
+        .form-horizontal .main-checkbox label{
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+        .form-horizontal .main-checkbox label:after{
+            content: "";
+            width: 10px;
+            height: 5px;
+            position: absolute;
+            top: 5px;
+            left: 4px;
+            border: 3px solid #fff;
+            border-top: none;
+            border-right: none;
+            background: transparent;
+            opacity: 0;
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+        }
+        .form-horizontal .main-checkbox input[type=checkbox]{
+            visibility: hidden;
+        }
+        .form-horizontal .main-checkbox input[type=checkbox]:checked + label:after{
+            opacity: 1;
+        }
+        .form-horizontal .text{
+            float: left;
+            margin-left: 7px;
+            line-height: 20px;
+            padding-top: 5px;
+            text-transform: capitalize;
+        }
+        .form-horizontal .btn{
+            float: right;
+            font-size: 14px;
+            color: #fff;
+            background: #00b4ef;
+            border-radius: 30px;
+            padding: 10px 25px;
+            border: none;
+            text-transform: capitalize;
+            transition: all 0.5s ease 0s;
+        }
+        @media only screen and (max-width: 479px){
+            .form-horizontal .form-group{
+                padding: 0 25px;
+            }
+            .form-horizontal .form-group i{
+                left: 45px;
+            }
+            .form-horizontal .btn{
+                padding: 10px 20px;
+            }
+        }
+
+    </style>
 </head>
-<body style="background-image: url('img/background.jpg'); background-repeat: no-repeat; background-size: 100% 100%; background-attachment: fixed;">
-<div class="container">
-    <div class="jumbotron">
-        <div style="text-align: center;">
-            <h1>欢迎来到上机考试管理系统</h1>
+<body >
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                    <a class="navbar-brand" href="#">上机考试系统</a>
+            </div>
+            <div class="navbar-right">
+                <p class="navbar-text ">你好，请登录!</p>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <form class="form-horizontal" action="/login" method="post">
+                    <span class="heading">用户登录</span>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="inputEmail3" name="username" value="${user.username}" placeholder="用户名或电子邮件">
+                        <i class="fa fa-user">${tip}</i>
+                    </div>
+                    <div class="form-group help">
+                        <input type="password" class="form-control" id="inputPassword3" name="password" value="${user.password}" placeholder="密　码">
+                        <i class="fa fa-lock">${tip}</i>
+                        <a href="#" class="fa fa-question-circle"></a>
+                    </div>
+                    <div class="form-group">
+                        <div class="main-checkbox">
+                            <input type="checkbox" value="None" id="checkbox1" name="check"/>
+                            <label for="checkbox1"></label>
+                        </div>
+                        <span class="text">记住密码</span>
+                        <button type="submit" class="btn btn-default">登录</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-    <div class="col-md-6 col-md-push-3" style="background: rgba(114,114,114,0.8);padding: 28px;">
-        <form action="login" class="form-horizontal form-group-lg">
-            <div class="form-group"><label for="username" class="col-sm-3 control-label" style="font-size: 1.5em;">用户名：</label>
-                <div class="col-sm-8"><input type="text" class="form-control" id="username" name="username" /></div>
-            </div>
-            <div class="form-group" style="margin-top: 30px;"><label for="password" class="col-sm-3 control-label" style="font-size: 1.5em;">密 &nbsp; &nbsp;码：</label>
-                <div class="col-sm-8"><input type="text" class="form-control" id="password" name="password" /></div>
-            </div>
-            <div class="form-group text-center" style="margin-top: 30px;">
-                <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 30px;padding-right: 30px;" value="登录" />
-            </div>
-        </form>
-    </div>
-</div>
-<div class="col-md-12 text-center" style="font-size: 1.5em;position: fixed;bottom: 0;background: rgba(188,188,188,0.5);">上机考试管理系统 &copy; 2020</div>
 </body>
 </html>
-<%--
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
-    <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-    <title>首页</title>
-    <script type="text/javascript">
-        $(function () {
-            $("button").click(function () {
-                alert("JS引用成功");
-            })
-        })
-    </script>
-</head>
-<body>
-<div style="width: 600px;margin: 0 auto">
-    <c:choose>
-        <c:when test="${users != null}"><h1>前台到后台代码正常</h1></c:when>
-        <c:otherwise><h1>前台到后台代码不通</h1>
-            <br/>
-            <a class="btn btn-info" href="show">测试数据库</a>
-        </c:otherwise>
-    </c:choose>
-    <h1>从数据库查询到的项目组成员为：</h1>
-    <c:forEach items="${users}" var="user">
-        <h1>${user.username}</h1>
-    </c:forEach>
-    <button class="btn btn-primary">测试JS</button>
-    <a class="btn btn-default" href="main">测试页面跳转</a></div>
-</body>
-</html>
---%>
