@@ -31,4 +31,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Integer updateTeacher(User user) {
         return teacherMapper.updateTeacher(user);
     }
+
+    @Override
+    public Integer insertTeacher(User user) {
+        return teacherMapper.insertTeacher(user);
+    }
 }

@@ -39,4 +39,13 @@ public class TeacherController {
         model.addAttribute("teachers", teacherServiceImpl.selectAllTeacher());
         return "admin_teacher";
     }
+
+    @RequestMapping("add_teacher")
+    public String add_teacher(User user, Model model) {
+        if (teacherServiceImpl.insertTeacher(user) == 1) {
+            model.addAttribute("tip", "新增教师信息成功");
+        }
+        model.addAttribute("teachers", teacherServiceImpl.selectAllTeacher());
+        return "admin_teacher";
+    }
 }

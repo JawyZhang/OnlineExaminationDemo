@@ -31,4 +31,12 @@ public interface TeacherService {
      * @return
      */
     Integer updateTeacher(User user);
+
+    /**
+     * 根据传入信息新建用户
+     *
+     * @param user
+     * @return
+     */
+    Integer insertTeacher(User user);
 }

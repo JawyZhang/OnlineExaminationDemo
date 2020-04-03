@@ -23,8 +23,15 @@
             })
             $("#submit").click(function () {
                 if ($("#username").val().length != 0 && $("#password").val().length != 0) {
-                    $("#form").submit();
-                    alert("修改成功。");
+                    if ($("#id").val().length != 0) {
+                        $("#form")[0].action = "/update_teacher";
+                        $("#form")[0].submit();
+                        alert("修改成功。");
+                    } else {
+                        $("#form")[0].action = "/add_teacher";
+                        $("#form")[0].submit();
+                        alert("新增成功。");
+                    }
                 } else {
                     alert("用户名或者密码不能为空！！！");
                     return false;
@@ -75,6 +82,7 @@
     </div>
 </nav>
 <div class="container " id="row">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
     <c:if test="${tip!=null}"><p>${tip}</p></c:if>
     <table border="1">
         <tr>
@@ -100,7 +108,7 @@
                     <h4 class="modal-title" id="myModalLabel">修改教师信息</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="/update_teacher" method="post" id="form">
+                    <form method="post" id="form">
                         <input type="hidden" id="id" name="id"/>
                         <div class="form-group">
                             <label for="username">用户名</label>

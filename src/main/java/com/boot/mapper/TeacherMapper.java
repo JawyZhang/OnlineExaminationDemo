@@ -2,6 +2,7 @@ package com.boot.mapper;
 
 import com.boot.pojo.User;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -39,5 +40,14 @@ public interface TeacherMapper {
      */
     @Update("update user set username=#{username},password=#{password} where id=#{id}")
     Integer updateTeacher(User user);
+
+    /**
+     * 根据传入信息新增一名教师用户
+     *
+     * @param user
+     * @return
+     */
+    @Insert("insert into user values(default,#{username},#{password},1)")
+    Integer insertTeacher(User user);
 }
 
