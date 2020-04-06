@@ -54,8 +54,18 @@
             -moz-background-size: cover;
             -ms-background-size: cover;
         }
+        .table{
 
+            background-color: ghostwhite;
 
+        }
+        .addBtn{
+            margin-top: 20px;
+
+        }
+        .searchBox{
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -82,22 +92,43 @@
     </div>
 </nav>
 <div class="container " id="row">
-    <button class="btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
+    <div class="col-md-3 col-md-offset-1">
+    <button class="addBtn btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
+    </div>
     <c:if test="${tip!=null}"><p>${tip}</p></c:if>
-    <table border="1">
-        <tr>
-            <th>姓名</th>
-            <th>修改信息</th>
-            <th>删除用户</th>
-        </tr>
+    <div class="searchBox input-group col-md-3 col-md-offset-8">
+        <input type="text" class="form-control"placeholder="请输入教师姓名或工号" />
+        <span class="input-group-btn">
+               <button class="btn btn-info btn-search">查找</button>
+            </span>
+    </div>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+
+
+    <div calss="divider"></div>
+    <table class="table table-striped " >
+        <thread>
+            <tr>
+                <th>工号</th>
+                <th>姓名</th>
+                <th>修改信息</th>
+                <th>删除用户</th>
+                <th>设为管理员</th>
+            </tr>
+        </thread>
+        <tbody>
         <c:forEach items="${teachers}" var="teacher">
             <tr>
+                <td>${teacher.id}</td>
                 <td>${teacher.username}</td>
                 <td><a href="#" class="edit" name="${teacher.id}" data-toggle="modal" data-target="#edit_teacher">修改</a>
                 </td>
                 <td><a href="delete_teacher?id=${teacher.id}">删除</a></td>
+                <td><button   href="#" class="button btn-primary">设为管理员</button> </td>
             </tr>
         </c:forEach>
+        </tbody>
+
     </table>
     <div class="modal fade" id="edit_teacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

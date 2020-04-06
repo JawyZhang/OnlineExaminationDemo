@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员控制面板设计，admin_home.jsp">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_exam.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_system.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员：教师管理、考试清理、系统配置页面初始化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_home.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,11 +21,6 @@
         <option value="Jsp File" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>alert(&quot;JS引用成功&quot;)</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -155,7 +147,9 @@
       <workItem from="1585721539206" duration="668000" />
       <workItem from="1585747080677" duration="9565000" />
       <workItem from="1585812564345" duration="5048000" />
-      <workItem from="1585837326374" duration="1541000" />
+      <workItem from="1585837326374" duration="1861000" />
+      <workItem from="1585922846968" duration="2928000" />
+      <workItem from="1586176810178" duration="8112000" />
     </task>
     <task id="LOCAL-00001" summary="修改登录界面，login.jsp">
       <created>1585722004370</created>
@@ -171,7 +165,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585817099968</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="管理员：教师管理、考试清理、系统配置页面初始化">
+      <created>1585843493368</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1585843493368</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +194,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改登录界面，login.jsp" />
     <MESSAGE value="管理员控制面板设计，admin_home.jsp" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理员控制面板设计，admin_home.jsp" />
+    <MESSAGE value="管理员：教师管理、考试清理、系统配置页面初始化" />
+    <option name="LAST_COMMIT_MESSAGE" value="管理员：教师管理、考试清理、系统配置页面初始化" />
   </component>
 </project>
