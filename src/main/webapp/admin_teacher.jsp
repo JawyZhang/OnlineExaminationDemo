@@ -64,7 +64,7 @@
         }
 
         .addBtn {
-            margin-top: 20px;
+            margin-top: 30px;
 
         }
 
@@ -97,16 +97,24 @@
     </div>
 </nav>
 <div class="container " id="row">
-    <div class="col-md-3 col-md-offset-1">
-        <button class="addBtn btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
+    <div class="addBtn col-md-3 col-md-offset-1">
+        <button class=" btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
     </div>
     <c:if test="${tip!=null}"><p>${tip}</p></c:if>
-    <div class="searchBox input-group col-md-3 col-md-offset-8">
+    <div class="searchBox input-group col-md-3 col-md-offset-7">
         <form action="selectTeacher" method="post">
-            <input type="text" class="form-control" name="condition" placeholder="请输入教师姓名或工号"/>
-            <span class="input-group-btn">
-                <input type="submit" class="btn btn-info btn-search" value="查找"/>
-            </span>
+            <div class="form-group">
+                <div class="col-md-9">
+                    <input type="text" class="form-control " name="condition" placeholder="请输入教师姓名或工号"/>
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" class="btn btn-info btn-search" value="查找"/>
+                </div>
+
+
+
+            </div>
+
         </form>
     </div>
     <HR width="80%" color=#987cb9 SIZE=3>
