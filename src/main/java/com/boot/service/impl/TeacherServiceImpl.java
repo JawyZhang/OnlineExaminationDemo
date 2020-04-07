@@ -1,6 +1,7 @@
 package com.boot.service.impl;
 
 import com.boot.mapper.TeacherMapper;
+import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,16 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public List<Teacher> selectAll() {
         return teacherMapper.selectAll();
+    }
+
+    @Override
+    public PageInfo selectAllByPage(PageInfo pageInfo) {
+        pageInfo.setPageStart((pageInfo.getPageNumber() - 1) * pageInfo.getPageSize());
+        pageInfo.setTotal(teacherMapper.selectCount());
+        int count = pageInfo.getTotal();
+        pageInfo.setTotalPage(count % pageInfo.getPageSize() == 0 ? count / pageInfo.getPageSize() : count / pageInfo.getPageSize() + 1);
+        pageInfo.setList(teacherMapper.selectAllByPage(pageInfo));
+        return pageInfo;
     }
 
     @Override

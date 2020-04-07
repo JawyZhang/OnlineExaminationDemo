@@ -82,7 +82,7 @@
                 <li class="active" ><a href="admin_home.jsp">控制面板</a></li>
                 <li><a href="/admin_teacher">教师管理</a></li>
                 <li><a href="admin_exam.jsp">考试清理</a></li>
-                <li><a href="admin_system.jsp">系统配置</a></li>
+                <li><a href="/admin_system">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>

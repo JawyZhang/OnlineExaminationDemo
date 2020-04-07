@@ -49,7 +49,7 @@
                 <li ><a href="admin_home.jsp">控制面板</a></li>
                 <li ><a href="/admin_teacher">教师管理</a></li>
                 <li ><a href="admin_exam.jsp">考试清理</a></li>
-                <li class="active"><a href="admin_system.jsp">系统配置</a></li>
+                <li class="active"><a href="/admin_system">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
@@ -63,7 +63,7 @@
 <div class="container " id="row" >
     <div class="row">
         <div class="col-md-8 col-md-offset-2 " >
-            <form class="form-horizontal" method="post" action="#">
+            <form class="form-horizontal" method="post" action="update_system">
                 <fieldset>
                     <legend>修改系统设置</legend>
                     <div class="form-group">
@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >分页查询记录条数</label>
                         <div class="col-md-7">
-                            <input class="form-control"  type="number" placeholder="指定分页查询时每页显示记录的默认值（查询页面中可以更改）"/>
+                            <input class="form-control"  type="number" name="pageSize" value="${system.pageSize}" placeholder="指定分页查询时每页显示记录的默认值（查询页面中可以更改）"/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -115,7 +115,6 @@
             </form>
         </div>
     </div>
-
     <jsp:include page="edit_password.jsp"/>
 </div>
 </body>

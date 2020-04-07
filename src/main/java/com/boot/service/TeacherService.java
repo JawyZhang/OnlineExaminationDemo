@@ -1,5 +1,6 @@
 package com.boot.service;
 
+import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -20,6 +21,14 @@ public interface TeacherService {
      */
     @Select("select * from teacher")
     List<Teacher> selectAll();
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    @Select("select * from teacher where teacher_id is not null limit #{pageStart},#{pageSize}")
+    PageInfo selectAllByPage(PageInfo pageInfo);
 
     /**
      * 根据用户名和密码查询对应的教师信息

@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
     <title>上机考试系统</title>
@@ -85,7 +85,7 @@
                 <li><a href="admin_home.jsp">控制面板</a></li>
                 <li class="active"><a href="#">教师管理</a></li>
                 <li><a href="admin_exam.jsp">考试清理</a></li>
-                <li><a href="admin_system.jsp">系统配置</a></li>
+                <li><a href="/admin_system">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
@@ -122,7 +122,7 @@
             </tr>
         </thread>
         <tbody>
-        <c:forEach items="${teachers}" var="teacher">
+        <c:forEach items="${pageInfo.list}" var="teacher">
             <tr>
                 <td>${teacher.teacher_id}</td>
                 <td>${teacher.username}</td>
@@ -140,8 +140,12 @@
             </tr>
         </c:forEach>
         </tbody>
-
     </table>
+    <p>当前页为：${pageInfo.pageNumber}，共${pageInfo.totalPage}页，数据总条数：${pageInfo.total}</p>
+    <c:forEach begin="1" end="${pageInfo.totalPage}" varStatus="status">
+        <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);" class="btn btn-info">${status.count}</a></c:if>
+        <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}" class="btn btn-info">${status.count}</a></c:if>
+    </c:forEach>
     <div class="modal fade" id="edit_teacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

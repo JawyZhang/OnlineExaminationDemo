@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.pojo.PageInfo;
 import com.boot.pojo.Student;
 import com.boot.pojo.Teacher;
 import com.boot.service.StudentService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -36,6 +38,11 @@ public class LogInOutController {
                 session.setAttribute("user", isTeacher);
                 session.removeAttribute("tip");
                 if (isTeacher.getTeacher_id() == null) {
+                    ServletContext application = session.getServletContext();
+                    PageInfo pageInfo = new PageInfo();
+                    //默认每页显示10条数据
+                    pageInfo.setPageSize(10);
+                    application.setAttribute("pageInfo", pageInfo);
                     //工号为空的教师是管理员
                     return "admin_home";
                 }

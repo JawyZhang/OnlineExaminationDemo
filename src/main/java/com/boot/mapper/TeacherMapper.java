@@ -1,5 +1,6 @@
 package com.boot.mapper;
 
+import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -22,6 +23,22 @@ public interface TeacherMapper {
      */
     @Select("select * from teacher where teacher_id is not null")
     List<Teacher> selectAll();
+
+    /**
+     * 分页查询
+     *
+     * @return
+     */
+    @Select("select * from teacher where teacher_id is not null limit #{pageStart},#{pageSize}")
+    List<Teacher> selectAllByPage(PageInfo pageInfo);
+
+    /**
+     * 查询表格中所有的教师总个数
+     *
+     * @return
+     */
+    @Select("select count(*) from teacher where teacher_id is not null")
+    Integer selectCount();
 
     /**
      * 根据用户名和密码查询对应的教师信息
@@ -98,6 +115,7 @@ public interface TeacherMapper {
             ",teacher_id=#{teacher_id},is_admin=#{is_admin} where id=#{id}" +
             "</script>")
     Integer updateTeacherInfo(Teacher teacher);
+
     /**
      * 根据传入的教师信息更新教师用户名和密码信息
      *
