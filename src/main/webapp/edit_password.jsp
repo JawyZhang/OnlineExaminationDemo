@@ -41,7 +41,7 @@
                                placeholder="请输入用户名">
                     </div>
                     <div class="form-group">
-                        <label>密&nbsp;&nbsp;码</label>
+                        <label>密码</label>
                         <input type="password" class="form-control" name="password" placeholder="请输入密码">
                     </div>
                 </form>

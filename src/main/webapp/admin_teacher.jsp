@@ -78,7 +78,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="admin_home.jsp">控制面板</a></li>
-                <li class="active"><a href="#">教师管理</a></li>
+                <li class="active"><a href="/admin_teacher">教师管理</a></li>
                 <li><a href="admin_exam.jsp">考试清理</a></li>
                 <li><a href="admin_system.jsp">系统配置</a></li>
             </ul>
@@ -102,10 +102,8 @@
                <button class="btn btn-info btn-search">查找</button>
             </span>
     </div>
-    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
+    <HR  width="80%" color=#987cb9 SIZE=3>
 
-
-    <div calss="divider"></div>
     <table class="table table-striped " >
         <thread>
             <tr>
@@ -149,6 +147,11 @@
                             <label for="password">密&nbsp;&nbsp;码</label>
                             <input type="password" class="form-control" id="password" name="password"
                                    placeholder="请输入密码">
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">同时设为管理员
+                            </label>
                         </div>
                     </form>
                 </div>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员：教师管理、考试清理、系统配置页面初始化">
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="admin_exam设计ui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_exam.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_exam.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_system.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_system.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/edit_password.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/edit_password.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +152,8 @@
       <workItem from="1585812564345" duration="5048000" />
       <workItem from="1585837326374" duration="1861000" />
       <workItem from="1585922846968" duration="2928000" />
-      <workItem from="1586176810178" duration="8112000" />
+      <workItem from="1586176810178" duration="11899000" />
+      <workItem from="1586248769291" duration="4382000" />
     </task>
     <task id="LOCAL-00001" summary="修改登录界面，login.jsp">
       <created>1585722004370</created>
@@ -172,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585843493368</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="admin_teacher修改ui">
+      <created>1586185410551</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586185410551</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,6 +206,8 @@
     <MESSAGE value="修改登录界面，login.jsp" />
     <MESSAGE value="管理员控制面板设计，admin_home.jsp" />
     <MESSAGE value="管理员：教师管理、考试清理、系统配置页面初始化" />
-    <option name="LAST_COMMIT_MESSAGE" value="管理员：教师管理、考试清理、系统配置页面初始化" />
+    <MESSAGE value="admin_teacher修改ui" />
+    <MESSAGE value="admin_exam设计ui" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin_exam设计ui" />
   </component>
 </project>

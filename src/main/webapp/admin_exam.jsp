@@ -29,7 +29,12 @@
             -ms-background-size: cover;
         }
 
-
+        .refreshBox{
+            margin-top: 20px;
+        }
+        .searchBox{
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -56,7 +61,53 @@
     </div>
 </nav>
 <div class="container " id="row" >
+    <div class="col-md-3 col-md-offset-1">
 
+        <form role="form" class="refreshBox">
+            <div class="form-group col-md-3">
+                <button type="submit" class="refreshBtn btn btn-primary">刷新</button>
+            </div>
+            <div class="checkbox col-md-9">
+                <label>
+                    <input type="checkbox">仅显示已结束的考试
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <div class="searchBox input-group col-md-3 col-md-offset-8">
+        <input type="text" class="form-control"placeholder="请输入考试名称或考试编号" />
+        <span class="input-group-btn">
+               <button class="btn btn-info btn-search">查找</button>
+            </span>
+    </div>
+    <HR  width="80%" color=#987cb9 SIZE=3>
+
+    <table class="table table-striped " >
+        <thread>
+            <tr>
+                <th>考试编号</th>
+                <th>考试名称</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>是否结束</th>
+                <th>清理</th>
+            </tr>
+        </thread>
+        <tbody>
+        <c:forEach items="${exams}" var="exam">
+            <tr>
+                <td>${exam.id}</td>
+                <td>${exam.name}</td>
+                <td>${exam.beginTime}</td>
+                <td>${exam.finishTime}</td>
+                <td>${exam.isFinished}</td>
+                <td><button   href="#" class="button btn-primary">清理</button> </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+
+    </table>
     <jsp:include page="edit_password.jsp"/>
 </div>
 </body>
