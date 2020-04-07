@@ -18,11 +18,13 @@
         $(function () {
             $(".edit").click(function () {
                 let _this = $(this);
+                $("#id").val("");/*先置空，避免其他的操作导致id值被重复引用*/
                 $("#id").val(_this.attr("name"));
                 $("#username").val(_this.parent().prev().html());
+                $("#teacher_id").val(_this.parent().prev().prev().html());
             })
             $("#submit").click(function () {
-                if ($("#username").val().length != 0 && $("#password").val().length != 0) {
+                if ($("#username").val().length != 0 && $("#teacher_id").val().length != 0) {
                     if ($("#id").val().length != 0) {
                         $("#form")[0].action = "/update_teacher";
                         $("#form")[0].submit();
@@ -33,7 +35,7 @@
                         alert("新增成功。");
                     }
                 } else {
-                    alert("用户名或者密码不能为空！！！");
+                    alert("用户名或者工号不能为空！！！");
                     return false;
                 }
             })
@@ -54,16 +56,19 @@
             -moz-background-size: cover;
             -ms-background-size: cover;
         }
-        .table{
+
+        .table {
 
             background-color: ghostwhite;
 
         }
-        .addBtn{
+
+        .addBtn {
             margin-top: 20px;
 
         }
-        .searchBox{
+
+        .searchBox {
             margin-top: 20px;
         }
     </style>
@@ -78,7 +83,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="admin_home.jsp">控制面板</a></li>
-                <li class="active"><a href="/admin_teacher">教师管理</a></li>
+                <li class="active"><a href="#">教师管理</a></li>
                 <li><a href="admin_exam.jsp">考试清理</a></li>
                 <li><a href="admin_system.jsp">系统配置</a></li>
             </ul>
@@ -93,18 +98,20 @@
 </nav>
 <div class="container " id="row">
     <div class="col-md-3 col-md-offset-1">
-    <button class="addBtn btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
+        <button class="addBtn btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
     </div>
     <c:if test="${tip!=null}"><p>${tip}</p></c:if>
     <div class="searchBox input-group col-md-3 col-md-offset-8">
-        <input type="text" class="form-control"placeholder="请输入教师姓名或工号" />
-        <span class="input-group-btn">
-               <button class="btn btn-info btn-search">查找</button>
+        <form action="selectTeacher" method="post">
+            <input type="text" class="form-control" name="condition" placeholder="请输入教师姓名或工号"/>
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-info btn-search" value="查找"/>
             </span>
+        </form>
     </div>
-    <HR  width="80%" color=#987cb9 SIZE=3>
+    <HR width="80%" color=#987cb9 SIZE=3>
 
-    <table class="table table-striped " >
+    <table class="table table-striped ">
         <thread>
             <tr>
                 <th>工号</th>
@@ -117,12 +124,19 @@
         <tbody>
         <c:forEach items="${teachers}" var="teacher">
             <tr>
-                <td>${teacher.id}</td>
+                <td>${teacher.teacher_id}</td>
                 <td>${teacher.username}</td>
                 <td><a href="#" class="edit" name="${teacher.id}" data-toggle="modal" data-target="#edit_teacher">修改</a>
                 </td>
                 <td><a href="delete_teacher?id=${teacher.id}">删除</a></td>
-                <td><button   href="#" class="button btn-primary">设为管理员</button> </td>
+                <td>
+                    <c:if test="${teacher.is_admin==1}">
+                        <a href="/cancelAdmin?id=${teacher.id}" class="button btn-warning">取消管理员</a>
+                    </c:if>
+                    <c:if test="${teacher.is_admin==0}">
+                        <a href="/asAdmin?id=${teacher.id}" class="button btn-primary">设为管理员</a>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -134,23 +148,28 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">修改教师信息</h4>
+                    <h4 class="modal-title" id="myModalLabel">教师信息</h4>
                 </div>
                 <div class="modal-body">
                     <form method="post" id="form">
                         <input type="hidden" id="id" name="id"/>
                         <div class="form-group">
-                            <label for="username">用户名</label>
+                            <label for="username">教师姓名</label>
                             <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
                         </div>
                         <div class="form-group">
-                            <label for="password">密&nbsp;&nbsp;码</label>
+                            <label for="password">密码</label>
                             <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="请输入密码">
+                                   placeholder="请输入密码，新增时不写默认为123456">
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher_id">工 号</label>
+                            <input type="text" class="form-control" id="teacher_id" name="teacher_id"
+                                   placeholder="请输入工号">
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox">同时设为管理员
+                                <input type="checkbox" name="is_admin">同时设为管理员
                             </label>
                         </div>
                     </form>

@@ -2,13 +2,14 @@ package com.boot.pojo;
 
 /**
  * @Author Mango
- * @Date 2020-04-03 18:46
+ * @Date 2020-04-07 16:43
  */
-public class User {
+public class Teacher {
     private Integer id;
     private String username;
     private String password;
-    private Integer status;
+    private String teacher_id;
+    private String is_admin;
 
     public Integer getId() {
         return id;
@@ -34,21 +35,19 @@ public class User {
         this.password = password;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getTeacher_id() {
+        return teacher_id;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setTeacher_id(String teacher_id) {
+        this.teacher_id = teacher_id;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                '}';
+    public String getIs_admin() {
+        return is_admin;
+    }
+
+    public void setIs_admin(String is_admin) {
+        this.is_admin = is_admin;
     }
 }

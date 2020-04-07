@@ -1,7 +1,7 @@
 package com.boot.service.impl;
 
 import com.boot.mapper.TeacherMapper;
-import com.boot.pojo.User;
+import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,57 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
 
     @Override
-    public List<User> selectAllTeacher() {
-        return teacherMapper.selectAllTeacher();
+    public List<Teacher> selectAll() {
+        return teacherMapper.selectAll();
+    }
+
+    @Override
+    public Teacher selectByUsernameAndPassword(Teacher teacher) {
+        return teacherMapper.selectByUsernameAndPassword(teacher);
+    }
+
+    @Override
+    public Teacher selectByTeacherIdAndPassword(Teacher teacher) {
+        return teacherMapper.selectByTeacherIdAndPassword(teacher);
+    }
+
+    @Override
+    public List<Teacher> selectByUsername(String username) {
+        return teacherMapper.selectByUsername(username);
+    }
+
+    @Override
+    public List<Teacher> selectByTeacherId(String teacher_id) {
+        return teacherMapper.selectByTeacherId(teacher_id);
+    }
+
+    @Override
+    public Integer asAdmin(Integer id) {
+        return teacherMapper.asAdmin(id);
+    }
+
+    @Override
+    public Integer cancelAdmin(Integer id) {
+        return teacherMapper.cancelAdmin(id);
+    }
+
+    @Override
+    public Integer insertTeacher(Teacher teacher) {
+        return teacherMapper.insertTeacher(teacher);
+    }
+
+    @Override
+    public Integer updateTeacherInfo(Teacher teacher) {
+        return teacherMapper.updateTeacherInfo(teacher);
+    }
+
+    @Override
+    public Integer updateTeacher(Teacher teacher) {
+        return teacherMapper.updateTeacher(teacher);
     }
 
     @Override
     public Integer deleteTeacher(Integer id) {
         return teacherMapper.deleteTeacher(id);
-    }
-
-    @Override
-    public Integer updateTeacher(User user) {
-        return teacherMapper.updateTeacher(user);
-    }
-
-    @Override
-    public Integer insertTeacher(User user) {
-        return teacherMapper.insertTeacher(user);
     }
 }

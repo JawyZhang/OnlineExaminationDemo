@@ -47,7 +47,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li ><a href="admin_home.jsp">控制面板</a></li>
-                <li ><a href="admin_teacher.jsp">教师管理</a></li>
+                <li ><a href="/admin_teacher">教师管理</a></li>
                 <li class="active"><a href="admin_exam.jsp">考试清理</a></li>
                 <li><a href="admin_system.jsp">系统配置</a></li>
             </ul>
