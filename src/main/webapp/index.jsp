@@ -187,6 +187,11 @@
                             <label for="checkbox1"></label>
                         </div>
                         <span class="text">记住密码</span>
+                        <div class="main-checkbox">
+                            <input type="checkbox" value="None" id="checkbox2" name="check"/>
+                            <label for="checkbox2"></label>
+                        </div>
+                        <span class="text">管理员以教师身份登录</span>
                         <button type="submit" class="btn btn-default">登录</button>
                     </div>
                 </form>
