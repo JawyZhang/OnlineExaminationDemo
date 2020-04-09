@@ -14,11 +14,10 @@
 <script type="text/javascript">
     $(function () {
         $("#update_password").click(function () {
-            if ($("input[name='username']").val().length != 0 && $("input[name='password']").val().length != 0) {
+            if ($("input[name='change_username']").val().length != 0 && $("input[name='change_password']").val().length != 0) {
                 $("#form").submit();
-                alert("修改成功。");
             } else {
-                alert("用户名或者密码不能为空！！！");
+                alert("用户名或密码不能为空！！！");
                 return false;
             }
         })
@@ -30,19 +29,19 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">修改口令</h4>
+                <h4 class="modal-title" id="myModalLabel">修改用户名和口令</h4>
             </div>
             <div class="modal-body">
-                <form action="/update_teacher" method="post" id="form">
+                <form action="/update_teacher_password" method="post" id="form">
                     <input type="hidden" name="id" value="${user.id}"/>
                     <div class="form-group">
                         <label>用户名</label>
-                        <input type="text" class="form-control" name="username" value="${user.username}"
+                        <input type="text" class="form-control" name="change_username" value="${user.username}"
                                placeholder="请输入用户名">
                     </div>
                     <div class="form-group">
                         <label>密码</label>
-                        <input type="password" class="form-control" name="password" placeholder="请输入密码">
+                        <input type="password" class="form-control" name="change_password" placeholder="请输入密码">
                     </div>
                 </form>
             </div>

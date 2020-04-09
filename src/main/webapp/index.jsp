@@ -173,13 +173,12 @@
             <div class="col-md-offset-3 col-md-6">
                 <form class="form-horizontal" action="/login" method="post">
                     <span class="heading">用户登录</span>
+                    <center><span>${tip}</span></center>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inputEmail3" name="username" placeholder="用户名或电子邮件">
-                        <i class="fa fa-user">${tip}</i>
+                        <input type="text" class="form-control" id="inputEmail3" name="username" value="${user.username}" placeholder="用户名或电子邮件">
                     </div>
                     <div class="form-group help">
-                        <input type="password" class="form-control" id="inputPassword3" name="password" placeholder="密　码">
-                        <i class="fa fa-lock">${tip}</i>
+                        <input type="password" class="form-control" id="inputPassword3" name="password" value="${user.password}" placeholder="密　码">
                         <a href="#" class="fa fa-question-circle"></a>
                     </div>
                     <div class="form-group">

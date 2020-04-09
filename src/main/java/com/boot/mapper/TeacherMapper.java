@@ -64,7 +64,7 @@ public interface TeacherMapper {
      * @param username
      * @return
      */
-    @Select("select * from teacher where username=#{username}")
+    @Select("select * from teacher where username=#{username} and teacher_id is not null")
     List<Teacher> selectByUsername(String username);
 
     /**
@@ -73,7 +73,7 @@ public interface TeacherMapper {
      * @param teacher_id
      * @return
      */
-    @Select("select * from teacher where teacher_id=#{teacher_id}")
+    @Select("select * from teacher where teacher_id=#{teacher_id} and teacher_id is not null")
     List<Teacher> selectByTeacherId(String teacher_id);
 
     /**
@@ -82,7 +82,7 @@ public interface TeacherMapper {
      * @param id
      * @return
      */
-    @Update("update teacher set is_admin=1 where id=#{id}")
+    @Update("update teacher set is_admin='on' where id=#{id}")
     Integer asAdmin(Integer id);
 
     /**
@@ -91,7 +91,7 @@ public interface TeacherMapper {
      * @param id
      * @return
      */
-    @Update("update teacher set is_admin=0 where id=#{id}")
+    @Update("update teacher set is_admin='null' where id=#{id}")
     Integer cancelAdmin(Integer id);
 
     /**
@@ -111,7 +111,7 @@ public interface TeacherMapper {
      */
     @Update("<script>" +
             "update teacher set username=#{username}" +
-            "<if test='password != null'>,password=#{password}</if>" +
+            "<if test='password.length != 0'>,password=#{password}</if>" +
             ",teacher_id=#{teacher_id},is_admin=#{is_admin} where id=#{id}" +
             "</script>")
     Integer updateTeacherInfo(Teacher teacher);

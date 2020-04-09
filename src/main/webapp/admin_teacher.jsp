@@ -18,7 +18,6 @@
         $(function () {
             $(".edit").click(function () {
                 let _this = $(this);
-                $("#id").val("");/*先置空，避免其他的操作导致id值被重复引用*/
                 $("#id").val(_this.attr("name"));
                 $("#username").val(_this.parent().prev().html());
                 $("#teacher_id").val(_this.parent().prev().prev().html());
@@ -28,11 +27,9 @@
                     if ($("#id").val().length != 0) {
                         $("#form")[0].action = "/update_teacher";
                         $("#form")[0].submit();
-                        alert("修改成功。");
                     } else {
                         $("#form")[0].action = "/add_teacher";
                         $("#form")[0].submit();
-                        alert("新增成功。");
                     }
                 } else {
                     alert("用户名或者工号不能为空！！！");
@@ -100,25 +97,20 @@
     <div class="addBtn col-md-3 col-md-offset-1">
         <button class=" btn btn-primary" data-toggle="modal" data-target="#edit_teacher">新增教师</button>
     </div>
-    <c:if test="${tip!=null}"><p>${tip}</p></c:if>
     <div class="searchBox input-group col-md-3 col-md-offset-7">
-        <form action="selectTeacher" method="post">
+        <form action="/selectTeacher" method="post">
             <div class="form-group">
                 <div class="col-md-9">
-                    <input type="text" class="form-control " name="condition" placeholder="请输入教师姓名或工号"/>
+                    <input type="text" class="form-control " name="condition" value="${condition}" placeholder="请输入教师姓名或工号"/>
                 </div>
                 <div class="col-md-3">
                     <input type="submit" class="btn btn-info btn-search" value="查找"/>
                 </div>
-
-
-
             </div>
-
         </form>
     </div>
     <HR width="80%" color=#987cb9 SIZE=3>
-
+    <center><span>${tip}</span></center>
     <table class="table table-striped ">
         <thread>
             <tr>
@@ -136,12 +128,12 @@
                 <td>${teacher.username}</td>
                 <td><a href="#" class="edit" name="${teacher.id}" data-toggle="modal" data-target="#edit_teacher">修改</a>
                 </td>
-                <td><a href="delete_teacher?id=${teacher.id}">删除</a></td>
+                <td><a href="/delete_teacher?id=${teacher.id}">删除</a></td>
                 <td>
-                    <c:if test="${teacher.is_admin==1}">
+                    <c:if test="${teacher.is_admin=='on'}">
                         <a href="/cancelAdmin?id=${teacher.id}" class="button btn-warning">取消管理员</a>
                     </c:if>
-                    <c:if test="${teacher.is_admin==0}">
+                    <c:if test="${teacher.is_admin=='null'}">
                         <a href="/asAdmin?id=${teacher.id}" class="button btn-primary">设为管理员</a>
                     </c:if>
                 </td>
@@ -151,8 +143,10 @@
     </table>
     <p>当前页为：${pageInfo.pageNumber}，共${pageInfo.totalPage}页，数据总条数：${pageInfo.total}</p>
     <c:forEach begin="1" end="${pageInfo.totalPage}" varStatus="status">
-        <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);" class="btn btn-info">${status.count}</a></c:if>
-        <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}" class="btn btn-info">${status.count}</a></c:if>
+        <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);"
+                                                               class="btn btn-default">${status.count}</a></c:if>
+        <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}"
+                                                               class="btn btn-info">${status.count}</a></c:if>
     </c:forEach>
     <div class="modal fade" id="edit_teacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
