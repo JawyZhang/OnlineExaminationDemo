@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员：教师管理、考试清理、系统配置页面初始化">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Subject.java" afterDir="false" />
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_clearDatabase.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/student_head.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/student_main.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Teacher.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -191,7 +192,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586253575867</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="添加了学科，课程，班级（课程与学生对应关系），考试实体类">
+      <created>1586507665362</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586507665362</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +225,8 @@
     <MESSAGE value="admin_teacher修改ui" />
     <MESSAGE value="admin_exam设计ui" />
     <MESSAGE value="admin_system设计ui" />
-    <option name="LAST_COMMIT_MESSAGE" value="admin_system设计ui" />
+    <MESSAGE value="添加了学科，课程，班级（课程与学生对应关系），考试实体类" />
+    <MESSAGE value="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表" />
   </component>
 </project>
