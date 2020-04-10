@@ -74,7 +74,7 @@
             </h3>
         </div>
         <table class="table">
-            <th class="col-md-3">考试名称</th><th class="col-md-3">开始时间</th><th class="col-md-3">剩余时间</th><th>提交情况</th>
+            <th class="col-md-3">考试名称</th><th class="col-md-3">开始时间</th><th class="col-md-3">结束时间</th><th>提交情况</th>
 
         </table>
     </div>

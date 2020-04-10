@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="admin_teacher搜索框样式修改">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/student_exam.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/student_home.jsp" afterDir="false" />
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="student_exam页面修改">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/student_exam.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/student_exam.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -156,7 +154,8 @@
       <workItem from="1586269519909" duration="2945000" />
       <workItem from="1586438128288" duration="1681000" />
       <workItem from="1586441610988" duration="3033000" />
-      <workItem from="1586444912591" duration="1438000" />
+      <workItem from="1586444912591" duration="2272000" />
+      <workItem from="1586508319955" duration="4414000" />
     </task>
     <task id="LOCAL-00001" summary="修改登录界面，login.jsp">
       <created>1585722004370</created>
@@ -200,7 +199,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586272437517</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="student_home,student_exam初始设计，student_exam有严重bug：图片加载不出">
+      <created>1586447149722</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586447149722</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +233,8 @@
     <MESSAGE value="admin_exam设计ui" />
     <MESSAGE value="admin_system设计ui" />
     <MESSAGE value="admin_teacher搜索框样式修改" />
-    <option name="LAST_COMMIT_MESSAGE" value="admin_teacher搜索框样式修改" />
+    <MESSAGE value="student_home,student_exam初始设计，student_exam有严重bug：图片加载不出" />
+    <MESSAGE value="student_exam页面修改" />
+    <option name="LAST_COMMIT_MESSAGE" value="student_exam页面修改" />
   </component>
 </project>
