@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" afterDir="false" />
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="修改学生实体类，添加班级List属性与班级实体关联&#10;修改教师实体类，添加课程List属性与课程实体关联">
       <change afterPath="$PROJECT_DIR$/src/main/webapp/admin_clearDatabase.jsp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/webapp/student_head.jsp" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/webapp/student_main.jsp" afterDir="false" />
@@ -98,7 +97,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.OnlineExaminationDemoApplicationTests.contextLoads">
+  <component name="RunManager" selected="Application.OnlineExaminationDemoApplication">
+    <configuration name="OnlineExaminationDemoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.boot.OnlineExaminationDemoApplication" />
+      <module name="online-examination-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="OnlineExaminationDemoApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="online-examination-demo" />
       <extension name="coverage">
@@ -125,9 +137,11 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.OnlineExaminationDemoApplicationTests.contextLoads" />
+      <item itemvalue="Application.OnlineExaminationDemoApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OnlineExaminationDemoApplication" />
         <item itemvalue="JUnit.OnlineExaminationDemoApplicationTests.contextLoads" />
       </list>
     </recent_temporary>
@@ -199,7 +213,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586507665362</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="添加分数实体类">
+      <created>1586508423157</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586508423157</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +248,8 @@
     <MESSAGE value="admin_system设计ui" />
     <MESSAGE value="添加了学科，课程，班级（课程与学生对应关系），考试实体类" />
     <MESSAGE value="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改学生实体类和教师实体类，分别添加学生班级表和教师课程表" />
+    <MESSAGE value="添加分数实体类" />
+    <MESSAGE value="修改学生实体类，添加班级List属性与班级实体关联&#10;修改教师实体类，添加课程List属性与课程实体关联" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改学生实体类，添加班级List属性与班级实体关联&#10;修改教师实体类，添加课程List属性与课程实体关联" />
   </component>
 </project>
