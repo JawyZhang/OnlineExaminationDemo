@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="admin_system设计ui">
+    <list default="true" id="87d9306f-b8d3-4522-89da-5e1f61011abc" name="默认更改列表" comment="管理员：教师管理、考试清理、系统配置页面初始化">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Subject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,8 +21,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -93,7 +97,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.OnlineExaminationDemoApplication">
+  <component name="RunManager" selected="JUnit.OnlineExaminationDemoApplicationTests.contextLoads">
     <configuration name="OnlineExaminationDemoApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="online-examination-demo" />
       <extension name="coverage">
@@ -120,7 +124,6 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.OnlineExaminationDemoApplicationTests.contextLoads" />
-      <item itemvalue="Spring Boot.OnlineExaminationDemoApplication" />
     </list>
     <recent_temporary>
       <list>
