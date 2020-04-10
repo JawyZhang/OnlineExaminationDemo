@@ -1,5 +1,7 @@
 package com.boot.pojo;
 
+import java.util.List;
+
 /**
  * @Author Mango
  * @Date 2020-04-07 16:42
@@ -8,6 +10,7 @@ public class Student {
     private Integer id;
     private String username;
     private String password;
+    private List<Class> classes;
 
     public Integer getId() {
         return id;
@@ -31,5 +34,13 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Class> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<Class> classes) {
+        this.classes = classes;
     }
 }

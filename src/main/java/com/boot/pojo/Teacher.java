@@ -1,5 +1,7 @@
 package com.boot.pojo;
 
+import java.util.List;
+
 /**
  * @Author Mango
  * @Date 2020-04-07 16:43
@@ -10,6 +12,7 @@ public class Teacher {
     private String password;
     private String teacher_id;
     private String is_admin;
+    private List<Course> courses;
 
     public Integer getId() {
         return id;
@@ -49,5 +52,13 @@ public class Teacher {
 
     public void setIs_admin(String is_admin) {
         this.is_admin = is_admin;
+    }
+
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }
