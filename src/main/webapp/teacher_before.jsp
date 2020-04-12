@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
-  Date: 2020/4/9
-  Time: 22:42
+  Date: 2020/4/12
+  Time: 20:58
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,48 +15,60 @@
     <style>
         body {
             padding-top: 50px;
+            background: url("img/background2.jpg")  no-repeat center 0px;
             background-size: cover;
 
-            background: url("img/background2.jpg") no-repeat fixed center 0;
+
+
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             -webkit-background-size: cover;
             -o-background-size: cover;
             -moz-background-size: cover;
             -ms-background-size: cover;
         }
 
-        .myPanel{
-            margin-top: 20px;
+        .detailBox {
+            width: 150px;
+            height: 150px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .father {
+            padding: 10px;
+            background: #fff;
+            margin-top: 100px;
+            margin-left: auto;
+            margin-right: 60px;
+            width: 250px;
+            height: 300px;
             border-radius: 15px;
-            background-color: white;
-            height:340px;
-            width: 450px;
-            margin-left: auto ;
-            margin-right: auto ;
-        }
-
-        .downloadBox{
-            margin-left: auto ;
-            margin-right: auto ;
-            width: 100%;
-            height: 150px;
             text-align: center;
-
+            display: inline-block;
+            vertical-align: center;
         }
-        .uploadBox{
-            margin-left: auto ;
-            margin-right: auto ;
+
+        .item {
+            padding: 20px;
             width: 100%;
-            height: 150px;
-            text-align: center;
+            height: 100%;
+            border: solid 1px black;
+            margin-right: auto;
+            margin-left: auto;
+        }
 
-        }
-        .image{
-            width: 30px;
-            height: 30px;
-            margin-top: 60px;
-        }
         .btn{
-            margin-top: 60px;
+            margin-top: 20px;
+        }
+        .myPanel {
+            vertical-align: center;
+            margin-right: auto;
+            margin-left: auto;
+            text-align: center;
+            width: 1200px;
+            height: 100%;
         }
     </style>
 </head>
@@ -68,7 +80,11 @@
         </div>
 
         <div class="collapse navbar-collapse">
-
+            <ul class="nav navbar-nav">
+                <li class="active" ><a href="teacher_before.jsp">考前操作</a></li>
+                <li><a href="teacher_within.jsp">考中管理</a></li>
+                <li><a href="teacher_after.jsp">考后操作</a></li>
+            </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
                 <li><a href="#" data-toggle="modal" data-target="#edit_password">修改口令</a></li>
@@ -79,22 +95,8 @@
     </div>
 </nav>
 <div class="container " id="row" style="margin: auto">
-    <div class="row">
-        <div class="myPanel">
-            <a href="student_home.jsp" style="margin: 10px">    返回</a>
 
-            <div class="downloadBox">
-                <img src="img/download.png" class=" img-rounded  image">
-                <button class="btn  btn-primary">下载试卷</button>
-            </div>
-            <HR width="80%" color=#987cb9 SIZE=3 >
-            <div class="uploadBox">
-                <img src="img/upload.png" class=" img-rounded  image">
-                <button class="btn  btn-primary">上传试卷</button>
-            </div>
-        </div>
-    </div>
-<jsp:include page="edit_password.jsp"/>
+    <jsp:include page="edit_password.jsp"/>
 </div>
 </body>
 </html>
