@@ -28,26 +28,26 @@ public class LogInOutController {
         if (isStudent != null) {
             session.setAttribute("user", isStudent);
             //该页面暂时不存在
-            return "学生页";
+            return "student_home";
         } else {
             Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);
             if (isTeacher != null) {
                 session.setAttribute("user", isTeacher);
-                if (isTeacher.getTeacher_id() == null) {
+                if (isTeacher.getIs_admin().equals("on")) {
                     //默认每页显示10条数据
                     session.setAttribute("systemPageSize",10);
                     //工号为空的教师是管理员
                     return "admin_home";
                 }
                 //通过用户名和密码的方式查询到教师信息
-                return "教师页";
+                return "teacher_home";
             } else {
                 teacher.setTeacher_id(teacher.getUsername());
                 isTeacher = teacherServiceImpl.selectByTeacherIdAndPassword(teacher);
                 if (isTeacher != null) {
                     session.setAttribute("user", isTeacher);
                     //通过工号方式查询到教师信息
-                    return "教师页";
+                    return "teacher_home";
                 }
             }
         }
