@@ -3,7 +3,137 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boot.mapper.Mapper">
+    <resultMap type="student" id="StudentResultMap">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+
+        <!-- 一个用户对应有多个订单信息 -->
+        <collection property="courses" javaType="java.util.ArrayList" ofType="com.boot.pojo.Course">
+            <id column="course_id" property="course_id"/>
+            <result column="course_name" property="course_name"/>
+
+            <association property="subject" javaType="com.boot.pojo.Subject">
+                <id column="subject_id" property="subject_id"/>
+                <result  column="subject_name" property="subject_name"/>
+
+            </association>
+
+            <!-- 一个课程订单有多个商品信息 -->
+            <association property="teacher" javaType="com.boot.pojo.Teacher">
+                <result  column="username" property="username"/>
+                <result  column="teacher_id" property="teacher_id"/>
+
+            </association>
+
+            <collection property="exams" javaType="java.util.ArrayList" ofType="com.boot.pojo.Exam">
+                <result  column="exam_name" property="exam_name"/>
+                <result  column="start_time" property="start_time"/>
+                <result  column="finish_time" property="finish_time"/>
+                <result  column="test_page" property="test_page"/>
+
+                <association property="score" javaType="com.boot.pojo.Score">
+                    <result  column="answer" property="answer"/>
+                    <result  column="score" property="score"/>
+
+                </association>
+
+            </collection>
+
+        </collection>
+
+    </resultMap>
+
+    <resultMap type="com.boot.pojo.Teacher" id="TeacherResultMap">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="teacher_id" property="teacher_id"/>
+        <result column="is_admin" property="is_admin"/>
+
+        <!-- 一个用户对应有多个订单信息 -->
+        <collection property="courses" javaType="java.util.ArrayList" ofType="com.boot.pojo.Course">
+            <id column="course_id" property="course_id"/>
+            <result column="course_name" property="class_name"/>
+            <result column="is_finished" property="isFinished"/>
+
+            <!-- 一个课程订单有多个商品信息 -->
+            <association property="subject" javaType="com.boot.pojo.Subject">
+                <id column="subject_id" property="subject_id"/>
+                <result  column="subject_name" property="subject_name"/>
+
+            </association>
+
+            <collection property="students" javaType="java.util.ArrayList" ofType="com.boot.pojo.Student">
+                <id column="id" property="id"/>
+                <result column="username" property="username"/>
+
+            </collection>
+
+            <collection property="exams" javaType="java.util.ArrayList" ofType="com.boot.pojo.Exam">
+                <result  column="exam_name" property="exam_name"/>
+                <result  column="start_time" property="start_time"/>
+                <result  column="finish_time" property="finish_time"/>
+                <result  column="test_page" property="test_page"/>
+
+                <collection property="scores" javaType="java.util.ArrayList" ofType="com.boot.pojo.Score">
+                    <result  column="answer" property="answer"/>
+                    <result  column="score" property="score"/>
+
+                    <association property="student" javaType="com.boot.pojo.Student">
+                        <id column="id" property="id"/>
+                        <result column="username" property="username"/>
+
+                    </association>
+
+                </collection>
+
+            </collection>
+
+        </collection>
+
+    </resultMap>
+
+    <resultMap type="com.boot.pojo.Teacher" id="TeacherTestMap">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="teacher_id" property="teacher_id"/>
+        <result column="is_admin" property="is_admin"/>
+
+    </resultMap>
+
     <select id="testSelectAllTeacher" resultType="teacher">
         select * from teacher
+    </select>
+
+    <select id="testSelectATeacher" resultMap="TeacherTestMap">
+        select * from teacher where username = 'teacher1'
+    </select>
+
+    <select id="selectStudentAllInfo" resultMap="StudentResultMap" parameterType="student">
+        select student.*, courses.course_id, courses.course_name, subjects.subject_id, subjects.subject_name, teacher.teacher_id, teacher.username, exams.exam_name, exams.start_time, exams.finish_time, exams.test_page, scores.answer, scores.score
+        from student
+        left join classes on classes.student_id = student.id
+        left join courses on courses.course_id = classes.course_id
+        left join subjects on subjects.subject_id = courses.subject_id
+        left join teacher on teacher.teacher_id = courses.teacher_id
+        left join exams on exams.course_id = courses.course_id
+        left join scores on scores.student_id = student.id and  exams.exam_id = scores.exam_id
+        where student.id = #{id}
+        order by courses.course_id
+    </select>
+
+    <select id="selectTeacherAllInfo" resultMap="TeacherResultMap" parameterType="com.boot.pojo.Teacher">
+        select teacher.*, courses.course_id, courses.course_name, courses.isfinished, subjects.subject_id, subjects.subject_name, exams.exam_name, exams.start_time, exams.finish_time, exams.test_page, scores.answer, scores.score, student.id, student.username
+        from teacher
+        left join courses on courses.teacher_id = teacher.teacher_id
+        left join subjects on subjects.subject_id = courses.subject_id
+        left join classes on classes.course_id = courses.course_id
+        left join student on student.id = classes.student_id
+        left join exams on exams.course_id = courses.course_id
+        left join scores on scores.student_id = student.id and  scores.exam_id = exams.exam_id
+        where teacher.id = #{id}
+        order by courses.course_id
     </select>
 </mapper>

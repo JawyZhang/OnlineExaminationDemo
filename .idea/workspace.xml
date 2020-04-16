@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c3d94424-be71-4e3c-aa77-e84766b6b516" name="Default Changelist" comment="teacher_home初始化">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/teacher_after.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/teacher_before.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/teacher_home.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/teacher_within.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/test.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/student_exam.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/student_exam.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/controller/TeacherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/StudentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/StudentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/TeacherMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/TeacherMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/service/impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/service/impl/StudentServiceImpl.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,7 +65,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1585041777339" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -75,15 +83,16 @@
     <property name="typescript.add.unambiguous.imports.on.the.fly" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\resources\templates" />
-      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp\bootstrap" />
-      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp\js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\创新实践\OnlineExaminationDemo\src\main\webapp\img" />
       <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp\bootstrap\js" />
       <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\OnlineExaminationDemo\src\main\java\com\boot\pojo" />
+      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\resources\templates" />
+      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp\bootstrap" />
+      <recent name="C:\Users\16422\Desktop\online-examination-demo\src\main\webapp\js" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -98,7 +107,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.OnlineExaminationDemoApplication">
+  <component name="RunManager" selected="Application.OnlineExaminationDemoApplication">
+    <configuration name="OnlineExaminationDemoApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.boot.OnlineExaminationDemoApplication" />
+      <module name="online-examination-demo" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="OnlineExaminationDemoApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="online-examination-demo" />
       <extension name="coverage">
@@ -124,11 +146,12 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.OnlineExaminationDemoApplication" />
       <item itemvalue="JUnit.OnlineExaminationDemoApplicationTests.contextLoads" />
-      <item itemvalue="Spring Boot.OnlineExaminationDemoApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.OnlineExaminationDemoApplication" />
         <item itemvalue="JUnit.OnlineExaminationDemoApplicationTests.contextLoads" />
       </list>
     </recent_temporary>
@@ -257,5 +280,10 @@
     <MESSAGE value="student_exam页面修改" />
     <MESSAGE value="teacher_home初始化" />
     <option name="LAST_COMMIT_MESSAGE" value="teacher_home初始化" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/OnlineExaminationDemo$OnlineExaminationDemoApplication.ic" NAME="OnlineExaminationDemoApplication Coverage Results" MODIFIED="1587028521489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.boot.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -1,16 +1,15 @@
 package com.boot.pojo;
 
 public class Class {
-    private Class theClass;
+    private Course theCourse;
     private Student student;
-    private int score;
 
-    public Class getTheClass() {
-        return theClass;
+    public Course getTheClass() {
+        return theCourse;
     }
 
-    public void setTheClass(Class theClass) {
-        this.theClass = theClass;
+    public void setTheClass(Course theClass) {
+        this.theCourse = theCourse;
     }
 
     public Student getStudent() {
@@ -19,13 +18,5 @@ public class Class {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 }

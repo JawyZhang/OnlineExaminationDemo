@@ -3,6 +3,7 @@ package com.boot.pojo;
 public class Score {
     private Exam exam;
     private Student student;
+    private String answer;
     private int score;
 
     public Exam getExam() {
@@ -19,6 +20,14 @@ public class Score {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public int getScore() {

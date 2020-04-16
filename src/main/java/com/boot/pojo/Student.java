@@ -10,7 +10,7 @@ public class Student {
     private Integer id;
     private String username;
     private String password;
-    private List<Class> classes;
+    private List<Course> courses;    //学生查询所有课程
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class Student {
         this.password = password;
     }
 
-    public List<Class> getClasses() {
-        return classes;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setClasses(List<Class> classes) {
-        this.classes = classes;
+    public void setCourses(List<Course> course) {
+        this.courses = course;
     }
 }

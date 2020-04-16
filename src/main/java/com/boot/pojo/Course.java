@@ -1,10 +1,14 @@
 package com.boot.pojo;
 
+import java.util.List;
+
 public class Course {
     private int course_id;
     private String course_name;
     private Subject subject;
     private Teacher teacher;
+    private List<Student> students; //教师查询课程学生
+    private List<Exam> exams;
     private int isFinished;
 
     public int getCourse_id() {
@@ -37,6 +41,22 @@ public class Course {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Exam> getExams() {
+        return exams;
+    }
+
+    public void setExams(List<Exam> exams) {
+        this.exams = exams;
     }
 
     public int getIsFinished() {

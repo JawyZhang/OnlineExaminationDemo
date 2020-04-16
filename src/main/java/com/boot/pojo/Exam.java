@@ -1,5 +1,7 @@
 package com.boot.pojo;
 
+import java.util.ArrayList;
+
 public class Exam {
     private int exam_id;
     private String exam_name;
@@ -8,6 +10,9 @@ public class Exam {
     private String finish_time;
     private int can_delete;
     private String test_page;
+
+    private Score score;    //学生查询自己成绩
+    private ArrayList<Score> scores;    //教师查询所有学生成绩
 
     public int getExam_id() {
         return exam_id;
@@ -63,5 +68,21 @@ public class Exam {
 
     public void setTest_page(String test_page) {
         this.test_page = test_page;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+    public ArrayList<Score> getScores() {
+        return scores;
+    }
+
+    public void setScores(ArrayList<Score> scores) {
+        this.scores = scores;
     }
 }
