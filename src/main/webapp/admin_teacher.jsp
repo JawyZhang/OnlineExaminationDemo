@@ -36,6 +36,63 @@
                     return false;
                 }
             })
+            $("#selectedDelete").click(function(){
+                var postModel=[];
+                $("input[class='select']").each(function(i){
+                    if($(this).is(':checked')){
+                        postModel.push($(this).attr('name'));
+                    }
+                })
+                $.ajax({
+                    type: 'POST',
+                    url: "/deleteAdminGroup",
+                    data: { 'id': postModel},
+                    success: function(rs){
+                        window.location.reload();
+                    },
+                    error: function(err){
+                        alert(err);
+                    },
+                });
+            })
+            $("#selectedAsAdmin").click(function(){
+                var postModel=[];
+                $("input[class='select']").each(function(i){
+                    if($(this).is(':checked')){
+                        postModel.push($(this).attr('name'));
+                    }
+                })
+                $.ajax({
+                    type: 'POST',
+                    url: "/asAdminGroup",
+                    data: { 'id': postModel},
+                    success: function(rs){
+                        window.location.reload();
+                    },
+                    error: function(err){
+                        alert(err);
+                    },
+                });
+            })
+            $("#selectedCancelAdmin").click(function(){
+                var postModel=[];
+                $("input[class='select']").each(function(i){
+                    if($(this).is(':checked')){
+                        postModel.push($(this).attr('name'));
+                    }
+                })
+                $.ajax({
+                    type: 'POST',
+                    url: "/cancelAdminGroup",
+                    data: { 'id': postModel},
+                    success: function(rs){
+                        window.location.reload();
+                    },
+                    error: function(err){
+                        alert(err);
+                    },
+                });
+            })
         })
     </script>
     <style>
@@ -114,6 +171,7 @@
     <table class="table table-striped ">
         <thread>
             <tr>
+                <th>选择</th>
                 <th>工号</th>
                 <th>姓名</th>
                 <th>修改信息</th>
@@ -124,6 +182,7 @@
         <tbody>
         <c:forEach items="${pageInfo.list}" var="teacher">
             <tr>
+                <td><input type="checkbox" class="select" name="${teacher.id}"/></td>
                 <td>${teacher.teacher_id}</td>
                 <td>${teacher.username}</td>
                 <td><a href="#" class="edit" name="${teacher.id}" data-toggle="modal" data-target="#edit_teacher">修改</a>
@@ -148,6 +207,9 @@
         <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}"
                                                                class="btn btn-info">${status.count}</a></c:if>
     </c:forEach>
+    <input id="selectedDelete" type="submit" class="btn btn-info btn-search" value="删除选中教师"/>
+    <input id="selectedAsAdmin" type="submit" class="btn btn-info btn-search" value="一键设置管理员"/>
+    <input id="selectedCancelAdmin" type="submit" class="btn btn-info btn-search" value="一键撤销管理员"/>
     <div class="modal fade" id="edit_teacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

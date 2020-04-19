@@ -1,5 +1,8 @@
 package com.boot.controller;
 
+import com.boot.mapper.Mapper;
+import com.boot.mapper.StudentMapper;
+import com.boot.mapper.TeacherMapper;
 import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +29,12 @@ import java.util.List;
 public class TeacherController {
     @Autowired
     private TeacherService teacherServiceImpl;
+    @Autowired
+    private StudentMapper studentMapper;
+    @Autowired
+    private TeacherMapper teacherMapper;
+    @Autowired
+    private Mapper mapper;
 
     @RequestMapping("admin_teacher")
     public String admin_teacher(Model model, HttpSession session, @RequestParam(defaultValue = "1") Integer pageNumber, @RequestParam(defaultValue = "") String tip) {
@@ -129,6 +140,48 @@ public class TeacherController {
             tip = UrlCodeUtils.getUrlString("取消管理员成功");
         } else {
             tip = UrlCodeUtils.getUrlString("取消管理员失败");
+        }
+        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
+    }
+
+    @RequestMapping("asAdminGroup")
+    public String asAdminGroup(@RequestParam(value="id[]") Integer[] ids, Model model, Integer id, HttpSession session) {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String tip = "";
+        for(int i=0; i<ids.length; i++){
+            if (teacherServiceImpl.asAdmin(ids[i]) > 0) {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员成功");
+            } else {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员失败");
+            }
+        }
+        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
+    }
+
+    @RequestMapping("cancelAdminGroup")
+    public String cancelAdminGroup(@RequestParam(value="id[]") Integer[] ids, Model model, Integer id, HttpSession session) {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String tip = "";
+        for(int i=0; i<ids.length; i++){
+            if (teacherServiceImpl.cancelAdmin(ids[i]) > 0) {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员成功");
+            } else {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员失败");
+            }
+        }
+        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
+    }
+
+    @RequestMapping("deleteAdminGroup")
+    public String deleteAdminGroup(@RequestParam(value="id[]") Integer[] ids, Model model, Integer id, HttpSession session) {
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String tip = "";
+        for(int i=0; i<ids.length; i++){
+            if (teacherServiceImpl.deleteTeacher(ids[i]) > 0) {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员成功");
+            } else {
+                tip += UrlCodeUtils.getUrlString(ids[i]+"设置管理员失败");
+            }
         }
         return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
     }

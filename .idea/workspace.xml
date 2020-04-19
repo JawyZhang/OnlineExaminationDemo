@@ -5,17 +5,11 @@
       <change afterPath="$PROJECT_DIR$/src/main/webapp/test.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/controller/TeacherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/controller/TeacherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/Mapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/StudentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/StudentMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/mapper/TeacherMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/mapper/TeacherMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Class.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Exam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Score.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/pojo/Student.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/service/StudentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/boot/service/impl/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/boot/service/impl/StudentServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/admin_teacher.jsp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +59,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1585041777339" />
     <property name="editor.config.ad.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../学习/创新2上机考试管理系统/OnlineExaminationDemo" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -249,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586531219680</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="实现教师和学生所有信息的多对多关联数据表查询，查询方法在Mapper类中可调用">
+      <created>1587034692937</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587034692938</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +280,8 @@
     <MESSAGE value="student_home,student_exam初始设计，student_exam有严重bug：图片加载不出" />
     <MESSAGE value="student_exam页面修改" />
     <MESSAGE value="teacher_home初始化" />
-    <option name="LAST_COMMIT_MESSAGE" value="teacher_home初始化" />
+    <MESSAGE value="实现教师和学生所有信息的多对多关联数据表查询，查询方法在Mapper类中可调用" />
+    <option name="LAST_COMMIT_MESSAGE" value="实现教师和学生所有信息的多对多关联数据表查询，查询方法在Mapper类中可调用" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/OnlineExaminationDemo$OnlineExaminationDemoApplication.ic" NAME="OnlineExaminationDemoApplication Coverage Results" MODIFIED="1587028521489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
