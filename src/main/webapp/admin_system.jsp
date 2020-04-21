@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
@@ -69,39 +70,39 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >后台任务时间</label>
                         <div class="col-md-7">
-                            <input class="form-control"  type="number" placeholder="指定扫描考试信息的间隔时间，单位：分钟"/>
+                            <input class="form-control"  type="number" name="taskTime" value="${system.taskTime}" placeholder="指定扫描考试信息的间隔时间，单位：分钟"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label" >分页查询记录条数</label>
                         <div class="col-md-7">
-                            <input class="form-control"  type="number" name="pageSize" value="${system.pageSize}" placeholder="指定分页查询时每页显示记录的默认值（查询页面中可以更改）"/>
+                            <input class="form-control"  type="number" name="systemPageSize" value="${system.systemPageSize}" placeholder="指定分页查询时每页显示记录的默认值（查询页面中可以更改）"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" >手动开启考试时间阈值</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="number" placeholder="指定手工开启考试允许的最大提前量，单位：分钟"/>
+                            <input class="form-control" type="number" name="examBeginTime" value="${system.examBeginTime}" placeholder="指定手工开启考试允许的最大提前量，单位：分钟"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" >上传文件字节数下限</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="number" placeholder="指定上传文件的大小下限（字节），低于此值发出警告"/>
+                            <input class="form-control" type="number" name="minFileSize" value="${system.minFileSize}" placeholder="指定上传文件的大小下限（字节），低于此值发出警告"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" >上传文件字节数上限</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="number" placeholder="指定上传文件的大小上限（字节），高于此值发出警告"/>
+                            <input class="form-control" type="number" name="maxFileSize" value="${system.maxFileSize}" placeholder="指定上传文件的大小上限（字节），高于此值发出警告"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" ></label>
                         <div class="col-md-7">
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="lock" name="city" id="lock"/>教师可以清理和删除考试
+                                <input type="checkbox" value="lock" name="teacherClear"<c:if test="${system.teacherClear==1}"> checked</c:if> id="lock"/>教师可以清理和删除考试
                             </label>
                         </div>
                     </div>
