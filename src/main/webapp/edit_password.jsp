@@ -32,8 +32,9 @@
                 <h4 class="modal-title" id="myModalLabel">修改用户名和口令</h4>
             </div>
             <div class="modal-body">
-                <form action="/update_teacher_password" method="post" id="form">
+                <form action="/update_password" method="post" id="form">
                     <input type="hidden" name="id" value="${user.id}"/>
+                    <input type="hidden" name="isStudent" value="${isStudent}">
                     <div class="form-group">
                         <label>用户名</label>
                         <input type="text" class="form-control" name="change_username" value="${user.username}"

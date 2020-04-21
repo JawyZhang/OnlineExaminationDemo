@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @Author Mango
- * @Date 2020-04-03 18:43
+ * @Date 2020-04-21 18:20
  */
 @Controller
-public class TeacherController {
-    @RequestMapping("teacher_home")
-    public String teacher_home(Model model, String tip) {
+public class StudentController {
+    @RequestMapping("student_home")
+    public String student_home(Model model, String tip) {
         model.addAttribute("tip", tip);
-        return "teacher_home";
+        return "student_home";
     }
 }

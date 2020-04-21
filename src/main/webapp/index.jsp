@@ -156,6 +156,14 @@
         }
 
     </style>
+    <script type="text/javascript">
+        $(function(){
+            let cookies = document.cookie.split("; ");
+            alert(cookies);
+            $("input[name='username']").val(cookies[0].split("=")[1]);
+            $("input[name='password']").val(cookies[1].split("=")[1]);
+        })
+    </script>
 </head>
 <body >
     <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
@@ -175,20 +183,19 @@
                     <span class="heading">用户登录</span>
                     <center><span>${tip}</span></center>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inputEmail3" name="username" value="${user.username}" placeholder="用户名或电子邮件">
+                        <input type="text" class="form-control" id="inputEmail3" name="username" required value="${user.username}" placeholder="用户名或电子邮件">
                     </div>
                     <div class="form-group help">
-                        <input type="password" class="form-control" id="inputPassword3" name="password" value="${user.password}" placeholder="密　码">
-                        <a href="#" class="fa fa-question-circle"></a>
+                        <input type="password" class="form-control" id="inputPassword3" name="password" required value="${user.password}" placeholder="密　码">
                     </div>
                     <div class="form-group">
                         <div class="main-checkbox">
-                            <input type="checkbox" value="None" id="checkbox1" name="check"/>
+                            <input type="checkbox" value="None" id="checkbox1" name="rememberPassword"/>
                             <label for="checkbox1"></label>
                         </div>
                         <span class="text">记住密码</span>
                         <div class="main-checkbox">
-                            <input type="checkbox" value="None" id="checkbox2" name="check"/>
+                            <input type="checkbox" value="None" id="checkbox2" name="asTeacher"/>
                             <label for="checkbox2"></label>
                         </div>
                         <span class="text">管理员以教师身份登录</span>

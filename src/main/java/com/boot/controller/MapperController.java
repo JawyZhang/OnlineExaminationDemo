@@ -20,7 +20,8 @@ public class MapperController {
     @RequestMapping("testMapper")
     public void testMapper() {
         List<Teacher> teachers = mapperServiceImpl.testSelectAllTeacher();
-        for (Teacher teacher : teachers)
+        for (Teacher teacher : teachers) {
             System.out.println(teacher);
+        }
     }
 }
