@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -23,21 +25,39 @@ public class LogInOutController {
     private TeacherService teacherServiceImpl;
 
     @RequestMapping("/login")
-    private String login(Model model, Student student, Teacher teacher, HttpSession session) {
+    private String login(Model model, HttpServletResponse response, Student student, Teacher teacher, HttpSession session, String rememberPassword, String asTeacher) {
+        //rememberPassword和asTeacher勾选为None，未勾选为null
         Student isStudent = studentServiceImpl.selectByUsernameAndPassword(student);
         if (isStudent != null) {
             session.setAttribute("user", isStudent);
-            //该页面暂时不存在
+            //该属性用于修改密码时判断修改学生表还是老师表
+            session.setAttribute("isStudent", "true");
+            if ("None".equals(rememberPassword)) {
+                rememberPassword(response, student.getUsername(), student.getPassword());
+            } else {
+                rememberPassword(response, "", "");
+            }
             return "student_home";
         } else {
             Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);
             if (isTeacher != null) {
                 session.setAttribute("user", isTeacher);
-                if (isTeacher.getIs_admin().equals("on")) {
-                    //默认每页显示10条数据
-                    session.setAttribute("systemPageSize",10);
-                    //工号为空的教师是管理员
+                //如果ID为1并且不作为教师登录则跳转到管理员界面
+                if (isTeacher.getId() == 1 && asTeacher == null) {
+                    //给管理员分页显示设置默认默认分页大小为每页10条数据
+                    session.setAttribute("systemPageSize", 10);
+                    //ID为1的教师是管理员
+                    if ("None".equals(rememberPassword)) {
+                        rememberPassword(response, teacher.getUsername(), teacher.getPassword());
+                    } else {
+                        rememberPassword(response, "", "");
+                    }
                     return "admin_home";
+                }
+                if ("None".equals(rememberPassword)) {
+                    rememberPassword(response, teacher.getUsername(), teacher.getPassword());
+                } else {
+                    rememberPassword(response, "", "");
                 }
                 //通过用户名和密码的方式查询到教师信息
                 return "teacher_home";
@@ -46,6 +66,11 @@ public class LogInOutController {
                 isTeacher = teacherServiceImpl.selectByTeacherIdAndPassword(teacher);
                 if (isTeacher != null) {
                     session.setAttribute("user", isTeacher);
+                    if ("None".equals(rememberPassword)) {
+                        rememberPassword(response, teacher.getUsername(), teacher.getPassword());
+                    } else {
+                        rememberPassword(response, "", "");
+                    }
                     //通过工号方式查询到教师信息
                     return "teacher_home";
                 }
@@ -57,9 +82,16 @@ public class LogInOutController {
         return "index";
     }
 
+    public void rememberPassword(HttpServletResponse response, String username, String password) {
+        response.addCookie(new Cookie("username", username));
+        response.addCookie(new Cookie("password", password));
+    }
+
     @RequestMapping("logout")
     public String logout(HttpSession session) {
         session.removeAttribute("user");
+        //不管是不是学生都移除学生标记信息，避免下一次登陆造成混乱
+        session.removeAttribute("isStudent");
         return "index";
     }
 }
