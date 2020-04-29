@@ -146,7 +146,6 @@
                     <button ref="#" class="button btn-primary">上传（仅未开始的考试显示）</button>
                 </td>
                 <td>${exam.isAutoBegin}</td>
-
                 <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
                 <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
                 <td>${exam.isArchived}</td>
