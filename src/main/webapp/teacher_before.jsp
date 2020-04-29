@@ -12,6 +12,10 @@
     <script type="text/javascript" src="bootstrap/js/jquery-1.11.3.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-datetimepicker.min.css">
+    <script src="bootstrap/js/bootstrap-datetimepicker.js"></script>
+    <script src="bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
     <style>
         body {
             padding-top: 50px;
@@ -29,50 +33,19 @@
             -ms-background-size: cover;
         }
 
-        .detailBox {
-            width: 150px;
-            height: 150px;
-            margin-left: auto;
-            margin-right: auto;
-        }
 
-        .father {
-            padding: 10px;
-            background: #fff;
-            margin-top: 100px;
-            margin-left: auto;
-            margin-right: 60px;
-            width: 250px;
-            height: 300px;
-            border-radius: 15px;
-            text-align: center;
-            display: inline-block;
-            vertical-align: center;
-        }
-
-        .item {
-            padding: 20px;
-            width: 100%;
-            height: 100%;
-            border: solid 1px black;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .btn{
+        .newBox {
             margin-top: 20px;
         }
-        .myPanel {
-            vertical-align: center;
-            margin-right: auto;
-            margin-left: auto;
-            text-align: center;
-            width: 1200px;
-            height: 100%;
+
+        .checkbox {
+
+            zoom: 120%;
         }
     </style>
 </head>
 <body>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -94,7 +67,99 @@
 
     </div>
 </nav>
+
+
 <div class="container " id="row" style="margin: auto">
+    <div class="col-md-12">
+        <form role="form" class="newBox form-inline col-md-10 col-md-offset-1">
+
+            <div class="form-group">
+
+                <input type="text" class="form-control" id="examName" placeholder="请输入考试名称">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="选择考试开始时间" id="from" readonly>
+            </div>
+            <div class="form-group">
+                <div>至</div>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control " placeholder="选择考试结束时间" id="to" readonly>
+            </div>
+
+            <script>
+                var today = new Date();
+                $('#from').datetimepicker({
+                    language: "zh-CN",
+                    format: 'yyyy-mm-dd hh:ii',
+                    autoclose: true,
+                    todayBtn: true,
+                    stratDate: today
+                }).on('changeDate', function (ev) {
+                    $('#to').datetimepicker('setStartDate', ev.date);
+                });
+
+                $('#to').datetimepicker({
+                    language: "zh-CN",
+                    format: 'yyyy-mm-dd hh:ii',
+                    autoclose: true,
+                    todayBtn: true,
+                    stratDate: today
+                }).on('changeDate', function (ev) {
+                    $('#from').datetimepicker('setEndDate', ev.date);
+                });
+            </script>
+
+            <div class="checkbox ">
+                <label><input type="checkbox">自动开始</label>
+            </div>
+            <button type="submit" class="btn btn-default">添加考试</button>
+
+        </form>
+
+
+    </div>
+    <HR width="80%" color=#987cb9 SIZE=3>
+    <table class="table table-striped ">
+        <thread>
+            <tr>
+                <th>考试名称</th>
+                <th>考试时间</th>
+                <th>创建人</th>
+                <th>上传试卷</th>
+                <th>自动开始</th>
+                <th>进行中</th>
+                <th>已结束</th>
+                <th>已归档</th>
+                <th>已清理</th>
+                <th>编辑</th>
+            </tr>
+        </thread>
+        <tbody>
+        <c:forEach items="${exams}" var="exam">
+            <tr>
+                <td>${exam.name}</td>
+                <td>${exam.beginTime}-${exam.finishTime}</td>
+                <td>${exam.creater}</td>
+                <td>
+                    <button ref="#" class="button btn-primary">上传（仅未开始的考试显示）</button>
+                </td>
+                <td>${exam.isAutoBegin}</td>
+
+                <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
+                <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
+                <td>${exam.isArchived}</td>
+                <td>${exam.isCleaned}</td>
+                <td>
+                    <button href="#" class="button btn-primary">编辑</button>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+
+    </table>
+
 
     <jsp:include page="edit_password.jsp"/>
 </div>
