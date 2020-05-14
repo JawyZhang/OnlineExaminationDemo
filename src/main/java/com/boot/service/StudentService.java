@@ -1,8 +1,6 @@
 package com.boot.service;
 
 import com.boot.pojo.Student;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 /**
  * @Author Mango
@@ -14,7 +12,6 @@ public interface StudentService {
      *
      * @return
      */
-    @Select("select * from student where username=#{username} and password=#{password}")
     Student selectByUsernameAndPassword(Student student);
 
     /**
@@ -23,6 +20,5 @@ public interface StudentService {
      * @param student
      * @return
      */
-    @Update("update student set username=#{username},password=#{password} where id=#{id}")
     Integer updateStudentById(Student student);
 }

@@ -1,11 +1,8 @@
 package com.boot.service;
 
+import com.boot.pojo.Exam;
 import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -19,7 +16,6 @@ public interface TeacherService {
      *
      * @return
      */
-    @Select("select * from teacher")
     List<Teacher> selectAll();
 
     /**
@@ -27,7 +23,6 @@ public interface TeacherService {
      *
      * @return
      */
-    @Select("select * from teacher where teacher_id is not null limit #{pageStart},#{pageSize}")
     PageInfo selectAllByPage(PageInfo pageInfo);
 
     /**
@@ -52,7 +47,6 @@ public interface TeacherService {
      * @param username
      * @return
      */
-    @Select("select * from teacher where username=#{username}")
     List<Teacher> selectByUsername(String username);
 
     /**
@@ -61,7 +55,6 @@ public interface TeacherService {
      * @param teacher_id
      * @return
      */
-    @Select("select * from teacher where teacher_id=#{teacher_id}")
     List<Teacher> selectByTeacherId(String teacher_id);
 
     /**
@@ -70,7 +63,6 @@ public interface TeacherService {
      * @param id
      * @return
      */
-    @Update("update teacher set is_admin=1 where id=#{id}")
     Integer asAdmin(Integer id);
 
     /**
@@ -79,7 +71,6 @@ public interface TeacherService {
      * @param id
      * @return
      */
-    @Update("update teacher set is_admin=0 where id=#{id}")
     Integer cancelAdmin(Integer id);
 
     /**
@@ -88,7 +79,6 @@ public interface TeacherService {
      * @param teacher
      * @return
      */
-    @Insert("insert into teacher values(default,#{username},'123456',#{teacher_id},#{is_admin})")
     Integer insertTeacher(Teacher teacher);
 
     /**
@@ -97,7 +87,6 @@ public interface TeacherService {
      * @param teacher
      * @return
      */
-    @Update("update teacher set username=#{username},password=#{password},teacher_id=#{teacher_id},is_admin=#{is_admin} where id=#{id}")
     Integer updateTeacherInfo(Teacher teacher);
 
     /**
@@ -106,7 +95,6 @@ public interface TeacherService {
      * @param teacher
      * @return
      */
-    @Update("update teacher set username=#{username},password=#{password} where id=#{id}")
     Integer updateTeacher(Teacher teacher);
 
     /**
@@ -115,6 +103,51 @@ public interface TeacherService {
      * @param id
      * @return
      */
-    @Delete("delete teacher where id=#{id}")
     Integer deleteTeacher(Integer id);
+
+    /**
+     * 添加考试信息
+     *
+     * @param exam
+     * @return
+     */
+    Integer addExam(Exam exam);
+
+    /**
+     * 更改考试信息
+     *
+     * @param exam
+     * @return
+     */
+    Integer updateExam(Exam exam);
+
+    /**
+     * 更新试卷信息
+     *
+     * @return
+     */
+    Integer setExamPaperPath(int exam_id, String paper_path);
+
+    /**
+     * 根据教师姓名获取该教师的所有考试
+     *
+     * @param username
+     * @return
+     */
+    List<Exam> selectExamsByUserName(String username);
+
+    /**
+     * 获取所有考试，管理员专用
+     *
+     * @return
+     */
+    List<Exam> selectAllExams();
+
+    /**
+     * 根据考试ID获取考试名称
+     *
+     * @param exam_id
+     * @return
+     */
+    String selectExamNameById(int exam_id);
 }

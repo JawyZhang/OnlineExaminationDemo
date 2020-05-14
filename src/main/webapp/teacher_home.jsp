@@ -81,9 +81,10 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active" ><a href="teacher_before.jsp">考前操作</a></li>
-                <li><a href="teacher_within.jsp">考中管理</a></li>
-                <li><a href="teacher_after.jsp">考后操作</a></li>
+                <li><a href="teacher_home">教师管理面板</a></li>
+                <li class="active" ><a href="teacher_before?username=${user.username}">考前操作</a></li>
+                <li><a href="teacher_within">考中管理</a></li>
+                <li><a href="teacher_after">考后操作</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
@@ -105,7 +106,7 @@
                         <li class="list-group-item">开启考试</li>
                     </ul>
                 </div>
-                <a class="btn btn-primary btn-large" href="teacher_before.jsp"><i class="icon-comment icon-white"></i>考前操作</a>
+                <a class="btn btn-primary btn-large" href="teacher_before?username=${user.username}"><i class="icon-comment icon-white"></i>考前操作</a>
 
             </div>
 
@@ -121,7 +122,7 @@
                         <li class="list-group-item">管理通知消息</li>
                     </ul>
                 </div>
-                <a class="btn btn-primary btn-large" href="teacher_within.jsp"><i class="icon-comment icon-white"></i>考中管理</a>
+                <a class="btn btn-primary btn-large" href="teacher_within"><i class="icon-comment icon-white"></i>考中管理</a>
             </div>
 
         </div>
@@ -135,7 +136,7 @@
                         <li class="list-group-item">清理删除考试</li>
                     </ul>
                 </div>
-                <a class="btn btn-primary btn-large" href="teacher_after.jsp"><i class="icon-comment icon-white"></i>考后操作</a>
+                <a class="btn btn-primary btn-large" href="teacher_after"><i class="icon-comment icon-white"></i>考后操作</a>
 
             </div>
 

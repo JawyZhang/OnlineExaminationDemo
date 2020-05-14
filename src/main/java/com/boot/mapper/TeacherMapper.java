@@ -1,5 +1,6 @@
 package com.boot.mapper;
 
+import com.boot.pojo.Exam;
 import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import org.apache.ibatis.annotations.Delete;
@@ -133,4 +134,56 @@ public interface TeacherMapper {
      */
     @Delete("delete from teacher where id=#{id}")
     Integer deleteTeacher(Integer id);
+
+    /**
+     * 添加考试信息
+     *
+     * @param exam
+     * @return
+     */
+    @Insert("insert into exams(course_id,exam_name,start_time,finish_time,creater,is_auto_begin) values(1,#{exam_name},#{start_time},#{finish_time},#{creater},#{is_auto_begin})")
+    Integer addExam(Exam exam);
+
+    /**
+     * 更改考试信息
+     *
+     * @param exam
+     * @return
+     */
+    @Update("update exams set exam_name=#{exam_name},start_time=#{start_time},finish_time=#{finish_time},is_auto_begin=#{is_auto_begin} where exam_id=#{exam_id}")
+    Integer updateExam(Exam exam);
+
+    /**
+     * 更新试卷信息
+     *
+     * @return
+     */
+    @Update("update exams set paper_path=#{paper_path} where exam_id=#{exam_id}")
+    Integer setExamPaperPath(int exam_id, String paper_path);
+
+    /**
+     * 根据教师姓名获取该教师的所有考试
+     *
+     * @param username
+     * @return
+     */
+    @Select("select * from exams where creater=#{username}")
+    List<Exam> selectExamsByUserName(String username);
+
+    /**
+     * 获取所有考试，管理员专用
+     *
+     * @return
+     */
+    @Select("select * from exams")
+    List<Exam> selectAllExams();
+
+    /**
+     * 根据考试ID获取考试名称
+     *
+     * @param exam_id
+     * @return
+     */
+    @Select("select exam_name from exams where exam_id=#{exam_id}")
+    String selectExamNameById(int exam_id);
 }

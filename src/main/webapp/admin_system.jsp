@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label" >上传文件字节数上限</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="number" name="maxFileSize" value="${system.maxFileSize}" placeholder="指定上传文件的大小上限（字节），空值提交设置为默认值102400"/>
+                            <input class="form-control" type="number" name="maxFileSize" value="${system.maxFileSize}" placeholder="指定上传文件的大小上限（字节），空值提交设置为默认值102400，最大值为204800"/>
                         </div>
                     </div>
                     <div class="form-group">

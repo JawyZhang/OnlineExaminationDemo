@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class SystemController {
     private static Map<String, Object> system = new HashMap<>(5);
     @Autowired
     private TeacherService teacherServiceImpl;
+    @Autowired
+    private MultipartConfigElement multipartConfigElement;
 
     /**
      * 系统配置

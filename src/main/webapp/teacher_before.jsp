@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
@@ -19,9 +20,8 @@
     <style>
         body {
             padding-top: 50px;
-            background: url("img/background2.jpg")  no-repeat center 0px;
+            background: url("img/background2.jpg") no-repeat center 0px;
             background-size: cover;
-
 
 
             background-position: center 0;
@@ -54,9 +54,10 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active" ><a href="teacher_before.jsp">考前操作</a></li>
-                <li><a href="teacher_within.jsp">考中管理</a></li>
-                <li><a href="teacher_after.jsp">考后操作</a></li>
+                <li><a href="teacher_home">教师管理面板</a></li>
+                <li class="active"><a href="teacher_before?username=${user.username}">考前操作</a></li>
+                <li><a href="teacher_within">考中管理</a></li>
+                <li><a href="teacher_after">考后操作</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
@@ -71,21 +72,23 @@
 
 <div class="container " id="row" style="margin: auto">
     <div class="col-md-12">
-        <form role="form" class="newBox form-inline col-md-10 col-md-offset-1">
-
+        <form role="form" class="newBox form-inline col-md-10 col-md-offset-1" action="addExam" method="post">
+            <input type="hidden" name="creater" value="${user.username}"/>
             <div class="form-group">
 
-                <input type="text" class="form-control" id="examName" placeholder="请输入考试名称">
+                <input type="text" class="form-control" id="examName" name="exam_name" placeholder="请输入考试名称" required>
             </div>
 
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="选择考试开始时间" id="from" readonly>
+                <input type="text" class="form-control" placeholder="选择考试开始时间" id="from" name="start_time" readonly
+                       required>
             </div>
             <div class="form-group">
                 <div>至</div>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control " placeholder="选择考试结束时间" id="to" readonly>
+                <input type="text" class="form-control " placeholder="选择考试结束时间" id="to" name="finish_time" readonly
+                       required>
             </div>
 
             <script>
@@ -112,7 +115,7 @@
             </script>
 
             <div class="checkbox ">
-                <label><input type="checkbox">自动开始</label>
+                <label><input type="checkbox" name="is_auto_begin">自动开始</label>
             </div>
             <button type="submit" class="btn btn-default">添加考试</button>
 
@@ -121,16 +124,15 @@
 
     </div>
     <HR width="80%" color=#987cb9 SIZE=3>
-    <table class="table table-striped ">
+    <table class="table table-striped">
         <thread>
             <tr>
                 <th>考试名称</th>
-                <th>考试时间</th>
+                <th>考试开始时间</th>
+                <th>考试结束时间</th>
                 <th>创建人</th>
-                <th>上传试卷</th>
+                <th>试卷</th>
                 <th>自动开始</th>
-                <th>进行中</th>
-                <th>已结束</th>
                 <th>已归档</th>
                 <th>已清理</th>
                 <th>编辑</th>
@@ -139,27 +141,52 @@
         <tbody>
         <c:forEach items="${exams}" var="exam">
             <tr>
-                <td>${exam.name}</td>
-                <td>${exam.beginTime}-${exam.finishTime}</td>
+                <td id="${exam.exam_id}_exam_name">${exam.exam_name}</td>
+                <td id="${exam.exam_id}_start_time">${exam.start_time}</td>
+                <td id="${exam.exam_id}_finish_time">${exam.finish_time}</td>
                 <td>${exam.creater}</td>
                 <td>
-                    <button ref="#" class="button btn-primary">上传（仅未开始的考试显示）</button>
+                    <c:if test="${exam.paper_path != null&&exam.paper_path.length()!=0}">
+                        <a href="/downloadPaper?exam_name=${exam.exam_name}&file=${exam.paper_path}"
+                           class="btn btn-info">下载预览</a>
+                        <a href="/deletePaper?exam_id=${exam.exam_id}&file=${exam.paper_path}" class="btn btn-danger"
+                           onclick="">删除</a>
+                    </c:if>
+                    <c:if test="${exam.paper_path == null||exam.paper_path.length()==0}">
+                        <form action="uploadPaper" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="exam_id" value="${exam.exam_id}"/>
+                            <input type="file" style="display: none;" id="${exam.exam_id}" name="filename"
+                                   onchange="this.form.submit();"/>
+                            <label for="${exam.exam_id}" class="btn btn-warning">选择试卷文件上传</label>
+                        </form>
+                    </c:if>
                 </td>
-                <td>${exam.isAutoBegin}</td>
-                <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
-                <td><input type="text" placeholder="可用JS判断也可做一个表项"></td>
-                <td>${exam.isArchived}</td>
-                <td>${exam.isCleaned}</td>
+                <td id="${exam.exam_id}_is_auto_begin">${exam.is_auto_begin}</td>
+                <td>${exam.is_archived}</td>
+                <td>${exam.is_cleaned}</td>
                 <td>
-                    <button href="#" class="button btn-primary">编辑</button>
+                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit_exam"
+                       onclick="setContent(${exam.exam_id},'${exam.exam_id}_start_time','${exam.exam_id}_finish_time','${exam.exam_id}_exam_name','${exam.exam_id}_is_auto_begin')">编辑</a>
                 </td>
             </tr>
         </c:forEach>
+        <script type="text/javascript">
+            function setContent(exam_id,start_time_id,finish_time_id, exam_name_id, is_auto_begin_id) {
+                $("input[name='exam_id']").val(exam_id);
+                $("input[name='change_exam_name']").val($("#" + exam_name_id).text());
+                $("input[name='change_start_time']").val($("#" + start_time_id).text());
+                $("input[name='change_finish_time']").val($("#" + finish_time_id).text());
+                $("input[name='change_is_auto_begin']")[0].checked = false;
+                if ($("#" + is_auto_begin_id).text() == "true") {
+                    $("input[name='change_is_auto_begin']")[0].checked = true;
+                }
+            }
+        </script>
         </tbody>
 
     </table>
 
-
+    <jsp:include page="edit_exam.jsp"/>
     <jsp:include page="edit_password.jsp"/>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package com.boot.service.impl;
 
 import com.boot.mapper.TeacherMapper;
+import com.boot.pojo.Exam;
 import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
@@ -81,5 +82,35 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Integer deleteTeacher(Integer id) {
         return teacherMapper.deleteTeacher(id);
+    }
+
+    @Override
+    public Integer addExam(Exam exam) {
+        return teacherMapper.addExam(exam);
+    }
+
+    @Override
+    public Integer updateExam(Exam exam) {
+        return teacherMapper.updateExam(exam);
+    }
+
+    @Override
+    public Integer setExamPaperPath(int exam_id, String paper_path) {
+        return teacherMapper.setExamPaperPath(exam_id, paper_path);
+    }
+
+    @Override
+    public List<Exam> selectExamsByUserName(String username) {
+        return teacherMapper.selectExamsByUserName(username);
+    }
+
+    @Override
+    public List<Exam> selectAllExams() {
+        return teacherMapper.selectAllExams();
+    }
+
+    @Override
+    public String selectExamNameById(int exam_id) {
+        return teacherMapper.selectExamNameById(exam_id);
     }
 }
