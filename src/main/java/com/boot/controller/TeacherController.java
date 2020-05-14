@@ -53,16 +53,22 @@ public class TeacherController {
     }
 
     @RequestMapping("uploadPaper")
-    public String uploadPaper(HttpServletRequest request, Model model, int exam_id, MultipartFile filename) {
-        String storagePath = UUID.randomUUID() + FileNameUtils.getExtName(filename.getOriginalFilename());
-        String absolutePath = upload_path + storagePath;
-        try {
-            filename.transferTo(new File(absolutePath));
-            teacherServiceImpl.setExamPaperPath(exam_id, storagePath);
-            model.addAttribute("tip", "上传成功");
-        } catch (IOException e) {
-            System.out.println("上传失败，失败原因：" + e.getMessage());
-            model.addAttribute("tip", "上传失败");
+    public String uploadPaper(HttpServletRequest request, int exam_id, MultipartFile filename) {
+        if (filename.getSize() < (int) SystemController.getSystem().get("minFileSize")) {
+            request.setAttribute("tip", "上传文件过小！！！");
+        } else if (filename.getSize() > (int) SystemController.getSystem().get("maxFileSize")) {
+            request.setAttribute("tip", "上传文件过大！！！");
+        } else {
+            String storagePath = UUID.randomUUID() + FileNameUtils.getExtName(filename.getOriginalFilename());
+            String absolutePath = upload_path + storagePath;
+            try {
+                filename.transferTo(new File(absolutePath));
+                teacherServiceImpl.setExamPaperPath(exam_id, storagePath);
+                request.setAttribute("tip", "上传成功");
+            } catch (IOException e) {
+                System.out.println("上传失败，失败原因：" + e.getMessage());
+                request.setAttribute("tip", "上传失败");
+            }
         }
         return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
     }

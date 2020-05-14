@@ -32,6 +32,14 @@ public class SystemController {
     @Autowired
     private MultipartConfigElement multipartConfigElement;
 
+    public static Map<String, Object> getSystem() {
+        return system;
+    }
+
+    public static void setSystem(Map<String, Object> system) {
+        SystemController.system = system;
+    }
+
     /**
      * 系统配置
      */
