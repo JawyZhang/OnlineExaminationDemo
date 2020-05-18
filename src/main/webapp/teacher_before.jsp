@@ -33,7 +33,11 @@
             -ms-background-size: cover;
         }
 
+        .table {
 
+            background-color: ghostwhite;
+
+        }
         .newBox {
             margin-top: 20px;
         }
