@@ -75,7 +75,7 @@
 <div class="container " id="row" style="margin: auto">
     <div class="panel panel-default" style="margin-top: 20px">
         <div class="panel-heading">
-            考试详情（见老师b站“上机考试系统-示例实现2”,22:04的示例）
+            考试详情（见老师b站“上机考试系统-示例实现2”,17:48，22:04的示例）
         </div>
         <div class="panel-body">
             <table class="table table-striped">
