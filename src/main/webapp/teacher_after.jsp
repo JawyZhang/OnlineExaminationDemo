@@ -59,9 +59,9 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="teacher_home">教师管理面板</a></li>
-                <li class="active"><a href="teacher_before?username=${user.username}">考前操作</a></li>
+                <li><a href="teacher_before?username=${user.username}">考前操作</a></li>
                 <li><a href="teacher_within">考中管理</a></li>
-                <li><a href="teacher_after">考后操作</a></li>
+                <li class="active"><a href="teacher_after">考后操作</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
                 <li><a href="javascript:void(0);">欢迎，${user.username}</a></li>
@@ -73,6 +73,31 @@
     </div>
 </nav>
 <div class="container " id="row" style="margin: auto">
+    <div class="panel panel-default" style="margin-top: 20px">
+        <div class="panel-heading">
+            考试详情（见老师b站“上机考试系统-示例实现2”,22:04的示例）
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thread>
+                    <tr>
+                        <th>考试名称</th>
+                        <th>考试时间</th>
+                        <th>创建人</th>
+                        <th>上传试卷</th>
+                        <th>自动开始</th>
+                        <th>进行中</th>
+                        <th>已结束</th>
+                        <th>已归档</th>
+                        <th>已清理</th>
+                        <th></th>
+                    </tr>
+                </thread>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
