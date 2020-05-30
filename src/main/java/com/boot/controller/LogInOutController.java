@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +26,7 @@ public class LogInOutController {
     private TeacherService teacherServiceImpl;
 
     @RequestMapping("/login")
-    private String login(Model model, HttpServletResponse response, Student student, Teacher teacher, HttpSession session, String rememberPassword, String asTeacher) {
+    private String login(HttpServletRequest request, HttpServletResponse response, Student student, Teacher teacher, HttpSession session, String rememberPassword, String asTeacher) {
         //rememberPassword和asTeacher勾选为None，未勾选为null
         Student isStudent = studentServiceImpl.selectByUsernameAndPassword(student);
         if (isStudent != null) {
@@ -37,6 +38,7 @@ public class LogInOutController {
             } else {
                 rememberPassword(response, "", "");
             }
+            studentServiceImpl.updateStudentStatus(1, isStudent.getId());
             return "student_home";
         } else {
             Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);
@@ -76,9 +78,9 @@ public class LogInOutController {
                 }
             }
         }
-        model.addAttribute("tip", "密码或用户名错误，请重试！");
+        request.setAttribute("tip", "密码或用户名错误，请重试！");
         //登录失败返回原来的登录信息
-        model.addAttribute("user", student);
+        request.setAttribute("user", student);
         return "index";
     }
 
@@ -89,9 +91,14 @@ public class LogInOutController {
 
     @RequestMapping("logout")
     public String logout(HttpSession session) {
+        Object user = session.getAttribute("user");
+        if (user instanceof Student) {
+            //将学生的状态置为0，表示已登出
+            studentServiceImpl.updateStudentStatus(0, ((Student) user).getId());
+            //清除session中的学生标记
+            session.removeAttribute("isStudent");
+        }
         session.removeAttribute("user");
-        //不管是不是学生都移除学生标记信息，避免下一次登陆造成混乱
-        session.removeAttribute("isStudent");
         return "index";
     }
 }

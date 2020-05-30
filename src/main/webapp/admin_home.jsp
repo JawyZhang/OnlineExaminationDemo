@@ -114,7 +114,7 @@
         <div class=" father">
             <div class="item">
                 <img src="img/admin_system.png" class="img-rounded img-thumbnail image center-block">
-                <a class="btn btn-primary btn-large" href="admin_system.jsp"><i class="icon-comment icon-white"></i>系统配置</a>
+                <a class="btn btn-primary btn-large" href="/admin_system"><i class="icon-comment icon-white"></i>系统配置</a>
 
             </div>
 

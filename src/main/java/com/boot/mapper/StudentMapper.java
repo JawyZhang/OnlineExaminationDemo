@@ -27,4 +27,13 @@ public interface StudentMapper {
      */
     @Update("update student set username=#{username},password=#{password} where id=#{id}")
     Integer updateStudentById(Student student);
+
+    /**
+     * 更新学生状态
+     * @param status
+     * @param stu_id
+     * @return
+     */
+    @Update("update student set status=#{status} where id=#{stu_id}")
+    Integer updateStudentStatus(int status, int stu_id);
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,14 +24,22 @@ import java.util.Map;
  */
 @Controller
 public class SystemController {
-    private static boolean flag = true;
+    private static boolean init_system_flag = true;
+    private static boolean init_flag = true;
     private static Map<String, Object> system = new HashMap<>(5);
     @Autowired
     private TeacherService teacherServiceImpl;
-    @Autowired
-    private MultipartConfigElement multipartConfigElement;
 
     public static Map<String, Object> getSystem() {
+        if (init_system_flag) {
+            system.put("taskTime", 1);
+            system.put("systemPageSize", 10);
+            system.put("examBeginTime", 60);
+            system.put("minFileSize", 1024);
+            system.put("maxFileSize", 102400);
+            system.put("teacherClear", 0);
+            init_system_flag = false;
+        }
         return system;
     }
 
@@ -45,16 +52,13 @@ public class SystemController {
      */
     @RequestMapping("admin_system")
     public String admin_system(Model model, HttpSession session) {
-        if (flag) {
-            system.put("taskTime", 1);
-            system.put("systemPageSize", 10);
+        if (init_system_flag) {
+            getSystem();
+        }
+        if (init_flag) {
             session.setAttribute("systemPageSize", 10);
-            system.put("examBeginTime", 60);
-            system.put("minFileSize", 1024);
-            system.put("maxFileSize", 102400);
-            system.put("teacherClear", 0);
             session.setAttribute("system", system);
-            flag = false;
+            init_flag=false;
         }
         return "admin_system";
     }
@@ -78,6 +82,7 @@ public class SystemController {
         system.put("maxFileSize", maxFileSize);
         system.put("teacherClear", "lock".equals(teacherClear) ? 1 : 0);
         model.addAttribute("system", system);
+        model.addAttribute("tip", "修改成功");
         return "admin_system";
     }
 

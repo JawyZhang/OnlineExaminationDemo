@@ -207,6 +207,7 @@
         <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}"
                                                                class="btn btn-info">${status.count}</a></c:if>
     </c:forEach>
+    <hr/>
     <input id="selectedDelete" type="submit" class="btn btn-info btn-search" value="删除选中教师"/>
     <input id="selectedAsAdmin" type="submit" class="btn btn-info btn-search" value="一键设置管理员"/>
     <input id="selectedCancelAdmin" type="submit" class="btn btn-info btn-search" value="一键撤销管理员"/>

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class PageInfo {
     private Integer pageNumber;
-    private Integer pageSize;
+    private Integer pageSize = 10;
     private Integer pageStart;
     private Integer total;
     private Integer totalPage;

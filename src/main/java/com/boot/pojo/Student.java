@@ -8,8 +8,11 @@ import java.util.List;
  */
 public class Student {
     private Integer id;
+    private String stu_no;
     private String username;
     private String password;
+    private String class_room;
+    private String IP;
     private List<Course> courses;    //学生查询所有课程
 
     public Integer getId() {
@@ -18,6 +21,14 @@ public class Student {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStu_no() {
+        return stu_no;
+    }
+
+    public void setStu_no(String stu_no) {
+        this.stu_no = stu_no;
     }
 
     public String getUsername() {
@@ -36,11 +47,31 @@ public class Student {
         this.password = password;
     }
 
+    public String getClass_room() {
+        return class_room;
+    }
+
+    public void setClass_room(String class_room) {
+        this.class_room = class_room;
+    }
+
     public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> course) {
-        this.courses = course;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", stu_no='" + stu_no + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", class_room='" + class_room + '\'' +
+                ", courses=" + courses +
+                '}';
     }
 }

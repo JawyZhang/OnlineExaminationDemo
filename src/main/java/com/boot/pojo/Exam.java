@@ -14,6 +14,11 @@ public class Exam {
     private boolean is_cleaned;
     private int can_delete;//教师下载完成考试信息，该考试就可以被删除了
     private String paper_path;
+    private int participate_count;//应参加人数
+    private int login_count;//已登录考生人数
+    private int unlogin_count;//未登录考生人数
+    private int submit_count;//已提交考生人数
+    private int unsubmit_count;//未提交考生人数
 
     private Score score;    //学生查询自己成绩
     private ArrayList<Score> scores;    //教师查询所有学生成绩
@@ -106,6 +111,46 @@ public class Exam {
         this.paper_path = paper_path;
     }
 
+    public int getParticipate_count() {
+        return participate_count;
+    }
+
+    public void setParticipate_count(int participate_count) {
+        this.participate_count = participate_count;
+    }
+
+    public int getLogin_count() {
+        return login_count;
+    }
+
+    public void setLogin_count(int login_count) {
+        this.login_count = login_count;
+    }
+
+    public int getUnlogin_count() {
+        return unlogin_count;
+    }
+
+    public void setUnlogin_count(int unlogin_count) {
+        this.unlogin_count = unlogin_count;
+    }
+
+    public int getSubmit_count() {
+        return submit_count;
+    }
+
+    public void setSubmit_count(int submit_count) {
+        this.submit_count = submit_count;
+    }
+
+    public int getUnsubmit_count() {
+        return unsubmit_count;
+    }
+
+    public void setUnsubmit_count(int unsubmit_count) {
+        this.unsubmit_count = unsubmit_count;
+    }
+
     public Score getScore() {
         return score;
     }
@@ -120,24 +165,5 @@ public class Exam {
 
     public void setScores(ArrayList<Score> scores) {
         this.scores = scores;
-    }
-
-    @Override
-    public String toString() {
-        return "Exam{" +
-                "exam_id=" + exam_id +
-                ", exam_name='" + exam_name + '\'' +
-                ", course=" + course +
-                ", start_time='" + start_time + '\'' +
-                ", finish_time='" + finish_time + '\'' +
-                ", creater='" + creater + '\'' +
-                ", is_auto_begin=" + is_auto_begin +
-                ", is_archived=" + is_archived +
-                ", is_cleaned=" + is_cleaned +
-                ", can_delete=" + can_delete +
-                ", paper_path='" + paper_path + '\'' +
-                ", score=" + score +
-                ", scores=" + scores +
-                '}';
     }
 }

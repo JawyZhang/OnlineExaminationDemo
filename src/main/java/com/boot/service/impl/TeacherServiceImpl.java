@@ -3,6 +3,7 @@ package com.boot.service.impl;
 import com.boot.mapper.TeacherMapper;
 import com.boot.pojo.Exam;
 import com.boot.pojo.PageInfo;
+import com.boot.pojo.Student;
 import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,17 +101,77 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<Exam> selectExamsByUserName(String username) {
-        return teacherMapper.selectExamsByUserName(username);
+    public List<Exam> selectExamsByUserName(String username, int status) {
+        return teacherMapper.selectExamsByUserName(username, status);
     }
 
     @Override
-    public List<Exam> selectAllExams() {
-        return teacherMapper.selectAllExams();
+    public List<Exam> selectAllExams(int status) {
+        return teacherMapper.selectAllExams(status);
+    }
+
+    @Override
+    public List<Exam> selectStartExamsByUserName(String username, int status) {
+        return teacherMapper.selectStartExamsByUserName(username, status);
+    }
+
+    @Override
+    public List<Exam> selectAllStartExams(int status) {
+        return teacherMapper.selectAllStartExams(status);
     }
 
     @Override
     public String selectExamNameById(int exam_id) {
         return teacherMapper.selectExamNameById(exam_id);
+    }
+
+    @Override
+    public Integer startExam(int exam_id) {
+        return teacherMapper.startExam(exam_id);
+    }
+
+    @Override
+    public Integer selectExamStuInfo(int exam_id, int stu_id) {
+        return teacherMapper.selectExamStuInfo(exam_id, stu_id);
+    }
+
+    @Override
+    public Integer addExamStuInfo(int exam_id, int stu_id) {
+        return teacherMapper.addExamStuInfo(exam_id, stu_id);
+    }
+
+    @Override
+    public Integer deleteExamStuInfo(int exam_id, int stu_id) {
+        return teacherMapper.deleteExamStuInfo(exam_id, stu_id);
+    }
+
+    @Override
+    public Student selectStuByNo(String stu_no) {
+        return teacherMapper.selectStuByNo(stu_no);
+    }
+
+    @Override
+    public Integer addStudent(Student student) {
+        return teacherMapper.addStudent(student);
+    }
+
+    @Override
+    public List<Student> selectExamAllStudents(int exam_id) {
+        return teacherMapper.selectExamAllStudents(exam_id);
+    }
+
+    @Override
+    public PageInfo selectExamAllStudentsByPage(int exam_id, PageInfo pageInfo) {
+        pageInfo.setPageStart((pageInfo.getPageNumber() - 1) * pageInfo.getPageSize());
+        pageInfo.setTotal(teacherMapper.selectExamAllStudentsCount(exam_id));
+        int count = pageInfo.getTotal();
+        pageInfo.setTotalPage(count % pageInfo.getPageSize() == 0 ? count / pageInfo.getPageSize() : count / pageInfo.getPageSize() + 1);
+        pageInfo.setList(teacherMapper.selectExamAllStudentsByPage(exam_id, pageInfo.getPageStart(), pageInfo.getPageSize()));
+        return pageInfo;
+    }
+
+    @Override
+    public Integer updateIP(int stu_id, int exam_id, String ip) {
+        return teacherMapper.updateIP(stu_id, exam_id, ip);
     }
 }

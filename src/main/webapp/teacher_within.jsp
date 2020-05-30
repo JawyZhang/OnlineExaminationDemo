@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
@@ -82,15 +83,27 @@
                 <thread>
                     <tr>
                         <th>考试名称</th>
+                        <th>结束时间</th>
                         <th>应参加（人）</th>
                         <th>已登录（人）</th>
                         <th>未登录（人）</th>
                         <th>已提交（人）</th>
                         <th>未提交（人）</th>
-
                     </tr>
                 </thread>
                 <tbody>
+                <c:forEach items="${exams}" var="exam">
+                    <tr>
+                        <c:set var="exam_id" value="${exam.exam_id}"/>
+                        <td>${exam.exam_name}</td>
+                        <td>${exam.finish_time}</td>
+                        <td>${exam.participate_count}</td>
+                        <td>${exam.login_count}</td>
+                        <td>${exam.unlogin_count}</td>
+                        <td>${exam.submit_count}</td>
+                        <td>${exam.unsubmit_count}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -105,19 +118,20 @@
                     添加单个学生
                 </div>
                 <div class="panel-body">
-                    <form action="#" method="post">
+                    <form action="addStudent" method="post">
+                        <input type="hidden" name="exam_id" value="${exam_id}" required/>
                         <div class="form-group">
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder="学号"/>
+                                <input type="text" class="form-control " name="stu_no" placeholder="学号"/>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder="姓名"/>
+                                <input type="text" class="form-control " name="username" placeholder="姓名"/>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder=‘班级"/>
+                                <input type="text" class="form-control " name="class_room" placeholder="班级"/>
                             </div>
                             <div class="col-md-3">
-                                <input type="submit" class="btn btn-info btn-search" value="查找"/>
+                                <input type="submit" class="btn btn-info btn-search" onclick="" value="添加"/>
                             </div>
                         </div>
                     </form>
@@ -128,16 +142,17 @@
                     查找学生信息
                 </div>
                 <div class="panel-body">
-                    <form action="#" method="post">
+                    <form action="searchExamStudent" method="post">
+                        <input type="hidden" name="exam_id" value="${exam_id}" required/>
                         <div class="form-group">
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder="学号"/>
+                                <input type="text" class="form-control " name="stu_no" placeholder="学号"/>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder="姓名"/>
+                                <input type="text" class="form-control " name="username" placeholder="姓名"/>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" class="form-control " name="condition" placeholder="班级"/>
+                                <input type="text" class="form-control " name="class_room" placeholder="班级"/>
                             </div>
                             <div class="col-md-3">
                                 <input type="submit" class="btn btn-info btn-search" value="查找"/>
@@ -146,6 +161,27 @@
                     </form>
                 </div>
             </div>
+            <c:if test="${student!=null}">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        查找结果
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <tr>
+                                <th>学号</th>
+                                <th>姓名</th>
+                                <th>班级</th>
+                                <th>主机IP</th>
+                                <th>状态</th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </c:if>
         </div>
 
     </div>
@@ -166,17 +202,17 @@
                 </div>
             </form>
             <table class="table table-striped">
-                <thread>
-                    <tr>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>班级</th>
-                        <th>ip地址</th>
-                        <th>加/解锁(是个按钮)</th>
+                <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>班级</th>
+                    <th>ip地址</th>
+                    <th>加/解锁(是个按钮)</th>
 
 
-                    </tr>
-                </thread>
+                </tr>
+                </thead>
                 <tbody>
                 </tbody>
             </table>

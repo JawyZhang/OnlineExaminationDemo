@@ -1,6 +1,7 @@
 package com.boot.service;
 
 import com.boot.pojo.Student;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @Author Mango
@@ -21,4 +22,12 @@ public interface StudentService {
      * @return
      */
     Integer updateStudentById(Student student);
+
+    /**
+     * 更新学生状态
+     * @param status
+     * @param stu_id
+     * @return
+     */
+    Integer updateStudentStatus(int status, int stu_id);
 }

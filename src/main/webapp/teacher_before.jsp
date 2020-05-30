@@ -38,6 +38,7 @@
             background-color: ghostwhite;
 
         }
+
         .newBox {
             margin-top: 20px;
         }
@@ -135,11 +136,11 @@
                 <th>考试开始时间</th>
                 <th>考试结束时间</th>
                 <th>创建人</th>
-                <th>试卷</th>
+                <th>试卷信息</th>
                 <th>自动开始</th>
-                <th>已归档</th>
-                <th>已清理</th>
-                <th>编辑</th>
+                <th>编辑考试</th>
+                <th>管理考生信息</th>
+                <th>开启考试</th>
             </tr>
         </thread>
         <tbody>
@@ -151,7 +152,7 @@
                 <td>${exam.creater}</td>
                 <td>
                     <c:if test="${exam.paper_path != null&&exam.paper_path.length()!=0}">
-                        <a href="/downloadPaper?exam_name=${exam.exam_name}&file=${exam.paper_path}"
+                        <a href="/downloadPaper?exam_id=${exam.exam_id}&exam_name=${exam.exam_name}&file=${exam.paper_path}"
                            class="btn btn-info">下载预览</a>
                         <a href="/deletePaper?exam_id=${exam.exam_id}&file=${exam.paper_path}" class="btn btn-danger"
                            onclick="">删除</a>
@@ -166,16 +167,20 @@
                     </c:if>
                 </td>
                 <td id="${exam.exam_id}_is_auto_begin">${exam.is_auto_begin}</td>
-                <td>${exam.is_archived}</td>
-                <td>${exam.is_cleaned}</td>
                 <td>
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit_exam"
                        onclick="setContent(${exam.exam_id},'${exam.exam_id}_start_time','${exam.exam_id}_finish_time','${exam.exam_id}_exam_name','${exam.exam_id}_is_auto_begin')">编辑</a>
                 </td>
+                <td><a href="/teacher_manage_student?exam_id=${exam.exam_id}" class="btn btn-primary">管理考生</a></td>
+                <td>
+                    <c:if test="${exam.paper_path != null&&exam.paper_path.length()!=0}">
+                        <a href="/start_exam?exam_id=${exam.exam_id}" class="btn btn-primary">开始考试</a>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
         <script type="text/javascript">
-            function setContent(exam_id,start_time_id,finish_time_id, exam_name_id, is_auto_begin_id) {
+            function setContent(exam_id, start_time_id, finish_time_id, exam_name_id, is_auto_begin_id) {
                 $("input[name='exam_id']").val(exam_id);
                 $("input[name='change_exam_name']").val($("#" + exam_name_id).text());
                 $("input[name='change_start_time']").val($("#" + start_time_id).text());
