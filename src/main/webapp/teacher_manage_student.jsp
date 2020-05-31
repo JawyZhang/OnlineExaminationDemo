@@ -70,44 +70,94 @@
     </div>
 </nav>
 <h1>通过Excel文件批量添加考生</h1>
+<p>请保证Excel文件为2003版的，程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无，即文件后缀名为xls的Excel文件！！！</p>
 <form action="/addStudentByExcel" method="post" enctype="multipart/form-data">
     <input type="hidden" name="exam_id" value="${exam_id}"/>
-    <label>请保证Excel文件为2003版的，程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无，即文件后缀名为xls的Excel文件！！！</label><br>
     <input type="file" name="filename" required/>
-    <input type="submit" value="添加">
+    <input type="submit" class="btn btn-primary" value="批量添加">
 </form>
+<hr/>
 <h1>通过手动输入逐个添加</h1>
+<p>生成的学生账号会以姓名作为用户名，学号后六位作为默认密码(不足六位前面补零)</p>
 <form action="/addStudent" method="post">
     <input type="hidden" name="exam_id" value="${exam_id}"/>
-    <label for="stu_no">学号：</label>
-    <input id="stu_no" name="stu_no" placeholder="请输入学号" required/>
-    <label for="username">姓名：</label>
-    <input id="username" name="username" placeholder="请输入姓名" required/>
-    <label for="class_room">班级：</label>
-    <input id="class_room" name="class_room" placeholder="请输入班级" required/>
-    <input type="submit" value="添加"/>
+    <label>学号：</label>
+    <input name="stu_no" placeholder="请输入学号" required/>
+    <label>姓名：</label>
+    <input name="username" placeholder="请输入姓名" required/>
+    <label>班级：</label>
+    <input name="class_room" placeholder="请输入班级" required/>
+    <input type="submit" class="btn btn-primary" value="添加"/>
 </form>
-<p>生成的学生账号会以姓名作为用户名，学号后六位作为默认密码(不足六位前面补零)</p>
-<table>
+<hr/>
+<h1>查找考生信息</h1>
+<form action="/searchStudent" method="post">
+    <input type="hidden" name="exam_id" value="${exam_id}"/>
+    <label>学号：</label>
+    <input name="stu_no" placeholder="请输入学号" value="${search.stu_no}" required/>
+    <label>姓名：</label>
+    <input name="username" placeholder="请输入姓名" value="${search.username}" required/>
+    <label>班级：</label>
+    <input name="class_room" placeholder="请输入班级" value="${search.class_room}" required/>
+    <input type="submit" class="btn btn-primary" value="查找"/>
+    <c:if test="${search!=null}">
+        <a href="/teacher_manage_student?exam_id=${exam_id}" class="btn btn-primary">清除条件查看全部考生</a>
+    </c:if>
+</form>
+<hr/>
+<table class="table">
     <thead>
     <tr>
         <th>学号</th>
         <th>姓名</th>
         <th>班级</th>
-        <th>操作</th>
+        <th>状态</th>
+        <th>主机IP</th>
+        <th>编辑</th>
+        <th>删除</th>
     </tr>
     </thead>
     <tbody>
     <c:forEach items="${pageInfo.list}" var="student">
         <tr>
+            <td style="display: none">${student.id}</td>
             <td>${student.stu_no}</td>
             <td>${student.username}</td>
             <td>${student.class_room}</td>
-            <td><a href="deleteExamStudent?stu_id=${student.id}&exam_id=${exam_id}" class="btn btn-danger">删除该考生</a></td>
+            <td>${student.status==0?"未登录":student.status==1?"已登录":student.status==2?"未提交":student.status==3?"已提交":""}</td>
+            <td>${student.ip==null?"暂未登录":student.ip}</td>
+            <td><a href="#" data-toggle="modal" data-target="#edit_student" onclick="fillInfo(this)"
+                   class="btn btn-primary">编辑考生信息</a></td>
+            <td><a href="deleteExamStudent?stu_id=${student.id}&exam_id=${exam_id}" class="btn btn-danger">删除该考生</a>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
+<script>
+    function fillInfo(element) {
+        let ip = element.parentNode.previousSibling.previousSibling.textContent;
+        let class_room = element.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+        let username = element.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+        let stu_no = element.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+        let stu_id = element.parentNode.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.textContent;
+        $("#stu_id").val(stu_id);
+        $("#stu_no").val(stu_no);
+        $("#username").val(username);
+        $("#class_room").val(class_room);
+        $("#ip").val(ip);
+    }
+    $(function () {
+        $("#update_student").click(function () {
+            if ($("#stu_no").val().length != 0 && $("#username").val().length != 0 && $("#class_room").val().length != 0) {
+                $("#student_form").submit();
+            } else {
+                alert("学号，姓名或者班级不能为空！！！");
+                return false;
+            }
+        })
+    })
+</script>
 <p>当前页为：${pageInfo.pageNumber}，共${pageInfo.totalPage}页，数据总条数：${pageInfo.total}</p>
 <c:forEach begin="1" end="${pageInfo.totalPage}" varStatus="status">
     <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);"
@@ -115,6 +165,43 @@
     <c:if test="${pageInfo.pageNumber != status.count}"><a href="/teacher_manage_student?pageNumber=${status.count}"
                                                            class="btn btn-info">${status.count}</a></c:if>
 </c:forEach>
+<div class="modal fade" id="edit_student" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改考生信息</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/update_student_exam" method="post" id="student_form">
+                    <input type="hidden" name="exam_id" value="${exam_id}"/>
+                    <input type="hidden" name="id" id="stu_id"/>
+                    <div class="form-group">
+                        <label>学号</label>
+                        <input type="text" class="form-control" name="stu_no" id="stu_no" placeholder="请输入学号" required>
+                    </div>
+                    <div class="form-group">
+                        <label>姓名</label>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="请输入姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label>班级</label>
+                        <input type="text" class="form-control" name="class_room" id="class_room" placeholder="请输入班级" required>
+                    </div>
+                    <div class="form-group">
+                        <label>主机IP</label>
+                        <input type="text" class="form-control" name="ip" id="ip" placeholder="请输入指定IP，清空则清除绑定">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" id="update_student" class="btn btn-primary">保存修改</button>
+            </div>
+        </div>
+    </div>
+</div>
 <jsp:include page="edit_password.jsp"/>
 </body>
 </html>

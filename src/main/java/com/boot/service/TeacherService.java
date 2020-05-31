@@ -159,6 +159,7 @@ public interface TeacherService {
      * @return
      */
     List<Exam> selectAllStartExams(int status);
+
     /**
      * 根据考试ID获取考试名称
      *
@@ -237,10 +238,30 @@ public interface TeacherService {
 
     /**
      * 绑定考生的主机IP
+     *
      * @param stu_id
      * @param exam_id
      * @param ip
      * @return
      */
-    Integer updateIP(int stu_id,int exam_id,String ip);
+    Integer updateIP(int stu_id, int exam_id, String ip);
+
+    /**
+     * 查询指定考试的指定考生信息
+     *
+     * @param exam_id
+     * @param stu_no
+     * @param username
+     * @param class_room
+     * @return
+     */
+    List<Student> selectExamStudentByNoAndUsernameAndClass(int exam_id, String stu_no, String username, String class_room);
+
+    /**
+     * 更新考生的信息
+     *
+     * @param exam_id
+     * @param student
+     */
+    int updateStudentExamInfo(int exam_id, Student student);
 }

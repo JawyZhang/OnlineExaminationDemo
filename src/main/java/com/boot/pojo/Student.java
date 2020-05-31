@@ -12,7 +12,8 @@ public class Student {
     private String username;
     private String password;
     private String class_room;
-    private String IP;
+    private int status;
+    private String ip;
     private List<Course> courses;    //学生查询所有课程
 
     public Integer getId() {
@@ -55,6 +56,22 @@ public class Student {
         this.class_room = class_room;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     public List<Course> getCourses() {
         return courses;
     }
@@ -71,6 +88,8 @@ public class Student {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", class_room='" + class_room + '\'' +
+                ", status=" + status +
+                ", ip='" + ip + '\'' +
                 ", courses=" + courses +
                 '}';
     }

@@ -174,4 +174,14 @@ public class TeacherServiceImpl implements TeacherService {
     public Integer updateIP(int stu_id, int exam_id, String ip) {
         return teacherMapper.updateIP(stu_id, exam_id, ip);
     }
+
+    @Override
+    public List<Student> selectExamStudentByNoAndUsernameAndClass(int exam_id, String stu_no, String username, String class_room) {
+        return teacherMapper.selectExamStudentByNoAndUsernameAndClass(exam_id, stu_no, username, class_room);
+    }
+
+    @Override
+    public int updateStudentExamInfo(int exam_id, Student student) {
+        return teacherMapper.updateStudentExamInfo(exam_id, student.getId(), student.getStu_no(), student.getUsername(), student.getClass_room(), student.getIp());
+    }
 }

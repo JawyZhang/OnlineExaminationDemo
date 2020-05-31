@@ -183,7 +183,7 @@ public interface TeacherMapper {
      * @return
      */
     @Results({
-            @Result(id = true, property = "id", column = "id"),
+            @Result(id = true, property = "exam_id", column = "exam_id"),
             @Result(property = "participate_count", one = @One(select = "selectExamStudentCount"), column = "exam_id"),
             @Result(property = "login_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=1}"),
             @Result(property = "unlogin_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=0}"),
@@ -218,7 +218,7 @@ public interface TeacherMapper {
      * @return
      */
     @Results({
-            @Result(id = true, property = "id", column = "id"),
+            @Result(id = true, property = "exam_id", column = "exam_id"),
             @Result(property = "participate_count", one = @One(select = "selectExamStudentCount"), column = "exam_id"),
             @Result(property = "login_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=1}"),
             @Result(property = "unlogin_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=0}"),
@@ -263,7 +263,7 @@ public interface TeacherMapper {
      * @param stu_id
      * @return
      */
-    @Insert("insert into exam_student values(default,#{exam_id},#{stu_id})")
+    @Insert("insert into exam_student(id,exam_id,stu_id) values(default,#{exam_id},#{stu_id})")
     Integer addExamStuInfo(int exam_id, int stu_id);
 
     /**
@@ -311,7 +311,10 @@ public interface TeacherMapper {
      * @param pageSize
      * @return
      */
-    @Select("select * from student where id in (select stu_id from exam_student where exam_id=#{exam_id}) limit #{pageStart},#{pageSize}")
+    @Results({
+            @Result(property = "ip", one = @One(select = "selectStudentIp"), column = "{exam_id=exam_id,stu_id=stu_id}")
+    })
+    @Select("select *,#{exam_id} exam_id,id stu_id from student where id in (select stu_id from exam_student where exam_id=#{exam_id}) limit #{pageStart},#{pageSize}")
     List<Student> selectExamAllStudentsByPage(int exam_id, int pageStart, int pageSize);
 
     /**
@@ -324,12 +327,50 @@ public interface TeacherMapper {
     Integer selectExamAllStudentsCount(int exam_id);
 
     /**
+     * 从exam_student表中查询考生的主机IP
+     *
+     * @param exam_id
+     * @param stu_id
+     * @return
+     */
+    @Select("select ip from exam_student where exam_id=#{exam_id} and stu_id=#{stu_id}")
+    String selectStudentIp(int exam_id, int stu_id);
+
+    /**
      * 绑定考生的主机IP
+     *
      * @param stu_id
      * @param exam_id
      * @param ip
      * @return
      */
     @Update("update exam_student set ip=#{ip} where exam_id=#{exam_id} and stu_id=#{stu_id}")
-    Integer updateIP(int stu_id,int exam_id,String ip);
+    Integer updateIP(int stu_id, int exam_id, String ip);
+
+    /**
+     * 查询指定考试的指定考生信息
+     *
+     * @param exam_id
+     * @param stu_no
+     * @param username
+     * @param class_room
+     * @return
+     */
+    @Results({
+            @Result(property = "ip", one = @One(select = "selectStudentIp"), column = "{exam_id=exam_id,stu_id=stu_id}")
+    })
+    @Select("select *,#{exam_id} exam_id,id stu_id from (select * from student where id in (select stu_id from exam_student where exam_id=#{exam_id})) es where es.stu_no=#{stu_no} and es.username=#{username} and es.class_room=#{class_room}")
+    List<Student> selectExamStudentByNoAndUsernameAndClass(int exam_id, String stu_no, String username, String class_room);
+
+    /**
+     * 更新考生的信息
+     * @param exam_id
+     * @param stu_id
+     * @param stu_no
+     * @param username
+     * @param class_room
+     * @param ip
+     */
+    @Update("update exam_student set ip=#{ip} where exam_id=#{exam_id} and stu_id=#{stu_id};update student set stu_no=#{stu_no},username=#{username},class_room=#{class_room} where id=#{stu_id}")
+    Integer updateStudentExamInfo(int exam_id, int stu_id,String stu_no,String username,String class_room,String ip);
 }

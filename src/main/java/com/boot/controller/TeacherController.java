@@ -151,7 +151,7 @@ public class TeacherController {
     @RequestMapping("start_exam")
     public String start_exam(HttpServletRequest request, int exam_id) {
         teacherServiceImpl.startExam(exam_id);
-        return "teacher_within";
+        return "forward:teacher_within";
     }
 
     @RequestMapping("teacher_manage_student")
@@ -201,9 +201,28 @@ public class TeacherController {
     }
 
     @RequestMapping("deleteExamStudent")
-    public String deleteExamStudent(int stu_id, int exam_id) {
-        teacherServiceImpl.deleteExamStuInfo(stu_id, exam_id);
+    public String deleteExamStudent(int exam_id, int stu_id) {
+        teacherServiceImpl.deleteExamStuInfo(exam_id, stu_id);
         return "forward:teacher_manage_student?exam_id=" + exam_id;
+    }
+
+    @RequestMapping("searchStudent")
+    public String searchStudent(HttpServletRequest request, int exam_id, String stu_no, String username, String class_room) {
+        List<Student> list = teacherServiceImpl.selectExamStudentByNoAndUsernameAndClass(exam_id, stu_no, username, class_room);
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setPageNumber(1);
+        pageInfo.setList(list);
+        pageInfo.setPageSize(list.size());
+        pageInfo.setTotal(list.size());
+        pageInfo.setTotalPage(1);
+        request.setAttribute("pageInfo", pageInfo);
+        request.setAttribute("exam_id", exam_id);
+        Student search = new Student();
+        search.setStu_no(stu_no);
+        search.setUsername(username);
+        search.setClass_room(class_room);
+        request.setAttribute("search", search);
+        return "teacher_manage_student";
     }
 
     @RequestMapping("teacher_within")
@@ -219,6 +238,12 @@ public class TeacherController {
         }
         model.addAttribute("exams", exams);
         return "teacher_within";
+    }
+
+    @RequestMapping("update_student_exam")
+    public String update_student_exam(int exam_id, Student student) {
+        teacherServiceImpl.updateStudentExamInfo(exam_id, student);
+        return "forward:teacher_manage_student?exam_id=" + exam_id;
     }
 
     @RequestMapping("teacher_after")

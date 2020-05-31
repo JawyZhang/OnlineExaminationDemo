@@ -89,6 +89,7 @@
                         <th>未登录（人）</th>
                         <th>已提交（人）</th>
                         <th>未提交（人）</th>
+                        <th>管理考生信息</th>
                     </tr>
                 </thread>
                 <tbody>
@@ -102,118 +103,9 @@
                         <td>${exam.unlogin_count}</td>
                         <td>${exam.submit_count}</td>
                         <td>${exam.unsubmit_count}</td>
+                        <td><a href="/teacher_manage_student?exam_id=${exam.exam_id}" class="btn btn-primary">管理考生</a></td>
                     </tr>
                 </c:forEach>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            学生信息
-        </div>
-        <div class="panel-body">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    添加单个学生
-                </div>
-                <div class="panel-body">
-                    <form action="addStudent" method="post">
-                        <input type="hidden" name="exam_id" value="${exam_id}" required/>
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="stu_no" placeholder="学号"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="username" placeholder="姓名"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="class_room" placeholder="班级"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="submit" class="btn btn-info btn-search" onclick="" value="添加"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    查找学生信息
-                </div>
-                <div class="panel-body">
-                    <form action="searchExamStudent" method="post">
-                        <input type="hidden" name="exam_id" value="${exam_id}" required/>
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="stu_no" placeholder="学号"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="username" placeholder="姓名"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" class="form-control " name="class_room" placeholder="班级"/>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="submit" class="btn btn-info btn-search" value="查找"/>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <c:if test="${student!=null}">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        查找结果
-                    </div>
-                    <div class="panel-body">
-                        <table class="table">
-                            <tr>
-                                <th>学号</th>
-                                <th>姓名</th>
-                                <th>班级</th>
-                                <th>主机IP</th>
-                                <th>状态</th>
-                            </tr>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </c:if>
-        </div>
-
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            登录锁定
-        </div>
-        <div class="panel-body">
-            <form action="#" method="post">
-                <div class="form-group">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control " name="condition" placeholder="ip地址"/>
-                    </div>
-                    <div>
-                        <input type="submit" class="btn btn-info btn-search" value="查找(下方表格是点击查找后出现的）"/>
-                    </div>
-
-                </div>
-            </form>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>学号</th>
-                    <th>姓名</th>
-                    <th>班级</th>
-                    <th>ip地址</th>
-                    <th>加/解锁(是个按钮)</th>
-
-
-                </tr>
-                </thead>
-                <tbody>
                 </tbody>
             </table>
         </div>
