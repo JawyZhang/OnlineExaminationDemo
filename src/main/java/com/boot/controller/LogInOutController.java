@@ -39,7 +39,7 @@ public class LogInOutController {
                 rememberPassword(response, "", "");
             }
             studentServiceImpl.updateStudentStatus(1, isStudent.getId());
-            return "student_home";
+            return "redirect:student_home?stu_id="+isStudent.getId();
         } else {
             Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);
             if (isTeacher != null) {

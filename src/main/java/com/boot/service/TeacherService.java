@@ -237,6 +237,14 @@ public interface TeacherService {
     PageInfo selectExamAllStudentsByPage(int exam_id, PageInfo pageInfo);
 
     /**
+     * 从exam_student表中查询考生的主机IP
+     *
+     * @param exam_id
+     * @param stu_id
+     * @return
+     */
+    String selectStudentIp(int exam_id, int stu_id);
+    /**
      * 绑定考生的主机IP
      *
      * @param stu_id

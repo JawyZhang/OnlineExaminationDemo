@@ -1,9 +1,11 @@
 package com.boot.mapper;
 
+import com.boot.pojo.Exam;
 import com.boot.pojo.Student;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Author Mango
@@ -30,10 +32,45 @@ public interface StudentMapper {
 
     /**
      * 更新学生状态
+     *
      * @param status
      * @param stu_id
      * @return
      */
     @Update("update student set status=#{status} where id=#{stu_id}")
     Integer updateStudentStatus(int status, int stu_id);
+
+    /**
+     * 根据学生ID获取该学生的所有考试信息
+     *
+     * @param stu_id
+     * @return
+     */
+    @Results({
+            @Result(property = "exam_id", column = "exam_id", id = true),
+            @Result(property = "submit_status", one = @One(select = "selectSubmitStatus"), column = "{stu_id=stu_id,exam_id=exam_id}")
+    })
+    @Select("select *,#{stu_id} stu_id from exams where exam_id in (select exam_id from exam_student where stu_id=#{stu_id})")
+    List<Exam> selectStudentAllExam(int stu_id);
+
+    /**
+     * 用于配合selectStudentAllExam查询考生的提交情况
+     *
+     * @param stu_id
+     * @param exam_id
+     * @return
+     */
+    @Select("select status from exam_student where stu_id=#{stu_id} and exam_id=#{exam_id}")
+    Integer selectSubmitStatus(int stu_id, int exam_id);
+
+    /**
+     * 记录考生的试卷提交的试卷信息和提交状态
+     *
+     * @param stu_id
+     * @param exam_id
+     * @param paper_path
+     * @return
+     */
+    @Update("update exam_student set status=1,paper_path=#{paper_path} where exam_id=#{exam_id} and stu_id=#{stu_id}")
+    Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path);
 }

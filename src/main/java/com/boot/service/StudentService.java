@@ -1,7 +1,11 @@
 package com.boot.service;
 
+import com.boot.pojo.Exam;
 import com.boot.pojo.Student;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * @Author Mango
@@ -30,4 +34,21 @@ public interface StudentService {
      * @return
      */
     Integer updateStudentStatus(int status, int stu_id);
+
+    /**
+     * 根据学生ID获取该学生的所有考试信息
+     * @param stu_id
+     * @return
+     */
+    List<Exam> selectStudentAllExam(int stu_id);
+
+    /**
+     * 记录考生的试卷提交的试卷信息和提交状态
+     *
+     * @param stu_id
+     * @param exam_id
+     * @param paper_path
+     * @return
+     */
+    Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path);
 }

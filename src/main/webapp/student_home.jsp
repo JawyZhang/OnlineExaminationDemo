@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
@@ -15,9 +16,8 @@
     <style>
         body {
             padding-top: 50px;
-            background: url("img/background2.jpg")  no-repeat center 0px;
+            background: url("img/background2.jpg") no-repeat center 0px;
             background-size: cover;
-
 
 
             background-position: center 0;
@@ -29,7 +29,7 @@
             -ms-background-size: cover;
         }
 
-        .panel{
+        .panel {
             margin-top: 20px;
         }
 
@@ -58,12 +58,39 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <h3 class="panel-title">
-                正在进行的考试
+                正在进行的考试(重复提交会自动覆盖)
             </h3>
         </div>
         <table class="table">
-            <th class="col-md-3">考试名称</th><th class="col-md-3">开始时间</th><th class="col-md-3">剩余时间</th><th>提交情况</th>
-
+            <tr>
+                <th class="col-md-3">考试名称</th>
+                <th class="col-md-3">开始时间</th>
+                <th class="col-md-3">剩余时间</th>
+                <th>提交情况</th>
+                <th>试卷下载</th>
+                <th>答案提交</th>
+            </tr>
+            <c:forEach items="${operating}" var="exam">
+                <tr>
+                    <td>${exam.exam_name}</td>
+                    <td>${exam.start_time}</td>
+                    <td id="rest_time">${exam.finish_time}</td>
+                    <td>${exam.submit_status==0?"未提交":"已提交"}</td>
+                    <td>
+                        <a href="/downloadPaper?exam_id=${exam.exam_id}&stu_id=${user.id}&exam_name=${exam.exam_name}&file=${exam.paper_path}"
+                           class="btn btn-info">下载试卷</a></td>
+                    <td>
+                        <label for="exam${exam.exam_id}" class="btn btn-primary">提交答案</label>
+                        <form action="/submit_paper" method="post" enctype="multipart/form-data" style="display: none">
+                            <input type="hidden" name="exam_id" value="${exam.exam_id}"/>
+                            <input type="hidden" name="stu_id" value="${user.id}"/>
+                            <input type="hidden" name="stu_no" value="${user.stu_no}"/>
+                            <input type="hidden" name="username" value="${user.username}"/>
+                            <input type="hidden" name="exam_name" value="${exam.exam_name}"/>
+                            <input id="exam${exam.exam_id}" type="file" name="filename" onchange="this.form.submit()"/>
+                        </form>
+                </tr>
+            </c:forEach>
         </table>
     </div>
 
@@ -74,12 +101,24 @@
             </h3>
         </div>
         <table class="table">
-            <th class="col-md-3">考试名称</th><th class="col-md-3">开始时间</th><th class="col-md-3">结束时间</th><th>提交情况</th>
-
+            <tr>
+                <th class="col-md-3">考试名称</th>
+                <th class="col-md-3">开始时间</th>
+                <th class="col-md-3">剩余时间</th>
+                <th>提交情况</th>
+            </tr>
+            <c:forEach items="${finished}" var="exam">
+                <tr>
+                    <td>${exam.exam_name}</td>
+                    <td>${exam.start_time}</td>
+                    <td>${exam.finish_time}</td>
+                    <td>${exam.submit_status==0?"未提交":"已提交"}</td>
+                </tr>
+            </c:forEach>
         </table>
     </div>
-    </div>
-    <jsp:include page="edit_password.jsp"/>
+</div>
+<jsp:include page="edit_password.jsp"/>
 </div>
 </body>
 </html>

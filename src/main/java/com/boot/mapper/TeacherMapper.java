@@ -187,10 +187,10 @@ public interface TeacherMapper {
             @Result(property = "participate_count", one = @One(select = "selectExamStudentCount"), column = "exam_id"),
             @Result(property = "login_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=1}"),
             @Result(property = "unlogin_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=0}"),
-            @Result(property = "submit_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=3}"),
-            @Result(property = "unsubmit_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=2}")
+            @Result(property = "submit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=1}"),
+            @Result(property = "unsubmit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=0}")
     })
-    @Select("select *,1,0,3,2 from exams where creater=#{username} and status=#{status}")
+    @Select("select *,1,0 from exams where creater=#{username} and status=#{status}")
     List<Exam> selectStartExamsByUserName(String username, int status);
 
     /**
@@ -213,6 +213,16 @@ public interface TeacherMapper {
     Integer selectExamStudentStatusCount(int exam_id, int status);
 
     /**
+     * 配合selectStartExamsByUserName查询指定考试的考生提交情况
+     *
+     * @param exam_id
+     * @param status
+     * @return
+     */
+    @Select("select count(*) from exam_student where status=#{status}")
+    Integer selectExamSubmitStatusCount(int exam_id, int status);
+
+    /**
      * 获取所有已开启的考试，管理员专用
      *
      * @return
@@ -222,8 +232,8 @@ public interface TeacherMapper {
             @Result(property = "participate_count", one = @One(select = "selectExamStudentCount"), column = "exam_id"),
             @Result(property = "login_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=1}"),
             @Result(property = "unlogin_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=0}"),
-            @Result(property = "submit_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=3}"),
-            @Result(property = "unsubmit_count", one = @One(select = "selectExamStudentStatusCount"), column = "{exam_id=exam_id,status=2}")
+            @Result(property = "submit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=1}"),
+            @Result(property = "unsubmit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=0}")
     })
     @Select("select *,1,0,3,2 from exams where status=#{status}")
     List<Exam> selectAllStartExams(int status);
@@ -263,7 +273,7 @@ public interface TeacherMapper {
      * @param stu_id
      * @return
      */
-    @Insert("insert into exam_student(id,exam_id,stu_id) values(default,#{exam_id},#{stu_id})")
+    @Insert("insert into exam_student(id,exam_id,stu_id,status) values(default,#{exam_id},#{stu_id},0)")
     Integer addExamStuInfo(int exam_id, int stu_id);
 
     /**
@@ -364,6 +374,7 @@ public interface TeacherMapper {
 
     /**
      * 更新考生的信息
+     *
      * @param exam_id
      * @param stu_id
      * @param stu_no
@@ -372,5 +383,5 @@ public interface TeacherMapper {
      * @param ip
      */
     @Update("update exam_student set ip=#{ip} where exam_id=#{exam_id} and stu_id=#{stu_id};update student set stu_no=#{stu_no},username=#{username},class_room=#{class_room} where id=#{stu_id}")
-    Integer updateStudentExamInfo(int exam_id, int stu_id,String stu_no,String username,String class_room,String ip);
+    Integer updateStudentExamInfo(int exam_id, int stu_id, String stu_no, String username, String class_room, String ip);
 }

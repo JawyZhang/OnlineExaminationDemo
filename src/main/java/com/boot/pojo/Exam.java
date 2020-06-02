@@ -14,6 +14,8 @@ public class Exam {
     private boolean is_cleaned;
     private int can_delete;//教师下载完成考试信息，该考试就可以被删除了
     private String paper_path;
+    private int status;
+    private int submit_status;//该属性用于夹带考生的提交情况
     private int participate_count;//应参加人数
     private int login_count;//已登录考生人数
     private int unlogin_count;//未登录考生人数
@@ -109,6 +111,22 @@ public class Exam {
 
     public void setPaper_path(String paper_path) {
         this.paper_path = paper_path;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getSubmit_status() {
+        return submit_status;
+    }
+
+    public void setSubmit_status(int submit_status) {
+        this.submit_status = submit_status;
     }
 
     public int getParticipate_count() {

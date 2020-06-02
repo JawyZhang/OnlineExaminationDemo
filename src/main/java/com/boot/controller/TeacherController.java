@@ -81,14 +81,22 @@ public class TeacherController {
     @RequestMapping("downloadPaper")
     public void downloadPaper(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "0") int stu_id, int exam_id, String exam_name, String file) {
         //response.setHeader("Content-Disposition", "attachment;filename=" + exam_name + FileNameUtils.getExtName(file));
-        //如果是学生下载试卷信息则将学生的主机IP与该考试绑定
-        if ("true".equals(request.getSession().getAttribute("isStudent"))) {
-            String ip = request.getRemoteAddr();
-            teacherServiceImpl.updateIP(stu_id, exam_id, ip);
-        }
         try {
             FileInputStream fileInputStream = new FileInputStream(new File(upload_path + file));
             ServletOutputStream outputStream = response.getOutputStream();
+            //如果是学生下载试卷信息则将学生的主机IP与该考试绑定
+            if ("true".equals(request.getSession().getAttribute("isStudent"))) {
+                String ip = request.getRemoteAddr();
+                String stu_ip = teacherServiceImpl.selectStudentIp(exam_id, stu_id);
+                if (!(stu_ip == null || stu_ip.equals("")) && !ip.equals(stu_ip)) {
+                    //如果查询到学生的绑定IP信息，并且跟当前IP不符合不会下载试卷，即不可参加该场考试
+                    outputStream.write("<h1 style='color:red'>当前机器的IP和初次使用机器的IP不一致，试卷下载失败！！！<h1>".getBytes("GBK"));
+                    return;
+                } else {
+                    //如果未查询到学生的绑定IP信息，则在第一次下载试卷时绑定IP信息
+                    teacherServiceImpl.updateIP(stu_id, exam_id, ip);
+                }
+            }
             byte[] buffer = new byte[512];
             int len;
             while ((len = fileInputStream.read(buffer)) != -1) {
@@ -244,6 +252,18 @@ public class TeacherController {
     public String update_student_exam(int exam_id, Student student) {
         teacherServiceImpl.updateStudentExamInfo(exam_id, student);
         return "forward:teacher_manage_student?exam_id=" + exam_id;
+    }
+
+    @RequestMapping("finish_exam")
+    public String finish_exam(int exam_id) {
+        System.out.println("结束的考试编号为" + exam_id);
+        return "forward:teacher_within";
+    }
+
+    @RequestMapping("teacher_manage_message")
+    public String teacher_manage_message(int exam_id) {
+        System.out.println("管理通知，考试id：" + exam_id);
+        return "teacher_manage_message";
     }
 
     @RequestMapping("teacher_after")
