@@ -154,7 +154,7 @@
                 <th>编辑考试</th>
                 <th>管理考生信息</th>
                 <th>开启考试</th>
-                <td>删除考试</td>
+                <th>删除考试</th>
             </tr>
         </thread>
         <tbody>
