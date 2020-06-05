@@ -1,10 +1,7 @@
 package com.boot.service.impl;
 
 import com.boot.mapper.TeacherMapper;
-import com.boot.pojo.Exam;
-import com.boot.pojo.PageInfo;
-import com.boot.pojo.Student;
-import com.boot.pojo.Teacher;
+import com.boot.pojo.*;
 import com.boot.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,8 +123,33 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Integer startExam(int exam_id) {
-        return teacherMapper.startExam(exam_id);
+    public Integer changeExamStatus(int exam_id, int status) {
+        return teacherMapper.updateExamStatus(exam_id, status);
+    }
+
+    @Override
+    public Integer startExam(int exam_id, String start_time) {
+        return teacherMapper.startExamStatus(exam_id, 1, start_time);
+    }
+
+    @Override
+    public Integer finishExam(int exam_id) {
+        return teacherMapper.updateExamStatus(exam_id, 2);
+    }
+
+    @Override
+    public Integer downloadExam(int exam_id) {
+        return teacherMapper.updateExamStatus(exam_id, 3);
+    }
+
+    @Override
+    public Integer cleanExam(int exam_id) {
+        return teacherMapper.updateExamStatus(exam_id, 4);
+    }
+
+    @Override
+    public Integer deleteExam(int exam_id) {
+        return teacherMapper.updateExamStatus(exam_id, 5);
     }
 
     @Override
@@ -188,5 +210,40 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public int updateStudentExamInfo(int exam_id, Student student) {
         return teacherMapper.updateStudentExamInfo(exam_id, student.getId(), student.getStu_no(), student.getUsername(), student.getClass_room(), student.getIp());
+    }
+
+    @Override
+    public List<Exam> selectScheduleExam() {
+        return teacherMapper.selectScheduleExam();
+    }
+
+    @Override
+    public Integer deleteExamStudent(int exam_id) {
+        return teacherMapper.deleteExamStudent(exam_id);
+    }
+
+    @Override
+    public List<Message> selectExamMessage(int exam_id) {
+        return teacherMapper.selectExamMessage(exam_id);
+    }
+
+    @Override
+    public Integer deleteMessage(int id) {
+        return teacherMapper.deleteMessage(id);
+    }
+
+    @Override
+    public Integer addMessage(int exam_id, String time, String detail) {
+        return teacherMapper.addMessage(exam_id, time, detail);
+    }
+
+    @Override
+    public Exam selectExam(String name) {
+        return teacherMapper.selectExam(name);
+    }
+
+    @Override
+    public Integer deleteAllMessage(int exam_id) {
+        return teacherMapper.deleteAllMessage(exam_id);
     }
 }

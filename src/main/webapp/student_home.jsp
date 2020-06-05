@@ -35,8 +35,44 @@
 
 
     </style>
+    <script>
+        function calc_time() {
+            setTimeout("time()", 1000 * 60);
+        }
+
+        function time() {
+            var time = $("#rest_time").text();
+            var value = time.slice(0, time.length - 2) - 1;
+            $("#rest_time").text(value + "分钟");
+            if (value > 1)
+                setTimeout("time()", 1000 * 60);
+            else {
+                setTimeout("last()", 1000);
+            }
+        }
+
+        var date, minute, minuteLastDigit;
+
+        function last() {
+            date = new Date();
+            minute = ("" + date.getMinutes());
+            minuteLastDigit = minute.substr(minute.length - 1);
+            if (date.getSeconds() == 0 && (minuteLastDigit == 6 || minuteLastDigit == 5)) {
+                $("#rest_time").text("0分钟");
+                alert("考试结束");
+                $(".submit_answer").empty();
+            } else {
+                setTimeout("last()", 1000);
+            }
+        }
+    </script>
 </head>
-<body>
+<body onload="calc_time()">
+<c:if test="${tip != null}">
+    <script>
+        alert("${tip}");
+    </script>
+</c:if>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -63,10 +99,12 @@
         </div>
         <table class="table">
             <tr>
-                <th class="col-md-3">考试名称</th>
-                <th class="col-md-3">开始时间</th>
-                <th class="col-md-3">剩余时间</th>
+                <th>考试名称</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>剩余时间</th>
                 <th>提交情况</th>
+                <th>查看通知</th>
                 <th>试卷下载</th>
                 <th>答案提交</th>
             </tr>
@@ -74,12 +112,14 @@
                 <tr>
                     <td>${exam.exam_name}</td>
                     <td>${exam.start_time}</td>
-                    <td id="rest_time">${exam.finish_time}</td>
+                    <td>${exam.finish_time}</td>
+                    <td id="rest_time">${exam.rest_time}</td>
                     <td>${exam.submit_status==0?"未提交":"已提交"}</td>
+                    <td><a href="/getExamMessage?exam_id=${exam.exam_id}&stu_id=${user.id}" class="btn btn-info">查看通知</a></td>
                     <td>
                         <a href="/downloadPaper?exam_id=${exam.exam_id}&stu_id=${user.id}&exam_name=${exam.exam_name}&file=${exam.paper_path}"
                            class="btn btn-info">下载试卷</a></td>
-                    <td>
+                    <td class=" submit_answer">
                         <label for="exam${exam.exam_id}" class="btn btn-primary">提交答案</label>
                         <form action="/submit_paper" method="post" enctype="multipart/form-data" style="display: none">
                             <input type="hidden" name="exam_id" value="${exam.exam_id}"/>
@@ -104,7 +144,7 @@
             <tr>
                 <th class="col-md-3">考试名称</th>
                 <th class="col-md-3">开始时间</th>
-                <th class="col-md-3">剩余时间</th>
+                <th class="col-md-3">结束时间</th>
                 <th>提交情况</th>
             </tr>
             <c:forEach items="${finished}" var="exam">

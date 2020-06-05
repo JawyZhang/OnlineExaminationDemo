@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class TimeUtils {
     private static DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static DateFormat df1 = new SimpleDateFormat("HH:mm");
 
     public static long getMillisTime(String time) {
         try {
@@ -19,5 +20,13 @@ public class TimeUtils {
             e.printStackTrace();
         }
         return System.currentTimeMillis();
+    }
+
+    public static String getCurrentTime() {
+        return df.format(new Date(System.currentTimeMillis()));
+    }
+    public static String getCurrentHourAndMinute(){
+        System.out.println(df1.format(new Date(System.currentTimeMillis())));
+        return df1.format(new Date(System.currentTimeMillis()));
     }
 }

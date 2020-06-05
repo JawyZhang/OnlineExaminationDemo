@@ -1,9 +1,6 @@
 package com.boot.service;
 
-import com.boot.pojo.Exam;
-import com.boot.pojo.PageInfo;
-import com.boot.pojo.Student;
-import com.boot.pojo.Teacher;
+import com.boot.pojo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -169,12 +166,52 @@ public interface TeacherService {
     String selectExamNameById(int exam_id);
 
     /**
+     * 更改考试状态
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer changeExamStatus(int exam_id, int status);
+
+    /**
      * 开启考试，将考试信息的状态改为1
      *
      * @param exam_id
      * @return
      */
-    Integer startExam(int exam_id);
+    Integer startExam(int exam_id, String start_time);
+
+    /**
+     * 结束考试，将考试信息的状态改为2
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer finishExam(int exam_id);
+
+    /**
+     * 删除考试，非真正删除，改状态为5
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer deleteExam(int exam_id);
+
+    /**
+     * 考试文件已下载过一次，更新考试状态
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer downloadExam(int exam_id);
+
+    /**
+     * 考试文件已清理，更新状态
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer cleanExam(int exam_id);
 
     /**
      * 根据考试号和学生号查询中间表信息
@@ -244,6 +281,7 @@ public interface TeacherService {
      * @return
      */
     String selectStudentIp(int exam_id, int stu_id);
+
     /**
      * 绑定考生的主机IP
      *
@@ -272,4 +310,59 @@ public interface TeacherService {
      * @param student
      */
     int updateStudentExamInfo(int exam_id, Student student);
+
+    /**
+     * 查询需要加入到定时任务的考试
+     *
+     * @return
+     */
+    List<Exam> selectScheduleExam();
+
+    /**
+     * 删除考试的所有考生
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer deleteExamStudent(int exam_id);
+
+    /**
+     * 查询指定考试的所有通知信息
+     *
+     * @param exam_id
+     * @return
+     */
+    List<Message> selectExamMessage(int exam_id);
+
+    /**
+     * 删除指定消息
+     *
+     * @param id
+     * @return
+     */
+    Integer deleteMessage(int id);
+
+    /**
+     * 插入新的消息
+     *
+     * @param exam_id
+     * @param time
+     * @param detail
+     * @return
+     */
+    Integer addMessage(int exam_id, String time, String detail);
+
+    /**
+     * 查找指定名称的考试
+     * @param name
+     * @return
+     */
+    Exam selectExam(String name);
+
+    /**
+     * 删除指定考试的所有通知
+     * @param exam_id
+     * @return
+     */
+    Integer deleteAllMessage(int exam_id);
 }

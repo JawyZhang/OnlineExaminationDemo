@@ -1,6 +1,7 @@
 package com.boot.service;
 
 import com.boot.pojo.Exam;
+import com.boot.pojo.Message;
 import com.boot.pojo.Student;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -51,4 +52,12 @@ public interface StudentService {
      * @return
      */
     Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path);
+
+    /**
+     * 查询指定考试的所有通知信息
+     *
+     * @param exam_id
+     * @return
+     */
+    List<Message> selectExamMessage(int exam_id);
 }

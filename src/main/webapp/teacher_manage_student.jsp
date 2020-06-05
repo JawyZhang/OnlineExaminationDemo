@@ -73,7 +73,11 @@
     </script>
 </head>
 <body>
-
+<c:if test="${tip != null}">
+    <script>
+        alert("${tip}");
+    </script>
+</c:if>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">

@@ -50,7 +50,11 @@
     </style>
 </head>
 <body>
-
+<c:if test="${tip != null}">
+    <script>
+        alert("${tip}");
+    </script>
+</c:if>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -107,7 +111,7 @@
                         <td>${exam.unsubmit_count}</td>
                         <td><a href="/teacher_manage_student?exam_id=${exam.exam_id}" class="btn btn-primary">管理考生</a>
                         </td>
-                        <td><a href="/teacher_manage_message?exam_id=${exam.exam_id}" class="btn btn-primary">管理通知</a>
+                        <td><a href="/teacher_manage_message?exam_id=${exam.exam_id}&exam_name=${exam.exam_name}" class="btn btn-primary">管理通知</a>
                         </td>
                         <td><a href="/finish_exam?exam_id=${exam.exam_id}" class="btn btn-danger"
                                onclick="return confirm('是否结束考试？')">结束考试</a></td>
@@ -118,5 +122,6 @@
         </div>
     </div>
 </div>
+<jsp:include page="edit_password.jsp"/>
 </body>
 </html>

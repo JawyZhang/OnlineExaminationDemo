@@ -54,7 +54,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="admin_home.jsp">控制面板</a></li>
                 <li><a href="/admin_teacher">教师管理</a></li>
-                <li><a href="admin_exam.jsp">考试清理</a></li>
+                <li><a href="/admin_exam">考试清理</a></li>
                 <li class="active"><a href="/admin_system">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
@@ -91,8 +91,8 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">手动开启考试时间阈值</label>
                         <div class="col-md-7">
-                            <input class="form-control" type="number" name="examBeginTime"
-                                   value="${system.examBeginTime}" placeholder="指定手工开启考试允许的最大提前量，单位：分钟，空值提交设置为默认值60"/>
+                            <input class="form-control" type="number" name="examBeginTime" max="60" min="0"
+                                   value="${system.examBeginTime}" placeholder="指定手工开启考试允许的最大提前量，单位：分钟，空值提交设置为最大值60"/>
                         </div>
                     </div>
                     <div class="form-group">

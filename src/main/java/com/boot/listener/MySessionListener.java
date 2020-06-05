@@ -1,5 +1,6 @@
 package com.boot.listener;
 
+import com.boot.controller.SystemController;
 import com.boot.pojo.Student;
 import com.boot.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,13 @@ import javax.servlet.http.HttpSessionListener;
 public class MySessionListener implements HttpSessionListener {
     @Autowired
     StudentServiceImpl studentServiceImpl;
+
+    @Override
+    public void sessionCreated(HttpSessionEvent se) {
+        if (se.getSession().getServletContext().getAttribute("system") == null) {
+            se.getSession().getServletContext().setAttribute("system", SystemController.getSystem());
+        }
+    }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {

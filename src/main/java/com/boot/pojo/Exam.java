@@ -8,6 +8,7 @@ public class Exam {
     private Course course;
     private String start_time;
     private String finish_time;
+    private String rest_time;
     private String creater;
     private boolean is_auto_begin;
     private boolean is_archived;
@@ -63,6 +64,14 @@ public class Exam {
 
     public void setFinish_time(String finish_time) {
         this.finish_time = finish_time;
+    }
+
+    public String getRest_time() {
+        return rest_time;
+    }
+
+    public void setRest_time(String rest_time) {
+        this.rest_time = rest_time;
     }
 
     public String getCreater() {

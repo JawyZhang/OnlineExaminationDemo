@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Jawy
@@ -49,7 +50,11 @@
     </style>
 </head>
 <body>
-
+<c:if test="${tip != null}">
+    <script>
+        alert("${tip}");
+    </script>
+</c:if>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -75,31 +80,64 @@
 <div class="container " id="row" style="margin: auto">
     <div class="panel panel-default" style="margin-top: 20px">
         <div class="panel-heading">
-            考试详情（见老师b站“上机考试系统-示例实现2”,17:48，22:04的示例）
+            考试详情
         </div>
         <div class="panel-body">
             <table class="table table-striped">
-                <thread>
-                    <tr>
-                        <th>考试名称</th>
-                        <th>考试时间</th>
-                        <th>创建人</th>
-                        <th>上传试卷</th>
-                        <th>自动开始</th>
-                        <th>进行中</th>
-                        <th>已结束</th>
-                        <th>已归档</th>
-                        <th>已清理</th>
-                        <th></th>
-                    </tr>
-                </thread>
+                <thead>
+                <tr>
+                    <th>考试名称</th>
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>创建人</th>
+                    <th>状态</th>
+                    <th>打包下载考生答案</th>
+                    <c:if test="${system.teacherClear==1||user.username=='admin'||user.is_admin=='on'}">
+                        <th>清理考试文件</th>
+                        <th>删除考试</th>
+                    </c:if>
+                </tr>
+                </thead>
                 <tbody>
+                <c:forEach items="${exams}" var="exam">
+                    <tr>
+                        <td>${exam.exam_name}</td>
+                        <td>${exam.start_time}</td>
+                        <td>${exam.finish_time}</td>
+                        <td>${exam.creater}</td>
+                        <td>${exam.status==2?"已结束":exam.status==1?"已开启":exam.status==0?"已创建":""}</td>
+                        <td>
+                            <c:if test="${exam.status==2||exam.status==3}"><a
+                                    href="downloadAllAnswers?exam_name=${exam.exam_name}&exam_id=${exam.exam_id}"
+                                    class="btn btn-primary"<c:if test="${exam.status==2}"> onclick="reload()"</c:if>>打包下载</a></c:if>
+                            <c:if test="${exam.status==4}"><label>文件已被清理</label></c:if>
+                        </td>
+                        <c:if test="${system.teacherClear==1||user.username=='admin'||user.is_admin=='on'}">
+                            <td>
+                                <c:if test="${exam.status==3}"><a
+                                        href='cleanExam?exam_name=${exam.exam_name}&exam_id=${exam.exam_id}&paper_path=${exam.paper_path}'
+                                        class="btn btn-warning"
+                                        onclick="return confirm('是否要清理该考试所有文件？')">清理考试文件</a></c:if>
+                                <c:if test="${exam.status==4}"><label>已清理</label></c:if>
+                            </td>
+                            <td>
+                                <c:if test="${exam.status==4}"><a href="deleteExam?exam_id=${exam.exam_id}"
+                                                                  class='btn btn-danger'
+                                                                  onclick="return confirm('是否要删除该考试所有信息？')">删除该考试</a></c:if>
+                            </td>
+                        </c:if>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
+            <script>
+                function reload() {
+                    setTimeout("window.location.reload()", 1000);
+                }
+            </script>
         </div>
     </div>
 </div>
-
-
+<jsp:include page="edit_password.jsp"/>
 </body>
 </html>

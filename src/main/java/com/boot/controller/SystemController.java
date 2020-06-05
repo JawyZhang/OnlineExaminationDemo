@@ -1,5 +1,6 @@
 package com.boot.controller;
 
+import com.boot.pojo.Exam;
 import com.boot.pojo.PageInfo;
 import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
@@ -51,14 +52,14 @@ public class SystemController {
      * 系统配置
      */
     @RequestMapping("admin_system")
-    public String admin_system(Model model, HttpSession session) {
+    public String admin_system(HttpSession session) {
         if (init_system_flag) {
             getSystem();
         }
         if (init_flag) {
-            session.setAttribute("systemPageSize", 10);
-            session.setAttribute("system", system);
-            init_flag=false;
+            session.getServletContext().setAttribute("systemPageSize", 10);
+            session.getServletContext().setAttribute("system", system);
+            init_flag = false;
         }
         return "admin_system";
     }
@@ -95,7 +96,7 @@ public class SystemController {
                                 @RequestParam(defaultValue = "") String tip/*tip用于接收其他控制器处理后的提示信息*/) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNumber(pageNumber);
-        pageInfo.setPageSize((Integer) session.getAttribute("systemPageSize"));
+        pageInfo.setPageSize((Integer) session.getServletContext().getAttribute("systemPageSize"));
         //使用分页查询
         model.addAttribute("pageInfo", teacherServiceImpl.selectAllByPage(pageInfo));
         //用于给其他控制器使用的属性：当前前台的页面值
@@ -104,6 +105,18 @@ public class SystemController {
             model.addAttribute("tip", tip);
         }
         return "admin_teacher";
+    }
+
+    /**
+     * 管理员之教师管理主页
+     */
+    @RequestMapping("admin_exam")
+    public String admin_exma(Model model) {
+        List<Exam> exams = teacherServiceImpl.selectAllStartExams(2);
+        exams.addAll(teacherServiceImpl.selectAllStartExams(3));
+        exams.addAll(teacherServiceImpl.selectAllStartExams(4));
+        model.addAttribute("exams", exams);
+        return "admin_exam";
     }
 
     /**
@@ -180,6 +193,15 @@ public class SystemController {
         return "admin_teacher";
     }
 
+    @RequestMapping("selectExam")
+    public String selectExam(Model model, String condition) {
+        List<Exam> exams = new ArrayList<>();
+        exams.add(teacherServiceImpl.selectExam(condition));
+        model.addAttribute("exams", exams);
+        model.addAttribute("condition", condition);
+        return "admin_exam";
+    }
+
     /**
      * 单个设置为管理员
      */
@@ -213,12 +235,12 @@ public class SystemController {
         String tip = "";
         for (int i = 0; i < ids.length; i++) {
             if (teacherServiceImpl.asAdmin(ids[i]) > 0) {
-                tip += UrlCodeUtils.getUrlString(ids[i] + "设置管理员成功");
+                tip += ids[i] + "设置管理员成功";
             } else {
-                tip += UrlCodeUtils.getUrlString(ids[i] + "设置管理员失败");
+                tip += ids[i] + "设置管理员失败";
             }
         }
-        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
+        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + UrlCodeUtils.getUrlString(tip);
     }
 
     @RequestMapping("cancelAdminGroup")
@@ -227,12 +249,12 @@ public class SystemController {
         String tip = "";
         for (int i = 0; i < ids.length; i++) {
             if (teacherServiceImpl.cancelAdmin(ids[i]) > 0) {
-                tip += UrlCodeUtils.getUrlString(ids[i] + "设置管理员成功");
+                tip += ids[i] + "设置管理员成功";
             } else {
-                tip += UrlCodeUtils.getUrlString(ids[i] + "设置管理员失败");
+                tip += ids[i] + "设置管理员失败";
             }
         }
-        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + tip;
+        return "redirect:admin_teacher?pageNumber=" + session.getAttribute("systemPageNumber") + "&tip=" + UrlCodeUtils.getUrlString(tip);
     }
 
     @RequestMapping("deleteAdminGroup")

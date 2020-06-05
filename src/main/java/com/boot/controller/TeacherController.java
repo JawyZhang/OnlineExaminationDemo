@@ -1,13 +1,8 @@
 package com.boot.controller;
 
-import com.boot.pojo.Exam;
-import com.boot.pojo.PageInfo;
-import com.boot.pojo.Student;
-import com.boot.pojo.Teacher;
+import com.boot.pojo.*;
 import com.boot.service.TeacherService;
-import com.boot.utils.ExcelUtils;
-import com.boot.utils.FileNameUtils;
-import com.boot.utils.StringUtils;
+import com.boot.utils.*;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,9 +20,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * @Author Mango
@@ -80,7 +78,6 @@ public class TeacherController {
 
     @RequestMapping("downloadPaper")
     public void downloadPaper(HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "0") int stu_id, int exam_id, String exam_name, String file) {
-        //response.setHeader("Content-Disposition", "attachment;filename=" + exam_name + FileNameUtils.getExtName(file));
         try {
             FileInputStream fileInputStream = new FileInputStream(new File(upload_path + file));
             ServletOutputStream outputStream = response.getOutputStream();
@@ -88,6 +85,7 @@ public class TeacherController {
             if ("true".equals(request.getSession().getAttribute("isStudent"))) {
                 String ip = request.getRemoteAddr();
                 String stu_ip = teacherServiceImpl.selectStudentIp(exam_id, stu_id);
+                System.out.println(stu_ip+"\t"+ip);
                 if (!(stu_ip == null || stu_ip.equals("")) && !ip.equals(stu_ip)) {
                     //如果查询到学生的绑定IP信息，并且跟当前IP不符合不会下载试卷，即不可参加该场考试
                     outputStream.write("<h1 style='color:red'>当前机器的IP和初次使用机器的IP不一致，试卷下载失败！！！<h1>".getBytes("GBK"));
@@ -97,13 +95,13 @@ public class TeacherController {
                     teacherServiceImpl.updateIP(stu_id, exam_id, ip);
                 }
             }
+            response.setHeader("Content-Disposition", "attachment;filename=" + UrlCodeUtils.getUrlString(exam_name) + FileNameUtils.getExtName(file));
             byte[] buffer = new byte[512];
             int len;
             while ((len = fileInputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, len);
             }
             outputStream.flush();
-            outputStream.close();
             fileInputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -158,7 +156,7 @@ public class TeacherController {
 
     @RequestMapping("start_exam")
     public String start_exam(HttpServletRequest request, int exam_id) {
-        teacherServiceImpl.startExam(exam_id);
+        teacherServiceImpl.startExam(exam_id, TimeUtils.getCurrentTime());
         return "forward:teacher_within";
     }
 
@@ -166,8 +164,8 @@ public class TeacherController {
     public String teacher_manage_student(HttpServletRequest request, @RequestParam(defaultValue = "1") Integer pageNumber, int exam_id) {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageNumber(pageNumber);
-        if (null != (Integer) request.getSession().getAttribute("systemPageSize")) {
-            pageInfo.setPageSize((Integer) request.getSession().getAttribute("systemPageSize"));
+        if (null != (Integer) request.getSession().getServletContext().getAttribute("systemPageSize")) {
+            pageInfo.setPageSize((Integer) request.getSession().getServletContext().getAttribute("systemPageSize"));
         }
         request.setAttribute("pageInfo", teacherServiceImpl.selectExamAllStudentsByPage(exam_id, pageInfo));
         request.setAttribute("exam_id", exam_id);
@@ -191,7 +189,7 @@ public class TeacherController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "forward:teacher_manage_student?exam_id=" + exam_id;
+        return "redirect:teacher_manage_student?exam_id=" + exam_id;
     }
 
     @RequestMapping("addStudent")
@@ -205,7 +203,7 @@ public class TeacherController {
         if (teacherServiceImpl.selectExamStuInfo(exam_id, student.getId()) == 0) {
             teacherServiceImpl.addExamStuInfo(exam_id, student.getId());
         }
-        return "forward:teacher_manage_student?exam_id=" + exam_id;
+        return "redirect:teacher_manage_student?exam_id=" + exam_id;
     }
 
     @RequestMapping("deleteExamStudent")
@@ -256,18 +254,116 @@ public class TeacherController {
 
     @RequestMapping("finish_exam")
     public String finish_exam(int exam_id) {
-        System.out.println("结束的考试编号为" + exam_id);
+        teacherServiceImpl.finishExam(exam_id);
         return "forward:teacher_within";
     }
 
+    @RequestMapping("teacher_after")
+    public String teacher_after(Model model, HttpSession session) {
+        List<Exam> exams = new ArrayList<>();
+        String username = ((Teacher) (session.getAttribute("user"))).getUsername();
+        if ("admin".equals(username)) {
+            //查询状态为2(已结束),3(已下载答卷),4(已清理)的考试
+            exams = teacherServiceImpl.selectAllStartExams(2);
+            exams.addAll(teacherServiceImpl.selectAllStartExams(3));
+            exams.addAll(teacherServiceImpl.selectAllStartExams(4));
+        } else {
+            //查询指定用户创建的状态为2(已结束),3(已下载答卷),4(已清理)的考试
+            exams = teacherServiceImpl.selectStartExamsByUserName(username, 2);
+            exams.addAll(teacherServiceImpl.selectStartExamsByUserName(username, 3));
+            exams.addAll(teacherServiceImpl.selectStartExamsByUserName(username, 4));
+        }
+        model.addAttribute("exams", exams);
+        return "teacher_after";
+    }
+
+    @RequestMapping("downloadAllAnswers")
+    public void downloadAllAnswers(HttpServletResponse response, String exam_name, int exam_id) {
+        try {
+            String downloadFilename = URLEncoder.encode(exam_name + ".zip", "utf-8");
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFilename);
+            ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
+            byte buffer[] = new byte[512];
+            int len = 0;
+            for (File file : new File(upload_path + exam_name).listFiles()) {
+                FileInputStream fis = new FileInputStream(file);
+                zos.putNextEntry(new ZipEntry(file.getName()));
+                while ((len = fis.read(buffer)) != -1) {
+                    zos.write(buffer, 0, len);
+                }
+                fis.close();
+            }
+            zos.flush();
+            zos.close();
+            teacherServiceImpl.downloadExam(exam_id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("cleanExam")
+    public String cleanExam(String exam_name, int exam_id, String paper_path, @RequestParam(defaultValue = "0") int is_admin) {
+        System.out.println(upload_path + exam_name);
+        System.out.println(upload_path + paper_path);
+        //删除所有考生上传文件
+        File dic = new File(upload_path + exam_name);
+        if (dic.exists()) {
+            for (File file : dic.listFiles()) {
+                file.delete();
+            }
+            dic.delete();
+        }
+        //删除试卷文件
+        File paper = new File(upload_path + paper_path);
+        if (paper.exists()) {
+            paper.delete();
+        }
+        //删除中间表中考试对应的所有考生
+        teacherServiceImpl.deleteExamStudent(exam_id);
+        //删除考试对应的通知信息
+        teacherServiceImpl.deleteAllMessage(exam_id);
+        //更改考试的状态
+        teacherServiceImpl.cleanExam(exam_id);
+        if (is_admin == 1) {
+            return "redirect:admin_exam";
+        }
+        return "forward:teacher_after";
+    }
+
+    @RequestMapping("deleteExam")
+    public String deleteExam(int exam_id, @RequestParam(defaultValue = "0") int is_admin) {
+        teacherServiceImpl.deleteExam(exam_id);
+        if (is_admin == 1) {
+            return "redirect:admin_exam";
+        }
+        return "forward:teacher_after";
+    }
+
     @RequestMapping("teacher_manage_message")
-    public String teacher_manage_message(int exam_id) {
-        System.out.println("管理通知，考试id：" + exam_id);
+    public String teacher_manage_message(Model model, int exam_id, String exam_name) {
+        List<Message> messages = teacherServiceImpl.selectExamMessage(exam_id);
+        model.addAttribute("messages", messages);
+        model.addAttribute("exam_id", exam_id);
+        model.addAttribute("exam_name", exam_name);
         return "teacher_manage_message";
     }
 
-    @RequestMapping("teacher_after")
-    public String teacher_after() {
-        return "teacher_after";
+    @RequestMapping("deleteMessage")
+    public void deleteMessage(HttpServletResponse response, int id) {
+        System.out.println(id);
+        try {
+            ServletOutputStream outputStream = response.getOutputStream();
+            teacherServiceImpl.deleteMessage(id);
+            outputStream.write("true".getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("addMessage")
+    public String addMessage(int exam_id, String exam_name, String detail) {
+        teacherServiceImpl.addMessage(exam_id, TimeUtils.getCurrentHourAndMinute(), detail);
+        return "redirect:teacher_manage_message?exam_id=" + exam_id + "&exam_name=" + UrlCodeUtils.getUrlString(exam_name);
     }
 }

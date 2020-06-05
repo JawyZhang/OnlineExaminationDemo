@@ -21,6 +21,9 @@
                 $("#id").val(_this.attr("name"));
                 $("#username").val(_this.parent().prev().html());
                 $("#teacher_id").val(_this.parent().prev().prev().html());
+                if (_this.attr("is_admin")=="on") {
+                    $("#is_admin").attr("checked", true);
+                }
             })
             $("#submit").click(function () {
                 if ($("#username").val().length != 0 && $("#teacher_id").val().length != 0) {
@@ -36,59 +39,59 @@
                     return false;
                 }
             })
-            $("#selectedDelete").click(function(){
-                var postModel=[];
-                $("input[class='select']").each(function(i){
-                    if($(this).is(':checked')){
+            $("#selectedDelete").click(function () {
+                var postModel = [];
+                $("input[class='select']").each(function (i) {
+                    if ($(this).is(':checked')) {
                         postModel.push($(this).attr('name'));
                     }
                 })
                 $.ajax({
                     type: 'POST',
                     url: "/deleteAdminGroup",
-                    data: { 'id': postModel},
-                    success: function(rs){
+                    data: {'id': postModel},
+                    success: function (rs) {
                         window.location.reload();
                     },
-                    error: function(err){
+                    error: function (err) {
                         alert(err);
                     },
                 });
             })
-            $("#selectedAsAdmin").click(function(){
-                var postModel=[];
-                $("input[class='select']").each(function(i){
-                    if($(this).is(':checked')){
+            $("#selectedAsAdmin").click(function () {
+                var postModel = [];
+                $("input[class='select']").each(function (i) {
+                    if ($(this).is(':checked')) {
                         postModel.push($(this).attr('name'));
                     }
                 })
                 $.ajax({
                     type: 'POST',
                     url: "/asAdminGroup",
-                    data: { 'id': postModel},
-                    success: function(rs){
+                    data: {'id': postModel},
+                    success: function (rs) {
                         window.location.reload();
                     },
-                    error: function(err){
+                    error: function (err) {
                         alert(err);
                     },
                 });
             })
-            $("#selectedCancelAdmin").click(function(){
-                var postModel=[];
-                $("input[class='select']").each(function(i){
-                    if($(this).is(':checked')){
+            $("#selectedCancelAdmin").click(function () {
+                var postModel = [];
+                $("input[class='select']").each(function (i) {
+                    if ($(this).is(':checked')) {
                         postModel.push($(this).attr('name'));
                     }
                 })
                 $.ajax({
                     type: 'POST',
                     url: "/cancelAdminGroup",
-                    data: { 'id': postModel},
-                    success: function(rs){
+                    data: {'id': postModel},
+                    success: function (rs) {
                         window.location.reload();
                     },
-                    error: function(err){
+                    error: function (err) {
                         alert(err);
                     },
                 });
@@ -138,7 +141,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="admin_home.jsp">控制面板</a></li>
                 <li class="active"><a href="#">教师管理</a></li>
-                <li><a href="admin_exam.jsp">考试清理</a></li>
+                <li><a href="/admin_exam">考试清理</a></li>
                 <li><a href="/admin_system">系统配置</a></li>
             </ul>
             <ul class="nav navbar-right navbar-nav">
@@ -158,7 +161,8 @@
         <form action="/selectTeacher" method="post">
             <div class="form-group">
                 <div class="col-md-9">
-                    <input type="text" class="form-control " name="condition" value="${condition}" placeholder="请输入教师姓名或工号"/>
+                    <input type="text" class="form-control " name="condition" value="${condition}"
+                           placeholder="请输入教师姓名或工号"/>
                 </div>
                 <div class="col-md-3">
                     <input type="submit" class="btn btn-info btn-search" value="查找"/>
@@ -185,21 +189,26 @@
                 <td><input type="checkbox" class="select" name="${teacher.id}"/></td>
                 <td>${teacher.teacher_id}</td>
                 <td>${teacher.username}</td>
-                <td><a href="#" class="edit" name="${teacher.id}" data-toggle="modal" data-target="#edit_teacher">修改</a>
+                <td><a href="#" class="edit btn btn-primary" name="${teacher.id}" is_admin="${teacher.is_admin}" data-toggle="modal" data-target="#edit_teacher">修改</a>
                 </td>
-                <td><a href="/delete_teacher?id=${teacher.id}">删除</a></td>
+                <td><a href="/delete_teacher?id=${teacher.id}" class="btn btn-danger"
+                       onclick="return confirm('是否要删除该用户？')">删除</a></td>
                 <td>
                     <c:if test="${teacher.is_admin=='on'}">
-                        <a href="/cancelAdmin?id=${teacher.id}" class="button btn-warning">取消管理员</a>
+                        <a href="/cancelAdmin?id=${teacher.id}" class="btn btn-warning">取消管理员</a>
                     </c:if>
                     <c:if test="${teacher.is_admin=='null'}">
-                        <a href="/asAdmin?id=${teacher.id}" class="button btn-primary">设为管理员</a>
+                        <a href="/asAdmin?id=${teacher.id}" class="btn btn-primary">设为管理员</a>
                     </c:if>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+    <input id="selectedDelete" type="submit" class="btn btn-info btn-search" value="删除选中教师"/>
+    <input id="selectedAsAdmin" type="submit" class="btn btn-info btn-search" value="一键设置管理员"/>
+    <input id="selectedCancelAdmin" type="submit" class="btn btn-info btn-search" value="一键撤销管理员"/>
+    <hr/>
     <p>当前页为：${pageInfo.pageNumber}，共${pageInfo.totalPage}页，数据总条数：${pageInfo.total}</p>
     <c:forEach begin="1" end="${pageInfo.totalPage}" varStatus="status">
         <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);"
@@ -207,10 +216,6 @@
         <c:if test="${pageInfo.pageNumber != status.count}"><a href="/admin_teacher?pageNumber=${status.count}"
                                                                class="btn btn-info">${status.count}</a></c:if>
     </c:forEach>
-    <hr/>
-    <input id="selectedDelete" type="submit" class="btn btn-info btn-search" value="删除选中教师"/>
-    <input id="selectedAsAdmin" type="submit" class="btn btn-info btn-search" value="一键设置管理员"/>
-    <input id="selectedCancelAdmin" type="submit" class="btn btn-info btn-search" value="一键撤销管理员"/>
     <div class="modal fade" id="edit_teacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -238,7 +243,7 @@
                         </div>
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="is_admin">同时设为管理员
+                                <input type="checkbox" name="is_admin" id="is_admin">同时设为管理员
                             </label>
                         </div>
                     </form>

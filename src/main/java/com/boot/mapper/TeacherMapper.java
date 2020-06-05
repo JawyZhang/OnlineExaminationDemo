@@ -1,9 +1,6 @@
 package com.boot.mapper;
 
-import com.boot.pojo.Exam;
-import com.boot.pojo.PageInfo;
-import com.boot.pojo.Student;
-import com.boot.pojo.Teacher;
+import com.boot.pojo.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -219,7 +216,7 @@ public interface TeacherMapper {
      * @param status
      * @return
      */
-    @Select("select count(*) from exam_student where status=#{status}")
+    @Select("select count(*) from exam_student where exam_id=#{exam_id} and status=#{status}")
     Integer selectExamSubmitStatusCount(int exam_id, int status);
 
     /**
@@ -235,7 +232,7 @@ public interface TeacherMapper {
             @Result(property = "submit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=1}"),
             @Result(property = "unsubmit_count", one = @One(select = "selectExamSubmitStatusCount"), column = "{exam_id=exam_id,status=0}")
     })
-    @Select("select *,1,0,3,2 from exams where status=#{status}")
+    @Select("select *,1,0 from exams where status=#{status}")
     List<Exam> selectAllStartExams(int status);
 
     /**
@@ -253,8 +250,8 @@ public interface TeacherMapper {
      * @param exam_id
      * @return
      */
-    @Update("update exams set status=1 where exam_id=#{exam_id}")
-    Integer startExam(int exam_id);
+    @Update("update exams set status=#{status} where exam_id=#{exam_id}")
+    Integer updateExamStatus(int exam_id, int status);
 
     /**
      * 根据考试号和学生号查询中间表信息
@@ -384,4 +381,79 @@ public interface TeacherMapper {
      */
     @Update("update exam_student set ip=#{ip} where exam_id=#{exam_id} and stu_id=#{stu_id};update student set stu_no=#{stu_no},username=#{username},class_room=#{class_room} where id=#{stu_id}")
     Integer updateStudentExamInfo(int exam_id, int stu_id, String stu_no, String username, String class_room, String ip);
+
+    /**
+     * 查询需要加入到定时任务的考试
+     *
+     * @return
+     */
+    @Select("SELECT * FROM exams where (is_auto_begin=1 and status<1 or status=1) and paper_path !=''")
+    List<Exam> selectScheduleExam();
+
+    /**
+     * 删除考试的所有考生
+     *
+     * @param exam_id
+     * @return
+     */
+    @Delete("delete from exam_student where exam_id=#{exam_id}")
+    Integer deleteExamStudent(int exam_id);
+
+    /**
+     * 开启考试
+     *
+     * @param exam_id
+     * @param status
+     * @param start_time
+     * @return
+     */
+    @Update("update exams set status=#{status},start_time=#{start_time} where exam_id=#{exam_id}")
+    Integer startExamStatus(int exam_id, int status, String start_time);
+
+    /**
+     * 查询指定考试的所有通知信息
+     *
+     * @param exam_id
+     * @return
+     */
+    @Select("select * from messages where exam_id=#{exam_id}")
+    List<Message> selectExamMessage(int exam_id);
+
+    /**
+     * 删除指定消息
+     *
+     * @param id
+     * @return
+     */
+    @Delete("delete from messages where id=#{id}")
+    Integer deleteMessage(int id);
+
+    /**
+     * 插入新的消息
+     *
+     * @param exam_id
+     * @param time
+     * @param detail
+     * @return
+     */
+    @Insert("insert into messages values(default,#{exam_id},#{time},#{detail})")
+    Integer addMessage(int exam_id, String time, String detail);
+
+    /**
+     * 查找指定名称的考试
+     *
+     * @param name
+     * @return
+     */
+    @Select("select * from exams where exam_name=#{name}")
+    Exam selectExam(String name);
+
+    /**
+     * 删除指定考试的所有通知
+     *
+     * @param exam_id
+     * @return
+     */
+    @Delete("delete from messages where exam_id=#{exam_id}")
+    Integer deleteAllMessage(int exam_id);
 }

@@ -1,6 +1,7 @@
 package com.boot.mapper;
 
 import com.boot.pojo.Exam;
+import com.boot.pojo.Message;
 import com.boot.pojo.Student;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -73,4 +74,13 @@ public interface StudentMapper {
      */
     @Update("update exam_student set status=1,paper_path=#{paper_path} where exam_id=#{exam_id} and stu_id=#{stu_id}")
     Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path);
+
+    /**
+     * 查询指定考试的所有通知信息
+     *
+     * @param exam_id
+     * @return
+     */
+    @Select("select * from messages where exam_id=#{exam_id}")
+    List<Message> selectExamMessage(int exam_id);
 }

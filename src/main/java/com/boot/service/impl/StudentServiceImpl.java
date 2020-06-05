@@ -2,6 +2,7 @@ package com.boot.service.impl;
 
 import com.boot.mapper.StudentMapper;
 import com.boot.pojo.Exam;
+import com.boot.pojo.Message;
 import com.boot.pojo.Student;
 import com.boot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path) {
         return studentMapper.updateStudentPaperAndSubmitStatus(stu_id, exam_id, paper_path);
+    }
+
+    @Override
+    public List<Message> selectExamMessage(int exam_id) {
+        return studentMapper.selectExamMessage(exam_id);
     }
 }

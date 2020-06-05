@@ -50,7 +50,11 @@
     </style>
 </head>
 <body>
-
+<c:if test="${tip != null}">
+    <script>
+        alert("${tip}");
+    </script>
+</c:if>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigaiton">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -174,12 +178,50 @@
                 <td><a href="/teacher_manage_student?exam_id=${exam.exam_id}" class="btn btn-primary">管理考生</a></td>
                 <td>
                     <c:if test="${exam.paper_path != null&&exam.paper_path.length()!=0}">
-                        <a href="/start_exam?exam_id=${exam.exam_id}" class="btn btn-primary">开始考试</a>
+                        <a href="/start_exam?exam_id=${exam.exam_id}" class="btn btn-primary"
+                           onclick="return checkTime(${system.examBeginTime},'${exam.start_time}','${exam.finish_time}')">开始考试</a>
                     </c:if>
                 </td>
             </tr>
         </c:forEach>
         <script type="text/javascript">
+            function checkTime(before_time, start_time, finish_time) {
+                var date = new Date();
+                var times = ["" + date.getFullYear(), "" + (date.getMonth() + 1), "" + date.getDay(), "" + date.getHours(), "" + date.getMinutes()];
+                var current = formatTime(times);
+                if (current > finish_time) {
+                    alert("考试时间已过，请修改考试时间！");
+                    return false;
+                }
+                if (start_time > calcTime(times, before_time)) {
+                    alert("考试不可开始，最早提前" + before_time + "分钟");
+                    return false;
+                }
+            }
+
+            function formatTime(times) {
+                for (index in times) {
+                    if (times[index].length == 1) {
+                        times[index] = "0" + times[index];
+                    }
+                }
+                return times[0] + "-" + times[1] + "-" + times[2] + " " + times[3] + ":" + times[4];
+            }
+
+            function calcTime(times, before_time) {
+                if(before_time==60){
+                    times[3]=""+(parseInt(times[3])+1);
+                }else{
+                    if(parseInt(times[4])+before_time>=60){
+                        times[3]=""+(parseInt(times[3])+1);
+                        times[4]=""+(parseInt(times[4])+before_time-60);
+                    }else{
+                        times[4]=""+(parseInt(times[4])+before_time);
+                    }
+                }
+                return formatTime(times);
+            }
+
             function setContent(exam_id, start_time_id, finish_time_id, exam_name_id, is_auto_begin_id) {
                 $("input[name='exam_id']").val(exam_id);
                 $("input[name='change_exam_name']").val($("#" + exam_name_id).text());
