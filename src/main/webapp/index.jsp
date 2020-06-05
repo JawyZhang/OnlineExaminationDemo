@@ -184,6 +184,9 @@
                 else if (KV[0] = "password")
                     $("input[name='password']").val(KV[1]);
             }
+            if ($("#inputEmail3").val() != ""){
+                $('#checkbox1').attr('checked', 'checked');
+            }
             // $("input[name='username']").val(cookies[0].split("=")[1]);
             // $("input[name='password']").val(cookies[1].split("=")[1]);
         })
@@ -208,7 +211,7 @@
                 <center><span>${tip}</span></center>
                 <div class="form-group">
                     <input type="text" class="form-control" id="inputEmail3" name="username" required
-                           value="${user.username}" placeholder="用户名或电子邮件">
+                           value="${user.username}" placeholder="用户名,学号或工号">
                 </div>
                 <div class="form-group help">
                     <input type="password" class="form-control" id="inputPassword3" name="password" required
