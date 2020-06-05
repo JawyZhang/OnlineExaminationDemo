@@ -21,6 +21,13 @@ public interface StudentService {
     Student selectByUsernameAndPassword(Student student);
 
     /**
+     * 根据用户名和密码查询学生信息
+     *
+     * @return
+     */
+    Student selectByIdAndPassword(Student student);
+
+    /**
      * 根据传入的学生信息更新对应的学生信息
      *
      * @param student

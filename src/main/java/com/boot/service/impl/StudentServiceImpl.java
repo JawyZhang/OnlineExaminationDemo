@@ -25,6 +25,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student selectByIdAndPassword(Student student) {
+        return studentMapper.selectByIdAndPassword(student);
+    }
+
+    @Override
     public Integer updateStudentById(Student student) {
         return studentMapper.updateStudentById(student);
     }
