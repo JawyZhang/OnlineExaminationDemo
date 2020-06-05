@@ -184,6 +184,9 @@
                 else if (KV[0] = "password")
                     $("input[name='password']").val(KV[1]);
             }
+            if ($("#inputEmail3").val() != ""){
+                $('#checkbox1').attr('checked', 'checked');
+            }
             // $("input[name='username']").val(cookies[0].split("=")[1]);
             // $("input[name='password']").val(cookies[1].split("=")[1]);
         })
