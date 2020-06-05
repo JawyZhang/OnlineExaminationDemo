@@ -19,7 +19,7 @@ public class ScheduleUtils {
     @Autowired
     private TeacherService teacherServiceImpl;
 
-    @Scheduled(cron = "1 * * * * ?")
+    @Scheduled(cron = "0/1 * * * * ?")
     private void refreshTask() {
         exams = teacherServiceImpl.selectScheduleExam();
         System.out.println("定时任务刷新，任务个数：" + exams.size());
