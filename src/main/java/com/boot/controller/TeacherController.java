@@ -55,15 +55,17 @@ public class TeacherController {
         } else {
             model.addAttribute("tip", "添加考试信息失败");
         }
-        return "redirect:teacher_before?username=" + exam.getCreater();
+        return "redirect:teacher_before?username=" + UrlCodeUtils.getUrlString(exam.getCreater());
     }
 
     @RequestMapping("uploadPaper")
     public String uploadPaper(HttpServletRequest request, int exam_id, MultipartFile filename) {
         if (filename.getSize() < (int) SystemController.getSystem().get("minFileSize")) {
             System.out.println("上传文件过小！！！");
+            return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername() + "&tip=" + UrlCodeUtils.getUrlString("文件过小");
         } else if (filename.getSize() > (int) SystemController.getSystem().get("maxFileSize")) {
             System.out.println("上传文件过大！！！");
+            return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername() + "&tip=" + UrlCodeUtils.getUrlString("文件过大");
         } else {
             String storagePath = UUID.randomUUID() + FileNameUtils.getExtName(filename.getOriginalFilename());
             String absolutePath = upload_path + storagePath;
@@ -74,7 +76,7 @@ public class TeacherController {
                 System.out.println("上传失败，失败原因：" + e.getMessage());
             }
         }
-        return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
+        return "redirect:teacher_before?username=" + UrlCodeUtils.getUrlString(((Teacher) (request.getSession().getAttribute("user"))).getUsername());
     }
 
     @RequestMapping("downloadPaper")
@@ -121,11 +123,11 @@ public class TeacherController {
         } else {
             request.setAttribute("tip", "删除失败");
         }
-        return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
+        return "redirect:teacher_before?username=" + UrlCodeUtils.getUrlString(((Teacher) (request.getSession().getAttribute("user"))).getUsername());
     }
 
     @RequestMapping("teacher_before")
-    public String teacher_before(Model model, String username) {
+    public String teacher_before(Model model, String username, @RequestParam(defaultValue = "") String tip) {
         List<Exam> exams = new ArrayList<>();
         if ("admin".equals(username)) {
             //查询状态为0(仅创建)的考试
@@ -135,6 +137,9 @@ public class TeacherController {
             exams = teacherServiceImpl.selectExamsByUserName(username, 0);
         }
         model.addAttribute("exams", exams);
+        if (tip.length() > 0) {
+            model.addAttribute("tip", tip);
+        }
         return "teacher_before";
     }
 
@@ -154,7 +159,7 @@ public class TeacherController {
         } else {
             request.setAttribute("tip", "修改失败");
         }
-        return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
+        return "redirect:teacher_before?username=" + UrlCodeUtils.getUrlString(((Teacher) (request.getSession().getAttribute("user"))).getUsername());
     }
 
     @RequestMapping("start_exam")
@@ -385,6 +390,6 @@ public class TeacherController {
         if (null != paper_path) {
             new File(upload_path + paper_path).delete();
         }
-        return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
+        return "redirect:teacher_before?username=" + UrlCodeUtils.getUrlString(((Teacher) (request.getSession().getAttribute("user"))).getUsername());
     }
 }

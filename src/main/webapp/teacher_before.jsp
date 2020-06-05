@@ -64,7 +64,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="teacher_home">教师管理面板</a></li>
-                <li class="active"><a href="teacher_before">考前操作</a></li>
+                <li class="active"><a href="teacher_before?$username=${user.username}">考前操作</a></li>
                 <li><a href="teacher_within">考中管理</a></li>
                 <li><a href="teacher_after">考后操作</a></li>
             </ul>
