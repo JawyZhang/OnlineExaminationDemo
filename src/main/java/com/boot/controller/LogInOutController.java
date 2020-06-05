@@ -45,7 +45,7 @@ public class LogInOutController {
             if (isTeacher != null) {
                 session.setAttribute("user", isTeacher);
                 //如果ID为1并且不作为教师登录则跳转到管理员界面
-                if (isTeacher.getId() == 1 && asTeacher == null) {
+                if (isTeacher.getIs_admin().equals("on") && asTeacher == null) {
                     //给管理员分页显示设置默认默认分页大小为每页10条数据
                     session.getServletContext().setAttribute("systemPageSize", 10);
                     //ID为1的教师是管理员
