@@ -97,46 +97,63 @@
                 <li><a href="/logout">退出</a></li>
             </ul>
         </div>
-
     </div>
 </nav>
 <div class="container " id="row" style="margin: auto">
-    <h1>通过Excel文件批量添加考生</h1>
-    <p>请保证Excel文件为2003版的，程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无，即文件后缀名为xls的Excel文件！！！</p>
-    <form action="/addStudentByExcel" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="exam_id" value="${exam_id}"/>
-        <input type="file" name="filename" required/>
-        <input type="submit" class="btn btn-primary" value="批量添加">
-    </form>
+    <div class="panel panel-default" style="margin-top: 20px">
+        <div class="panel-heading"> 通过Excel文件批量添加考生</div>
+
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <strong>请保证Excel文件为2003版的，，即文件后缀名为xls的Excel文件,程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无！！！</strong>
+            </div>
+            <form action="/addStudentByExcel" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="exam_id" value="${exam_id}"/>
+                <input type="file" name="filename" required/>
+                <input type="submit" style="margin-top: 5px" class="btn btn-primary" value="批量添加">
+            </form>
+        </div>
+    </div>
     <hr/>
-    <h1>通过手动输入逐个添加</h1>
-    <p>生成的学生账号会以姓名作为用户名，学号后六位作为默认密码(不足六位前面补零)</p>
-    <form action="/addStudent" method="post">
-        <input type="hidden" name="exam_id" value="${exam_id}"/>
-        <label>学号：</label>
-        <input name="stu_no" placeholder="请输入学号" required/>
-        <label>姓名：</label>
-        <input name="username" placeholder="请输入姓名" required/>
-        <label>班级：</label>
-        <input name="class_room" placeholder="请输入班级" required/>
-        <input type="submit" class="btn btn-primary" value="添加"/>
-    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">通过手动输入逐个添加考生</div>
+        <div class="panel-body">
+            <div class="alert alert-info">
+                <strong>注意：生成的学生账号会以姓名作为用户名，学号后六位作为默认密码(不足六位前面补零)</strong>
+            </div>
+            <form action="/addStudent" method="post">
+                <input type="hidden" name="exam_id" value="${exam_id}"/>
+                <label>学号：</label>
+                <input name="stu_no" placeholder="请输入学号" required/>
+                <label>姓名：</label>
+                <input name="username" placeholder="请输入姓名" required/>
+                <label>班级：</label>
+                <input name="class_room" placeholder="请输入班级" required/>
+                <input type="submit" class="btn btn-primary" value="添加"/>
+            </form>
+        </div>
+    </div>
     <hr/>
-    <h1>查找考生信息</h1>
-    <form action="/searchStudent" method="post">
-        <input type="hidden" name="exam_id" value="${exam_id}"/>
-        <label>学号：</label>
-        <input name="stu_no" placeholder="请输入学号" value="${search.stu_no}" required/>
-        <label>姓名：</label>
-        <input name="username" placeholder="请输入姓名" value="${search.username}" required/>
-        <label>班级：</label>
-        <input name="class_room" placeholder="请输入班级" value="${search.class_room}" required/>
-        <input type="submit" class="btn btn-primary" value="查找"/>
-        <c:if test="${search!=null}">
-            <a href="/teacher_manage_student?exam_id=${exam_id}" class="btn btn-primary">清除条件查看全部考生</a>
-        </c:if>
-    </form>
-    <hr/>
+    <div class="panel panel-default">
+        <div class="panel-heading">查找考生信息</div>
+        <div class="panel-body">
+            <form action="/searchStudent" method="post">
+                <input type="hidden" name="exam_id" value="${exam_id}"/>
+                <label>学号：</label>
+                <input name="stu_no" placeholder="请输入学号" value="${search.stu_no}" required/>
+                <label>姓名：</label>
+                <input name="username" placeholder="请输入姓名" value="${search.username}" required/>
+                <label>班级：</label>
+                <input name="class_room" placeholder="请输入班级" value="${search.class_room}" required/>
+                <input type="submit" class="btn btn-primary" value="查找"/>
+                <c:if test="${search!=null}">
+                    <a href="/teacher_manage_student?exam_id=${exam_id}"
+                       class="btn btn-primary">清除条件查看全部考生</a>
+                </c:if>
+            </form>
+        </div>
+
+        <hr/>
     <table class="table">
         <thead>
         <tr>
@@ -158,9 +175,11 @@
                 <td>${student.class_room}</td>
                 <td>${student.status==0?"未登录":student.status==1?"已登录":student.status==2?"未提交":student.status==3?"已提交":""}</td>
                 <td>${(student.ip==null||student.ip=="")?"暂未下载该考试试卷":student.ip}</td>
-                <td><a href="#" data-toggle="modal" data-target="#edit_student" onclick="fillInfo(this)"
+                <td><a href="#" data-toggle="modal" data-target="#edit_student"
+                       onclick="fillInfo(this)"
                        class="btn btn-primary">编辑考生信息</a></td>
-                <td><a href="deleteExamStudent?stu_id=${student.id}&exam_id=${exam_id}" class="btn btn-danger">删除该考生</a>
+                <td><a href="deleteExamStudent?stu_id=${student.id}&exam_id=${exam_id}"
+                       class="btn btn-danger">删除该考生</a>
                 </td>
             </tr>
         </c:forEach>
@@ -170,14 +189,17 @@
     <c:forEach begin="1" end="${pageInfo.totalPage}" varStatus="status">
         <c:if test="${pageInfo.pageNumber == status.count}"><a href="javascript:void(0);"
                                                                class="btn btn-default">${status.count}</a></c:if>
-        <c:if test="${pageInfo.pageNumber != status.count}"><a href="/teacher_manage_student?pageNumber=${status.count}"
-                                                               class="btn btn-info">${status.count}</a></c:if>
+        <c:if test="${pageInfo.pageNumber != status.count}"><a
+                href="/teacher_manage_student?pageNumber=${status.count}"
+                class="btn btn-info">${status.count}</a></c:if>
     </c:forEach>
-    <div class="modal fade" id="edit_student" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade" id="edit_student" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">修改考生信息</h4>
                 </div>
@@ -187,23 +209,27 @@
                         <input type="hidden" name="id" id="stu_id"/>
                         <div class="form-group">
                             <label>学号</label>
-                            <input type="text" class="form-control" name="stu_no" id="stu_no" placeholder="请输入学号"
+                            <input type="text" class="form-control" name="stu_no" id="stu_no"
+                                   placeholder="请输入学号"
                                    required>
                         </div>
                         <div class="form-group">
                             <label>姓名</label>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="请输入姓名"
+                            <input type="text" class="form-control" name="username" id="username"
+                                   placeholder="请输入姓名"
                                    required>
                         </div>
                         <div class="form-group">
                             <label>班级</label>
-                            <input type="text" class="form-control" name="class_room" id="class_room"
+                            <input type="text" class="form-control" name="class_room"
+                                   id="class_room"
                                    placeholder="请输入班级"
                                    required>
                         </div>
                         <div class="form-group">
                             <label>主机IP</label>
-                            <input type="text" class="form-control" name="ip" id="ip" placeholder="请输入指定IP，清空则清除绑定">
+                            <input type="text" class="form-control" name="ip" id="ip"
+                                   placeholder="请输入指定IP，清空则清除绑定">
                         </div>
                     </form>
                 </div>
@@ -213,6 +239,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <jsp:include page="edit_password.jsp"/>
