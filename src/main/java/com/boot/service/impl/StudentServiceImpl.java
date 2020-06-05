@@ -21,7 +21,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student selectByUsernameAndPassword(Student student) {
-        return studentMapper.selectByUsernameAndPassword(student);
+        Student student1 = studentMapper.selectByUsernameAndPassword(student);
+        if (null == student1) {
+            student.setStu_no(student.getUsername());
+            student1 = studentMapper.selectByIdAndPassword(student);
+        }
+        return student1;
     }
 
     @Override

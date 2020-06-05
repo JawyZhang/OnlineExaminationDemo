@@ -365,4 +365,12 @@ public interface TeacherService {
      * @return
      */
     Integer deleteAllMessage(int exam_id);
+
+    /**
+     * 查询是否有交卷的学生
+     *
+     * @param exam_id
+     * @return
+     */
+    Integer selectAnswersCount(int exam_id);
 }

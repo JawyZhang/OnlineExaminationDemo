@@ -105,7 +105,7 @@
 
         <div class="panel-body">
             <div class="alert alert-info">
-                <strong>请保证Excel文件为2003版的，，即文件后缀名为xls的Excel文件,程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无！！！</strong>
+                <strong>请保证Excel文件为2003版的，即文件后缀名为xls的Excel文件，程序只会读取前三列，请保证前三列的按"学号-姓名-班级"的方式排列，表头可有可无！！！</strong>
             </div>
             <form action="/addStudentByExcel" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="exam_id" value="${exam_id}"/>

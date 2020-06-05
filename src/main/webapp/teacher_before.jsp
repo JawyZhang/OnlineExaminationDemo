@@ -121,15 +121,24 @@
                 }).on('changeDate', function (ev) {
                     $('#from').datetimepicker('setEndDate', ev.date);
                 });
+
+                function checkFromAndToTime() {
+                    var from = $("#from").val();
+                    var to = $("#to").val();
+                    if (from.length > 0 && to.length > 0) {
+                        return true;
+                    }
+                    alert("请选择考试的开始时间和结束时间！")
+                    return false;
+                }
             </script>
 
             <div class="checkbox ">
                 <label><input type="checkbox" name="is_auto_begin">自动开始</label>
             </div>
-            <button type="submit" class="btn btn-default">添加考试</button>
+            <button type="submit" class="btn btn-default" onclick="return checkFromAndToTime()">添加考试</button>
 
         </form>
-
 
     </div>
     <HR width="80%" color=#987cb9 SIZE=3>
@@ -145,6 +154,7 @@
                 <th>编辑考试</th>
                 <th>管理考生信息</th>
                 <th>开启考试</th>
+                <td>删除考试</td>
             </tr>
         </thread>
         <tbody>
@@ -182,6 +192,7 @@
                            onclick="return checkTime(${system.examBeginTime},'${exam.start_time}','${exam.finish_time}')">开始考试</a>
                     </c:if>
                 </td>
+                <td><a href="/deleteUselessExam?exam_id=${exam.exam_id}&paper_path=${exam.paper_path}" class="btn btn-danger" onclick="return confirm('是否删除该考试？')">删除考试</a></td>
             </tr>
         </c:forEach>
         <script type="text/javascript">
@@ -209,14 +220,14 @@
             }
 
             function calcTime(times, before_time) {
-                if(before_time==60){
-                    times[3]=""+(parseInt(times[3])+1);
-                }else{
-                    if(parseInt(times[4])+before_time>=60){
-                        times[3]=""+(parseInt(times[3])+1);
-                        times[4]=""+(parseInt(times[4])+before_time-60);
-                    }else{
-                        times[4]=""+(parseInt(times[4])+before_time);
+                if (before_time == 60) {
+                    times[3] = "" + (parseInt(times[3]) + 1);
+                } else {
+                    if (parseInt(times[4]) + before_time >= 60) {
+                        times[3] = "" + (parseInt(times[3]) + 1);
+                        times[4] = "" + (parseInt(times[4]) + before_time - 60);
+                    } else {
+                        times[4] = "" + (parseInt(times[4]) + before_time);
                     }
                 }
                 return formatTime(times);

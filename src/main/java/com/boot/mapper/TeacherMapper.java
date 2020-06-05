@@ -387,7 +387,7 @@ public interface TeacherMapper {
      *
      * @return
      */
-    @Select("SELECT * FROM exams where (is_auto_begin=1 and status<1 or status=1) and paper_path !=''")
+    @Select("select * from exams where ((is_auto_begin=1 and status=0) or status=1) and paper_path !=''")
     List<Exam> selectScheduleExam();
 
     /**
@@ -456,4 +456,13 @@ public interface TeacherMapper {
      */
     @Delete("delete from messages where exam_id=#{exam_id}")
     Integer deleteAllMessage(int exam_id);
+
+    /**
+     * 查询是否有交卷的学生
+     *
+     * @param exam_id
+     * @return
+     */
+    @Select("select count(*) from exam_student where exam_id=#{exam_id} and paper_path != ''")
+    Integer selectAnswersCount(int exam_id);
 }

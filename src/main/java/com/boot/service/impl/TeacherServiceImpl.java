@@ -246,4 +246,9 @@ public class TeacherServiceImpl implements TeacherService {
     public Integer deleteAllMessage(int exam_id) {
         return teacherMapper.deleteAllMessage(exam_id);
     }
+
+    @Override
+    public Integer selectAnswersCount(int exam_id) {
+        return teacherMapper.selectAnswersCount(exam_id);
+    }
 }

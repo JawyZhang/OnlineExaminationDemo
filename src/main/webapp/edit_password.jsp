@@ -38,7 +38,7 @@
                     <input type="hidden" name="isStudent" value="${isStudent}">
                     <div class="form-group">
                         <label>用户名</label>
-                        <input type="text" class="form-control" name="change_username" value="${user.username}" <c:if test="${user.username=='admin'}">disabled</c:if>
+                        <input type="text" class="form-control" name="change_username" value="${user.username}"
                                placeholder="请输入用户名">
                     </div>
                     <div class="form-group">

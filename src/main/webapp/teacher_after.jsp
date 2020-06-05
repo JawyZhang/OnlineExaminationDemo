@@ -105,7 +105,7 @@
                         <td>${exam.start_time}</td>
                         <td>${exam.finish_time}</td>
                         <td>${exam.creater}</td>
-                        <td>${exam.status==2?"已结束":exam.status==1?"已开启":exam.status==0?"已创建":""}</td>
+                        <td>${exam.status>=2?"已结束":exam.status==1?"已开启":exam.status==0?"已创建":""}</td>
                         <td>
                             <c:if test="${exam.status==2||exam.status==3}"><a
                                     href="downloadAllAnswers?exam_name=${exam.exam_name}&exam_id=${exam.exam_id}"

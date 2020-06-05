@@ -68,7 +68,9 @@ public class StudentController {
                 System.out.println(stu_ip + "\t" + ip);
                 if (!(stu_ip == null || stu_ip.equals("")) && !ip.equals(stu_ip)) {
                     //如果查询到学生的绑定IP信息，并且跟当前IP不符合不会下载试卷，即不可参加该场考试
-                    outputStream.write("<h1 style='color:red'>当前机器的IP和初次使用机器的IP不一致，答案提交失败！！！<h1>".getBytes("GBK"));
+                    outputStream.write(("<html><head><script>" +
+                            "var res=confirm('当前机器的IP和初次使用机器的IP不一致，答案提交失败！！！');if(res==true||res==false){history.back();}" +
+                            "</script></head><body></body></html>").getBytes("GBK"));
                     return;
                 }
                 String storagePath = exam_name + "/" + exam_name + "-" + stu_no + "-" + username + FileNameUtils.getExtName(filename.getOriginalFilename());

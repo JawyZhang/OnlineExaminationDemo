@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import sun.nio.cs.ext.GBK;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -85,10 +86,12 @@ public class TeacherController {
             if ("true".equals(request.getSession().getAttribute("isStudent"))) {
                 String ip = request.getRemoteAddr();
                 String stu_ip = teacherServiceImpl.selectStudentIp(exam_id, stu_id);
-                System.out.println(stu_ip+"\t"+ip);
+                System.out.println(stu_ip + "\t" + ip);
                 if (!(stu_ip == null || stu_ip.equals("")) && !ip.equals(stu_ip)) {
                     //如果查询到学生的绑定IP信息，并且跟当前IP不符合不会下载试卷，即不可参加该场考试
-                    outputStream.write("<h1 style='color:red'>当前机器的IP和初次使用机器的IP不一致，试卷下载失败！！！<h1>".getBytes("GBK"));
+                    outputStream.write(("<html><head><script>" +
+                            "var res=confirm('当前机器的IP和初次使用机器的IP不一致，试卷下载失败！！！');if(res==true||res==false){history.back();}" +
+                            "</script></head><body></body></html>").getBytes("GBK"));
                     return;
                 } else {
                     //如果未查询到学生的绑定IP信息，则在第一次下载试卷时绑定IP信息
@@ -280,23 +283,30 @@ public class TeacherController {
     @RequestMapping("downloadAllAnswers")
     public void downloadAllAnswers(HttpServletResponse response, String exam_name, int exam_id) {
         try {
-            String downloadFilename = URLEncoder.encode(exam_name + ".zip", "utf-8");
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment;filename=" + downloadFilename);
-            ZipOutputStream zos = new ZipOutputStream(response.getOutputStream());
-            byte buffer[] = new byte[512];
-            int len = 0;
-            for (File file : new File(upload_path + exam_name).listFiles()) {
-                FileInputStream fis = new FileInputStream(file);
-                zos.putNextEntry(new ZipEntry(file.getName()));
-                while ((len = fis.read(buffer)) != -1) {
-                    zos.write(buffer, 0, len);
+            ServletOutputStream outputStream = response.getOutputStream();
+            if (teacherServiceImpl.selectAnswersCount(exam_id) > 0) {
+                String downloadFilename = URLEncoder.encode(exam_name + ".zip", "utf-8");
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Disposition", "attachment;filename=" + downloadFilename);
+                ZipOutputStream zos = new ZipOutputStream(outputStream);
+                byte buffer[] = new byte[512];
+                int len = 0;
+                for (File file : new File(upload_path + exam_name).listFiles()) {
+                    FileInputStream fis = new FileInputStream(file);
+                    zos.putNextEntry(new ZipEntry(file.getName()));
+                    while ((len = fis.read(buffer)) != -1) {
+                        zos.write(buffer, 0, len);
+                    }
+                    fis.close();
                 }
-                fis.close();
+                zos.flush();
+                zos.close();
+                teacherServiceImpl.downloadExam(exam_id);
+            } else {
+                outputStream.write(("<html><head><script>" +
+                        "var res=confirm('没有考生上传试卷！');if(res==true||res==false){history.back();}" +
+                        "</script></head><body></body></html>").getBytes("GBK"));
             }
-            zos.flush();
-            zos.close();
-            teacherServiceImpl.downloadExam(exam_id);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -365,5 +375,16 @@ public class TeacherController {
     public String addMessage(int exam_id, String exam_name, String detail) {
         teacherServiceImpl.addMessage(exam_id, TimeUtils.getCurrentHourAndMinute(), detail);
         return "redirect:teacher_manage_message?exam_id=" + exam_id + "&exam_name=" + UrlCodeUtils.getUrlString(exam_name);
+    }
+
+    @RequestMapping("deleteUselessExam")
+    public String deleteUselessExam(HttpServletRequest request, int exam_id, String paper_path) {
+        System.out.println(paper_path);
+        teacherServiceImpl.deleteExam(exam_id);
+        teacherServiceImpl.deleteExamStudent(exam_id);
+        if (null != paper_path) {
+            new File(upload_path + paper_path).delete();
+        }
+        return "redirect:teacher_before?username=" + ((Teacher) (request.getSession().getAttribute("user"))).getUsername();
     }
 }
