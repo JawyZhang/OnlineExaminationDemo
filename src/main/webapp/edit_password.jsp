@@ -15,6 +15,10 @@
 <script type="text/javascript">
     $(function () {
         $("#update_password").click(function () {
+            if($("input[name='change_password']").val() != $("input[name='reassure_password']").val()){
+                alert("两次密码不一致！！！");
+                return false;
+            }
             if ($("input[name='change_username']").val().length != 0 && $("input[name='change_password']").val().length != 0) {
                 $("#form").submit();
             } else {
@@ -44,6 +48,10 @@
                     <div class="form-group">
                         <label>密码</label>
                         <input type="password" class="form-control" name="change_password" placeholder="请输入密码">
+                    </div>
+                    <div class="form-group">
+                        <label>再次确认</label>
+                        <input type="password" class="form-control" name="reassure_password" placeholder="请输入密码">
                     </div>
                 </form>
             </div>
