@@ -19,16 +19,16 @@ public interface StudentMapper {
      *
      * @return
      */
-    @Select("select * from student where username=#{username} and password=#{password}")
-    Student selectByUsernameAndPassword(Student student);
+    @Select("select * from student where username=#{username}")
+    List<Student> selectByUsername(String username);
 
     /**
      * 根据学号和密码查询学生信息
      *
      * @return
      */
-    @Select("select * from student where stu_no=#{stu_no} and password=#{password}")
-    Student selectByIdAndPassword(Student student);
+    @Select("select * from student where stu_no=#{stu_no}")
+    List<Student> selectById(String student_id);
 
     /**
      * 根据传入的学生信息更新对应的学生信息
