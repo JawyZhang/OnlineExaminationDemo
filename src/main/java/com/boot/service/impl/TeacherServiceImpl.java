@@ -3,6 +3,7 @@ package com.boot.service.impl;
 import com.boot.mapper.TeacherMapper;
 import com.boot.pojo.*;
 import com.boot.service.TeacherService;
+import com.boot.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +35,26 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher selectByUsernameAndPassword(Teacher teacher) {
-        return teacherMapper.selectByUsernameAndPassword(teacher);
+        List<Teacher> teacher1List = teacherMapper.loginByUsername(teacher.getUsername());
+        Teacher teacher2 = null;
+        for (Teacher teacher1:teacher1List) {
+            if(MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())){
+                teacher2 = teacher1;
+            }
+        }
+        return teacher2;
     }
 
     @Override
     public Teacher selectByTeacherIdAndPassword(Teacher teacher) {
-        return teacherMapper.selectByTeacherIdAndPassword(teacher);
+        List<Teacher> teacher1List = teacherMapper.selectByTeacherId(teacher.getTeacher_id());
+        Teacher teacher2 = null;
+        for (Teacher teacher1:teacher1List) {
+            if(MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())){
+                teacher2 = teacher1;
+            }
+        }
+        return teacher2;
     }
 
     @Override
@@ -69,11 +84,13 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Integer updateTeacherInfo(Teacher teacher) {
+        teacher.setPassword(MD5Utils.md5(teacher.getPassword(), String.valueOf(teacher.getId())));
         return teacherMapper.updateTeacherInfo(teacher);
     }
 
     @Override
     public Integer updateTeacher(Teacher teacher) {
+        teacher.setPassword(MD5Utils.md5(teacher.getPassword(), String.valueOf(teacher.getId())));
         return teacherMapper.updateTeacher(teacher);
     }
 
@@ -174,6 +191,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Integer addStudent(Student student) {
+        student.setPassword(MD5Utils.md5(student.getPassword(), String.valueOf(student.getId())));
         return teacherMapper.addStudent(student);
     }
 
