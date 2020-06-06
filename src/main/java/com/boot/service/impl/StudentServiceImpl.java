@@ -4,6 +4,7 @@ import com.boot.mapper.StudentMapper;
 import com.boot.pojo.Exam;
 import com.boot.pojo.Message;
 import com.boot.pojo.Student;
+import com.boot.utils.MD5Utils;
 import com.boot.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,21 +22,31 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student selectByUsernameAndPassword(Student student) {
-        Student student1 = studentMapper.selectByUsernameAndPassword(student);
-        if (null == student1) {
-            student.setStu_no(student.getUsername());
-            student1 = studentMapper.selectByIdAndPassword(student);
+        List<Student> student1List = studentMapper.selectByUsername(student.getUsername());
+        Student student2 = null;
+        for (Student student1:student1List) {
+            if(MD5Utils.verify(student.getPassword(), String.valueOf(student1.getId()), student1.getPassword())){
+                student2 = student1;
+            }
         }
-        return student1;
+        return student2;
     }
 
     @Override
     public Student selectByIdAndPassword(Student student) {
-        return studentMapper.selectByIdAndPassword(student);
+        List<Student> student1List = studentMapper.selectById(student.getStu_no());
+        Student student2 = null;
+        for (Student student1:student1List) {
+            if(MD5Utils.verify(student.getPassword(), String.valueOf(student1.getId()), student1.getPassword())){
+                student2 = student1;
+            }
+        }
+        return student2;
     }
 
     @Override
     public Integer updateStudentById(Student student) {
+        student.setPassword(MD5Utils.md5(student.getPassword(), String.valueOf(student.getId())));
         return studentMapper.updateStudentById(student);
     }
 
