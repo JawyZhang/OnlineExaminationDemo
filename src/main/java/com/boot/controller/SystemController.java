@@ -6,14 +6,26 @@ import com.boot.pojo.Teacher;
 import com.boot.service.TeacherService;
 import com.boot.utils.UrlCodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,27 +37,105 @@ import java.util.Map;
  */
 @Controller
 public class SystemController {
+    private static String upload_path = "D:/";
+    private static String xmlFileName = "system_config.xml";
     private static boolean init_system_flag = true;
     private static boolean init_flag = true;
     private static Map<String, Object> system = new HashMap<>(5);
     @Autowired
     private TeacherService teacherServiceImpl;
 
-    public static Map<String, Object> getSystem() {
-        if (init_system_flag) {
-            system.put("taskTime", 1);
-            system.put("systemPageSize", 10);
-            system.put("examBeginTime", 60);
-            system.put("minFileSize", 1024);
-            system.put("maxFileSize", 102400);
-            system.put("teacherClear", 0);
-            init_system_flag = false;
+    public static Map<String, Object> getSystem(){
+        File file = new File(upload_path + xmlFileName);
+        if (!file.exists()) {
+            createXML();
         }
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.parse(upload_path + xmlFileName);
+            system.put("taskTime", Integer.parseInt(document.getElementsByTagName("taskTime").item(0).getTextContent()));
+            system.put("systemPageSize", Integer.parseInt(document.getElementsByTagName("systemPageSize").item(0).getTextContent()));
+            system.put("examBeginTime", Integer.parseInt(document.getElementsByTagName("examBeginTime").item(0).getTextContent()));
+            system.put("minFileSize", Integer.parseInt(document.getElementsByTagName("minFileSize").item(0).getTextContent()));
+            system.put("maxFileSize", Integer.parseInt(document.getElementsByTagName("maxFileSize").item(0).getTextContent()));
+            system.put("teacherClear", Integer.parseInt(document.getElementsByTagName("teacherClear").item(0).getTextContent()));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(system.get("taskTime"));
         return system;
+    }
+
+    public static void createXML(){
+        try{
+            // 创建一个DocumentBuilderFactory
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            // 创建一个DocumentBuilder对象
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            //DocumentBuilder db=getDocumentBuilder();
+            Document document=db.newDocument();
+            document.setXmlStandalone(true);
+            Element system_config=document.createElement("system_config");
+            //向bookstore根节点中添加字节点book
+            Element taskTime=document.createElement("taskTime");
+            Element systemPageSize=document.createElement("systemPageSize");
+            Element examBeginTime=document.createElement("examBeginTime");
+            Element minFileSize=document.createElement("minFileSize");
+            Element maxFileSize=document.createElement("maxFileSize");
+            Element teacherClear=document.createElement("teacherClear");
+            taskTime.setTextContent("1");
+            systemPageSize.setTextContent("10");
+            examBeginTime.setTextContent("60");
+            minFileSize.setTextContent("1024");
+            maxFileSize.setTextContent("10485760");
+            teacherClear.setTextContent("0");
+
+            system_config.appendChild(taskTime);
+            system_config.appendChild(systemPageSize);
+            system_config.appendChild(examBeginTime);
+            system_config.appendChild(minFileSize);
+            system_config.appendChild(maxFileSize);
+            system_config.appendChild(teacherClear);
+            document.appendChild(system_config);
+            //创建TransformerFactory对象
+            TransformerFactory tff=TransformerFactory.newInstance();
+            //创建Transformer对象
+            Transformer tf=tff.newTransformer();
+            //换行文件内容
+            tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            tf.transform(new DOMSource(document), new StreamResult(new File(upload_path+xmlFileName)));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void setSystem(Map<String, Object> system) {
         SystemController.system = system;
+        File file = new File(upload_path + xmlFileName);
+        if (!file.exists()) {
+            createXML();
+        }
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.parse(upload_path + xmlFileName);
+            document.getElementsByTagName("taskTime").item(0).setTextContent(String.valueOf(system.get("taskTime")));
+            document.getElementsByTagName("systemPageSize").item(0).setTextContent(String.valueOf(system.get("systemPageSize")));
+            document.getElementsByTagName("examBeginTime").item(0).setTextContent(String.valueOf(system.get("examBeginTime")));
+            document.getElementsByTagName("minFileSize").item(0).setTextContent(String.valueOf(system.get("minFileSize")));
+            document.getElementsByTagName("maxFileSize").item(0).setTextContent(String.valueOf(system.get("maxFileSize")));
+            document.getElementsByTagName("teacherClear").item(0).setTextContent(String.valueOf(system.get("teacherClear")));
+            //创建TransformerFactory对象
+            TransformerFactory tff=TransformerFactory.newInstance();
+            //创建Transformer对象
+            Transformer tf=tff.newTransformer();
+            //换行文件内容
+            tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            tf.transform(new DOMSource(document), new StreamResult(new File(upload_path+xmlFileName)));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,6 +172,7 @@ public class SystemController {
         system.put("minFileSize", minFileSize);
         system.put("maxFileSize", maxFileSize);
         system.put("teacherClear", "lock".equals(teacherClear) ? 1 : 0);
+        setSystem(system);
         model.addAttribute("system", system);
         model.addAttribute("tip", "修改成功");
         return "admin_system";
