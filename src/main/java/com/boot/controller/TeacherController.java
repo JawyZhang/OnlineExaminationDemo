@@ -187,6 +187,7 @@ public class TeacherController {
             for (Student temp : students) {
                 Student student = teacherServiceImpl.selectStuByNo(temp.getStu_no());
                 if (null == student) {
+                    temp.setStatus(2);
                     teacherServiceImpl.addStudent(temp);
                     student = teacherServiceImpl.selectStuByNo(temp.getStu_no());
                 }
@@ -202,7 +203,7 @@ public class TeacherController {
 
     @RequestMapping("addStudent")
     public String addStudent(Student temp, int exam_id) {
-        temp.setPassword(StringUtils.getSubLengthStr(temp.getStu_no(), 6));
+        temp.setPassword(temp.getStu_no());
         Student student = teacherServiceImpl.selectStuByNo(temp.getStu_no());
         if (null == student) {
             temp.setStatus(2);

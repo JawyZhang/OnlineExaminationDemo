@@ -316,7 +316,25 @@ public interface TeacherMapper {
      * @return
      */
     @Insert("insert into student values(default,#{stu_no},#{username},#{password},#{class_room},0)")
-    Integer addStudent(Student student);
+    Integer firstOfAddStudent(Student student);
+
+    /**
+     * 根据传入的信息新增一个学生信息
+     *
+     * @param student
+     * @return
+     */
+    @Select("select * from student where stu_no = #{stu_no}")
+    Student locationOfAddStudent(Student student);
+
+    /**
+     * 根据传入的信息新增一个学生信息
+     *
+     * @param student
+     * @return
+     */
+    @Update("update student set password=#{password} where id=#{id}")
+    Integer Md5OfAddStudent(Student student);
 
     /**
      * 查询指定考试的所有考生

@@ -36,7 +36,7 @@ public class ExcelUtils {
                     if (j == 0) {
                         student.setStu_no(content);
                         //设置密码为字符串的后六位
-                        student.setPassword(StringUtils.getSubLengthStr(content, 6));
+                        student.setPassword(content);
                     } else if (j == 1) {
                         student.setUsername(content);
                     } else {

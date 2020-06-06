@@ -191,8 +191,10 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Integer addStudent(Student student) {
+        teacherMapper.firstOfAddStudent(student);
+        student = teacherMapper.locationOfAddStudent(student);
         student.setPassword(MD5Utils.md5(student.getPassword(), String.valueOf(student.getId())));
-        return teacherMapper.addStudent(student);
+        return teacherMapper.Md5OfAddStudent(student);
     }
 
     @Override
