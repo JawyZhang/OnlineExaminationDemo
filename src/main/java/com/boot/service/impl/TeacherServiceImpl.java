@@ -37,8 +37,8 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher selectByUsernameAndPassword(Teacher teacher) {
         List<Teacher> teacher1List = teacherMapper.loginByUsername(teacher.getUsername());
         Teacher teacher2 = null;
-        for (Teacher teacher1:teacher1List) {
-            if(MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())){
+        for (Teacher teacher1 : teacher1List) {
+            if (MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())) {
                 teacher2 = teacher1;
             }
         }
@@ -49,8 +49,8 @@ public class TeacherServiceImpl implements TeacherService {
     public Teacher selectByTeacherIdAndPassword(Teacher teacher) {
         List<Teacher> teacher1List = teacherMapper.selectByTeacherId(teacher.getTeacher_id());
         Teacher teacher2 = null;
-        for (Teacher teacher1:teacher1List) {
-            if(MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())){
+        for (Teacher teacher1 : teacher1List) {
+            if (MD5Utils.verify(teacher.getPassword(), String.valueOf(teacher1.getId()), teacher1.getPassword())) {
                 teacher2 = teacher1;
             }
         }
@@ -206,7 +206,14 @@ public class TeacherServiceImpl implements TeacherService {
         pageInfo.setTotal(teacherMapper.selectExamAllStudentsCount(exam_id));
         int count = pageInfo.getTotal();
         pageInfo.setTotalPage(count % pageInfo.getPageSize() == 0 ? count / pageInfo.getPageSize() : count / pageInfo.getPageSize() + 1);
-        pageInfo.setList(teacherMapper.selectExamAllStudentsByPage(exam_id, pageInfo.getPageStart(), pageInfo.getPageSize()));
+        List<Student> students = teacherMapper.selectExamAllStudentsByPage(exam_id, pageInfo.getPageStart(), pageInfo.getPageSize());
+        List<Integer> ids = teacherMapper.selectExamAllSubmitStu_id(exam_id);
+        for (Student student : students) {
+            if (ids.contains(student.getId())) {
+                student.setStatus(2);
+            }
+        }
+        pageInfo.setList(students);
         return pageInfo;
     }
 

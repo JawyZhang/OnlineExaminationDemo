@@ -29,6 +29,14 @@ public interface TeacherMapper {
     List<Teacher> selectAllByPage(PageInfo pageInfo);
 
     /**
+     * 选择指定考试所有已提交学生的ID
+     * @param exam_id
+     * @return
+     */
+    @Select("select stu_id from exam_student where exam_id=#{exam_id} and status=1")
+    List<Integer> selectExamAllSubmitStu_id(int exam_id);
+
+    /**
      * 查询表格中所有的教师总个数
      *
      * @return

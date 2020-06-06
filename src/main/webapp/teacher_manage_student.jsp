@@ -173,7 +173,7 @@
                 <td>${student.stu_no}</td>
                 <td>${student.username}</td>
                 <td>${student.class_room}</td>
-                <td>${student.status==0?"未登录":student.status==1?"已登录":student.status==2?"未提交":student.status==3?"已提交":""}</td>
+                <td>${student.status==0?"未登录":student.status==1?"已登录，未提交":student.status==2?"已提交":""}</td>
                 <td>${(student.ip==null||student.ip=="")?"暂未下载该考试试卷":student.ip}</td>
                 <td><a href="#" data-toggle="modal" data-target="#edit_student"
                        onclick="fillInfo(this)"
