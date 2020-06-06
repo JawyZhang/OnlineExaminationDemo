@@ -101,6 +101,26 @@
             </div>
 
             <script>
+                $(function () {
+                    $(".deletePaper").click(function () {
+                        exam_id = $(this).attr('exam_id')
+                        file = $(this).attr('file')
+                        $.ajax({
+                            type: 'POST',
+                            url: "/deletePaper",
+                            data: {'exam_id': exam_id,
+                                    'file': file},
+                            success: function (rs) {
+                                window.location.reload();
+                            },
+                            error: function (err) {
+                                alert(err);
+                            },
+                        });
+                    })
+                })
+
+
                 var today = new Date();
                 $('#from').datetimepicker({
                     language: "zh-CN",
@@ -168,7 +188,7 @@
                     <c:if test="${exam.paper_path != null&&exam.paper_path.length()!=0}">
                         <a href="/downloadPaper?exam_id=${exam.exam_id}&exam_name=${exam.exam_name}&file=${exam.paper_path}"
                            class="btn btn-info">下载预览</a>
-                        <a href="/deletePaper?exam_id=${exam.exam_id}&file=${exam.paper_path}" class="btn btn-danger"
+                        <a exam_id=${exam.exam_id} file=${exam.paper_path}  class="btn btn-danger deletePaper"
                            onclick="">删除</a>
                     </c:if>
                     <c:if test="${exam.paper_path == null||exam.paper_path.length()==0}">
