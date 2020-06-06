@@ -51,8 +51,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Integer updateStudentStatus(int status, int stu_id) {
-        return studentMapper.updateStudentStatus(status, stu_id);
+    public Integer updateStudentStatus(int status, int id) {
+        return studentMapper.updateStudentStatus(status, id);
     }
 
     @Override

@@ -43,11 +43,11 @@ public interface StudentMapper {
      * 更新学生状态
      *
      * @param status
-     * @param stu_id
+     * @param id
      * @return
      */
-    @Update("update student set status=#{status} where id=#{stu_id}")
-    Integer updateStudentStatus(int status, int stu_id);
+    @Update("update student set status=#{status} where id=#{id}")
+    Integer updateStudentStatus(int status, int id);
 
     /**
      * 根据学生ID获取该学生的所有考试信息
