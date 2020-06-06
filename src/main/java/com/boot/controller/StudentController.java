@@ -81,7 +81,9 @@ public class StudentController {
                 }
                 filename.transferTo(new File(absolutePath));
                 studentServiceImpl.updateStudentPaperAndSubmitStatus(stu_id, exam_id, storagePath);
-                outputStream.write("<h1>提交成功<h1>".getBytes("GBK"));
+                outputStream.write(("<html><head><script>" +
+                        "var res=confirm('提交成功');if(res==true||res==false){history.back();}" +
+                        "</script></head><body></body></html>").getBytes("GBK"));
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

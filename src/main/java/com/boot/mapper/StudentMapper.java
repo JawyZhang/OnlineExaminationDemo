@@ -80,7 +80,7 @@ public interface StudentMapper {
      * @param paper_path
      * @return
      */
-    @Update("update exam_student set status=2,paper_path=#{paper_path} where exam_id=#{exam_id} and stu_id=#{stu_id}")
+    @Update("update exam_student set status=1,paper_path=#{paper_path} where exam_id=#{exam_id} and stu_id=#{stu_id}")
     Integer updateStudentPaperAndSubmitStatus(int stu_id, int exam_id, String paper_path);
 
     /**
