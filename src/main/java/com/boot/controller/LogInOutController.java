@@ -38,7 +38,9 @@ public class LogInOutController {
             } else {
                 rememberPassword(response, "", "");
             }
-            studentServiceImpl.updateStudentStatus(1, isStudent.getId());
+            if(isStudent.getStatus() == 0){
+                return "first_login";
+            }
             return "redirect:student_home?stu_id="+isStudent.getId();
         } else{
             student.setStu_no(student.getUsername());
@@ -52,13 +54,20 @@ public class LogInOutController {
                 } else {
                     rememberPassword(response, "", "");
                 }
-                studentServiceImpl.updateStudentStatus(1, isStudent.getId());
+                if(isStudent.getStatus() == 0){
+                    return "first_login";
+                }
                 return "redirect:student_home?stu_id="+isStudent.getId();
             } else {
                 Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);
                 if (isTeacher != null) {
                     session.setAttribute("user", isTeacher);
+                    //该属性用于修改密码时判断修改学生表还是老师表
+                    session.setAttribute("isStudent", "false");
                     //如果ID为1并且不作为教师登录则跳转到管理员界面
+                    if(isTeacher.getStatus() == 0){
+                        return "first_login";
+                    }
                     if (isTeacher.getIs_admin().equals("on") && asTeacher == null) {
                         //给管理员分页显示设置默认默认分页大小为每页10条数据
                         session.getServletContext().setAttribute("systemPageSize", 10);
@@ -82,6 +91,22 @@ public class LogInOutController {
                     isTeacher = teacherServiceImpl.selectByTeacherIdAndPassword(teacher);
                     if (isTeacher != null) {
                         session.setAttribute("user", isTeacher);
+                        //该属性用于修改密码时判断修改学生表还是老师表
+                        session.setAttribute("isStudent", "false");
+                        if(isTeacher.getStatus() == 0){
+                            return "first_login";
+                        }
+                        if (isTeacher.getIs_admin().equals("on") && asTeacher == null) {
+                            //给管理员分页显示设置默认默认分页大小为每页10条数据
+                            session.getServletContext().setAttribute("systemPageSize", 10);
+                            //ID为1的教师是管理员
+                            if ("None".equals(rememberPassword)) {
+                                rememberPassword(response, teacher.getUsername(), teacher.getPassword());
+                            } else {
+                                rememberPassword(response, "", "");
+                            }
+                            return "admin_home";
+                        }
                         if ("None".equals(rememberPassword)) {
                             rememberPassword(response, teacher.getUsername(), teacher.getPassword());
                         } else {
