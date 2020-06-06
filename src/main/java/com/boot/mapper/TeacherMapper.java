@@ -117,7 +117,7 @@ public interface TeacherMapper {
     @Update("<script>" +
             "update teacher set username=#{username}" +
             "<if test=\"password.length != 0\">,password=#{password}</if>" +
-            ",teacher_id=#{teacher_id},is_admin=#{is_admin} <where> id=#{id} </where>" +
+            ",teacher_id=#{teacher_id},is_admin=#{is_admin},status=#{status} <where> id=#{id} </where>" +
             "</script>")
     Integer updateTeacherInfo(Teacher teacher);
 
@@ -127,7 +127,7 @@ public interface TeacherMapper {
      * @param teacher
      * @return
      */
-    @Update("update teacher set username=#{username},password=#{password} where id=#{id}")
+    @Update("update teacher set username=#{username},password=#{password},status=#{status} where id=#{id}")
     Integer updateTeacher(Teacher teacher);
 
     /**

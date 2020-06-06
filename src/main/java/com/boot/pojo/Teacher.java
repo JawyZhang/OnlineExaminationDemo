@@ -13,6 +13,7 @@ public class Teacher {
     private String teacher_id;
     private String is_admin;
     private List<Course> courses;
+    private int status = 0;
 
     public Integer getId() {
         return id;
@@ -60,5 +61,13 @@ public class Teacher {
 
     public void setCourses(List<Course> courses) {
         this.courses = courses;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
