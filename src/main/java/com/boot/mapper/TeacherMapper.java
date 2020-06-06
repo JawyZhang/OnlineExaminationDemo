@@ -60,6 +60,15 @@ public interface TeacherMapper {
      * @param username
      * @return
      */
+    @Select("select * from teacher where username=#{username}")
+    List<Teacher> loginByUsername(String username);
+
+    /**
+     * 根据用户名查询教师信息
+     *
+     * @param username
+     * @return
+     */
     @Select("select * from teacher where username=#{username} and teacher_id is not null")
     List<Teacher> selectByUsername(String username);
 
