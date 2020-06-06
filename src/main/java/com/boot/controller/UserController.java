@@ -34,6 +34,7 @@ public class UserController {
             student.setPassword(change_password);
             student.setStatus(0);
             if (studentServiceImpl.updateStudentById(student) == 1) {
+                studentServiceImpl.updateStudentStatus(0, student.getId());
                 //更新用户信息成功，清空原有信息，强制重新登录
                 request.getSession().removeAttribute("user");
                 //删除学生标记
