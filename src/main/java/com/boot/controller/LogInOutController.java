@@ -38,9 +38,10 @@ public class LogInOutController {
             } else {
                 rememberPassword(response, "", "");
             }
-            if(isStudent.getStatus() == 0){
+            if(isStudent.getStatus() == 2){
                 return "first_login";
             }
+            studentServiceImpl.updateStudentStatus(1, isStudent.getId());
             return "redirect:student_home?stu_id="+isStudent.getId();
         } else{
             student.setStu_no(student.getUsername());
@@ -54,9 +55,10 @@ public class LogInOutController {
                 } else {
                     rememberPassword(response, "", "");
                 }
-                if(isStudent.getStatus() == 0){
+                if(isStudent.getStatus() == 2){
                     return "first_login";
                 }
+                studentServiceImpl.updateStudentStatus(1, isStudent.getId());
                 return "redirect:student_home?stu_id="+isStudent.getId();
             } else {
                 Teacher isTeacher = teacherServiceImpl.selectByUsernameAndPassword(teacher);

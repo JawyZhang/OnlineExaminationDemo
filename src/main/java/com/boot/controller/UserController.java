@@ -32,7 +32,7 @@ public class UserController {
             student.setId(id);
             student.setUsername(change_username);
             student.setPassword(change_password);
-            student.setStatus(1);
+            student.setStatus(0);
             if (studentServiceImpl.updateStudentById(student) == 1) {
                 //更新用户信息成功，清空原有信息，强制重新登录
                 request.getSession().removeAttribute("user");
