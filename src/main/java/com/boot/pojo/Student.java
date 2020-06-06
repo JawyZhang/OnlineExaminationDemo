@@ -12,7 +12,7 @@ public class Student {
     private String username;
     private String password;
     private String class_room;
-    private int status;
+    private int status = 0;
     private String ip;
     private List<Course> courses;    //学生查询所有课程
 
