@@ -205,6 +205,7 @@ public class TeacherController {
         temp.setPassword(StringUtils.getSubLengthStr(temp.getStu_no(), 6));
         Student student = teacherServiceImpl.selectStuByNo(temp.getStu_no());
         if (null == student) {
+            temp.setStatus(2);
             teacherServiceImpl.addStudent(temp);
             student = teacherServiceImpl.selectStuByNo(temp.getStu_no());
         }
