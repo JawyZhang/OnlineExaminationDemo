@@ -37,7 +37,6 @@ import java.util.Map;
  */
 @Controller
 public class SystemController {
-    private static String upload_path = "D:/";
     private static String xmlFileName = "system_config.xml";
     private static boolean init_system_flag = true;
     private static boolean init_flag = true;
@@ -46,14 +45,14 @@ public class SystemController {
     private TeacherService teacherServiceImpl;
 
     public static Map<String, Object> getSystem(){
-        File file = new File(upload_path + xmlFileName);
+        File file = new File(xmlFileName);
         if (!file.exists()) {
             createXML();
         }
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse(upload_path + xmlFileName);
+            Document document = db.parse(xmlFileName);
             system.put("taskTime", Integer.parseInt(document.getElementsByTagName("taskTime").item(0).getTextContent()));
             system.put("systemPageSize", Integer.parseInt(document.getElementsByTagName("systemPageSize").item(0).getTextContent()));
             system.put("examBeginTime", Integer.parseInt(document.getElementsByTagName("examBeginTime").item(0).getTextContent()));
@@ -104,7 +103,7 @@ public class SystemController {
             Transformer tf=tff.newTransformer();
             //换行文件内容
             tf.setOutputProperty(OutputKeys.INDENT, "yes");
-            tf.transform(new DOMSource(document), new StreamResult(new File(upload_path+xmlFileName)));
+            tf.transform(new DOMSource(document), new StreamResult(new File(xmlFileName)));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -112,14 +111,14 @@ public class SystemController {
 
     public static void setSystem(Map<String, Object> system) {
         SystemController.system = system;
-        File file = new File(upload_path + xmlFileName);
+        File file = new File(xmlFileName);
         if (!file.exists()) {
             createXML();
         }
         try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document document = db.parse(upload_path + xmlFileName);
+            Document document = db.parse(xmlFileName);
             document.getElementsByTagName("taskTime").item(0).setTextContent(String.valueOf(system.get("taskTime")));
             document.getElementsByTagName("systemPageSize").item(0).setTextContent(String.valueOf(system.get("systemPageSize")));
             document.getElementsByTagName("examBeginTime").item(0).setTextContent(String.valueOf(system.get("examBeginTime")));
@@ -132,7 +131,7 @@ public class SystemController {
             Transformer tf=tff.newTransformer();
             //换行文件内容
             tf.setOutputProperty(OutputKeys.INDENT, "yes");
-            tf.transform(new DOMSource(document), new StreamResult(new File(upload_path+xmlFileName)));
+            tf.transform(new DOMSource(document), new StreamResult(new File(xmlFileName)));
         }catch(Exception e){
             e.printStackTrace();
         }
