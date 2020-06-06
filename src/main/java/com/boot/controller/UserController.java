@@ -32,6 +32,7 @@ public class UserController {
             student.setId(id);
             student.setUsername(change_username);
             student.setPassword(change_password);
+            student.setStatus(1);
             if (studentServiceImpl.updateStudentById(student) == 1) {
                 //更新用户信息成功，清空原有信息，强制重新登录
                 request.getSession().removeAttribute("user");
@@ -40,12 +41,14 @@ public class UserController {
             } else {
                 tip = UrlCodeUtils.getUrlString("修改密码失败");
             }
+
             return "redirect:student_home?tip=" + tip;
         } else {
             Teacher teacher = new Teacher();
             teacher.setId(id);
             teacher.setUsername(change_username);
             teacher.setPassword(change_password);
+            teacher.setStatus(1);
             if (teacherServiceImpl.updateTeacher(teacher) == 1) {
                 request.getSession().removeAttribute("user");
             } else {
