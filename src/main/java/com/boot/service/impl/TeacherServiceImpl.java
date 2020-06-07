@@ -79,7 +79,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Integer insertTeacher(Teacher teacher) {
-        return teacherMapper.insertTeacher(teacher);
+        teacherMapper.insertTeacher(teacher);
+        Teacher teacher1 = teacherMapper.selectByTeacherIdAndPassword(teacher);
+        teacher1.setPassword(MD5Utils.md5(teacher1.getPassword(), String.valueOf(teacher1.getId())));
+        return teacherMapper.updateTeacher(teacher1);
+
     }
 
     @Override
